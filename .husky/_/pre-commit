@@ -1,6 +1,2 @@
-#!/bin/sh
-. "$(dirname "$0")/husky.sh"
-#npm test
-npm run lint
-npx lint-staged
-npx pretty-quick --staged
+#!/usr/bin/env sh
+. "${0%/*}/h"

@@ -3,19 +3,15 @@ import { CommonModule } from '@angular/common';
 
 import { SecureRoutingModule } from './secure-routing.module';
 import { SecureComponent } from './secure.component';
-import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
-import { PageContentComponent } from './page-content/page-content.component';
 import { SideMenuComponent } from './side-menu/side-menu.component';
-
+import { MaterialModules } from 'src/app/shared/material/material.module';
 @NgModule({
   declarations: [
     SecureComponent,
     HeaderComponent,
-    FooterComponent,
-    PageContentComponent,
     SideMenuComponent,
   ],
-  imports: [CommonModule, SecureRoutingModule],
+  imports: [CommonModule, SecureRoutingModule,MaterialModules],
 })
 export class SecureModule {}

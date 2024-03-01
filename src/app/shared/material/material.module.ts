@@ -13,8 +13,10 @@ import { MatTableModule } from '@angular/material/table';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MaterialRoutingModule } from './material-routing.module';
-
-const MaterialModules = [
+import { MatNativeDateModule } from '@angular/material/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatRadioModule} from '@angular/material/radio';
+export const MaterialModules = [
   MatButtonModule,
   MatIconModule,
   MatToolbarModule,
@@ -27,9 +29,12 @@ const MaterialModules = [
   MatTableModule,
   MatAutocompleteModule,
   MatSidenavModule,
+  MatNativeDateModule,
+  MatDatepickerModule,
+  MatRadioModule
 ];
 @NgModule({
   declarations: [],
-  imports: [CommonModule, MaterialRoutingModule, MaterialModules],
+  imports: [CommonModule, MaterialRoutingModule,MaterialModules],
 })
 export class MaterialModule {}

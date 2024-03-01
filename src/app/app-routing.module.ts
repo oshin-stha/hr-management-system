@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LoginComponent } from './features/user/login/login.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./core/layout/secure/secure.module').then((m) => m.SecureModule),
   },
+  {path:'**', component:LoginComponent}
 ];
 
 @NgModule({

@@ -14,7 +14,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MaterialRoutingModule } from './material-routing.module';
 
-const MaterialModules = [
+export const MaterialModules = [
   MatButtonModule,
   MatIconModule,
   MatToolbarModule,

@@ -8,7 +8,7 @@ describe('PublicComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PublicComponent],
+      declarations: [PublicComponent]
     });
     fixture = TestBed.createComponent(PublicComponent);
     component = fixture.componentInstance;

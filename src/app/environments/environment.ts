@@ -1,11 +1,21 @@
+import { initializeApp } from 'firebase/app';
+// import { collection, getFirestore } from 'firebase/firestore';
+import {  getAuth  } from 'firebase/auth';
+
+
 export enum EnvironmentTs {}
 
 export const firebaseConfig = {
-  apiKey: 'AIzaSyDWZxpNFJR1Fd7xY5hbeGhCP6Ekvn18MP8',
-  authDomain: 'hr-management-system-ac8ce.firebaseapp.com',
-  projectId: 'hr-management-system-ac8ce',
-  storageBucket: 'hr-management-system-ac8ce.appspot.com',
-  messagingSenderId: '89377056248',
-  appId: '1:89377056248:web:df83081825dbb559cca20d',
-  measurementId: 'G-80FEQ7WBF2',
+  apiKey: "AIzaSyBsx_T67LomjTHbKSyNGoOv_dVv35Nny4Q",
+  authDomain: "hr-management-system-cbc1f.firebaseapp.com",
+  projectId: "hr-management-system-cbc1f",
+  storageBucket: "hr-management-system-cbc1f.appspot.com",
+  messagingSenderId: "542917674913",
+  appId: "1:542917674913:web:b3c80e99c3c599376eede0"
 };
+
+export const APP = initializeApp(firebaseConfig);
+// const FIRESTORE = getFirestore(APP);
+export const AUTH = getAuth(APP);
+// const USERREF = collection(FIRESTORE, 'users');
+

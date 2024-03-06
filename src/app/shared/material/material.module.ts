@@ -14,8 +14,11 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MaterialRoutingModule } from './material-routing.module';
 import { MatNativeDateModule } from '@angular/material/core';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { StoreModule } from '@ngrx/store';
+import { LoaderSpinnerReducer } from '../store/loader-spinner.reducer';
 export const MaterialModules = [
   MatButtonModule,
   MatIconModule,
@@ -31,10 +34,16 @@ export const MaterialModules = [
   MatSidenavModule,
   MatNativeDateModule,
   MatDatepickerModule,
-  MatRadioModule
+  MatRadioModule,
+  MatProgressSpinnerModule,
 ];
 @NgModule({
   declarations: [],
-  imports: [CommonModule, MaterialRoutingModule,MaterialModules],
+  imports: [
+    CommonModule,
+    MaterialRoutingModule,
+    MaterialModules,
+    StoreModule.forFeature('loader', { LoaderState: LoaderSpinnerReducer }),
+  ],
 })
 export class MaterialModule {}

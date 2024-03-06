@@ -1,23 +1,50 @@
-import { createReducer, on } from "@ngrx/store";
-import { addUserStart, signupSuccess } from "./add-user.action";
-import { UserState, initialState } from "./add-user.state";
-import { Action } from "@ngrx/store";
-import { AuthDetails, UserDetails } from "../../models/adduser.model";
-const _addUserReducer=createReducer(initialState,
-    on(signupSuccess,(state,action:{data:AuthDetails})=>{
-        return{
-            ...state,
-            auth: [...state.auth, action.data]
-        }
-    }),
-    
-    on(addUserStart,(state,action:{data:UserDetails})=>{
-        return{
-            ...state,
-            user: [...state.user, action.data]
-        }
-    })
-    )
-    export function AddUserReducer(state:UserState | undefined, action:Action){
-        return _addUserReducer(state,action)
-    }
+import { createReducer, on } from '@ngrx/store';
+import {
+  addUserFail,
+  addUserStart,
+  addUserSuccess,
+  loaderSuccess,
+  setErrorMessage,
+  signupFail,
+  signupSuccess,
+} from './add-user.action';
+import { UserState, initialState } from './add-user.state';
+import { Action } from '@ngrx/store';
+import { UserDetails } from '../../models/adduser.model';
+const _addUserReducer = createReducer(
+  initialState,
+  on(signupSuccess, (state, action: { email: string; password: string }) => {
+    return {
+      ...state,
+      action: [action.email, action.password],
+    };
+  }),
+
+  on(addUserStart, (state) => {
+    return {
+      ...state,
+    };
+  }),
+  on(addUserSuccess, (state) => {
+    return {
+      ...state,
+    };
+  }),
+  on(setErrorMessage, (state, action) => {
+    return {
+      ...state,
+      errorMessage: action.message,
+    };
+  }),
+  on(loaderSuccess, (state, action) => {
+    return {
+      ...state,
+      isLoading: action.status,
+    };
+  }),
+  on(signupFail, () => initialState),
+  on(addUserFail, () => initialState),
+);
+export function AddUserReducer(state: UserState | undefined, action: Action) {
+  return _addUserReducer(state, action);
+}

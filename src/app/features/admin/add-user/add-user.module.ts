@@ -12,15 +12,13 @@ import { EffectsModule } from '@ngrx/effects';
 @NgModule({
   declarations: [AddUserComponent],
   imports: [
-    CommonModule, 
+    CommonModule,
     AddUserRoutingModule,
     MaterialModules,
     FormsModule,
     ReactiveFormsModule,
-    StoreModule.forFeature('userFeature',{ userState: AddUserReducer }), 
-    EffectsModule.forFeature([AddUserEffect]) 
-],
+    StoreModule.forFeature('user', AddUserReducer),
+    EffectsModule.forFeature([AddUserEffect]),
+  ],
 })
-export class AddUserModule {
-  
-}
+export class AddUserModule {}

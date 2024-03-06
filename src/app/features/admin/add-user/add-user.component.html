@@ -8,25 +8,44 @@
         <mat-form-field appearance="outline">
           <mat-label>Employee Id</mat-label>
           <input matInput placeholder="AN1001" formControlName="employeeId" />
-          <mat-error *ngIf="signupForm.get('employeeId')?.invalid && signupForm.get('employeeId')?.touched">
+          <mat-error
+            *ngIf="
+              signupForm.get('employeeId')?.invalid &&
+              signupForm.get('employeeId')?.touched
+            "
+          >
             EmployeeId is required
           </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>First Name</mat-label>
           <input matInput placeholder="firstname" formControlName="firstName" />
-          <mat-error *ngIf="signupForm.get('firstName')?.invalid && signupForm.get('firstName')?.touched">
+          <mat-error
+            *ngIf="
+              signupForm.get('firstName')?.invalid &&
+              signupForm.get('firstName')?.touched
+            "
+          >
             firstName is required
           </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Middle Name</mat-label>
-          <input matInput placeholder="middlename" formControlName="middleName" />
+          <input
+            matInput
+            placeholder="middlename"
+            formControlName="middleName"
+          />
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Last Name</mat-label>
           <input matInput placeholder="lastname" formControlName="lastName" />
-          <mat-error *ngIf="signupForm.get('lastName')?.invalid && signupForm.get('lastName')?.touched">
+          <mat-error
+            *ngIf="
+              signupForm.get('lastName')?.invalid &&
+              signupForm.get('lastName')?.touched
+            "
+          >
             Last name is required
           </mat-error>
         </mat-form-field>
@@ -36,47 +55,99 @@
           <mat-radio-button value="female">Female</mat-radio-button>
           <mat-radio-button value="other">Others</mat-radio-button>
         </mat-radio-group>
-        <mat-error *ngIf="signupForm.get('gender')?.invalid && signupForm.get('gender')?.touched">
+        <mat-error
+          *ngIf="
+            signupForm.get('gender')?.invalid &&
+            signupForm.get('gender')?.touched
+          "
+        >
           Gender is required
         </mat-error>
         <mat-form-field appearance="outline">
           <mat-label>Contact Number</mat-label>
-          <input matInput placeholder="contactno" formControlName="contactNumber" />
-          <mat-error *ngIf="signupForm.get('contactNumber')?.invalid && signupForm.get('contactNumber')?.touched">
-           Contact Number is required
+          <input
+            matInput
+            placeholder="contactno"
+            formControlName="contactNumber"
+          />
+          <mat-error
+            *ngIf="
+              signupForm.get('contactNumber')?.invalid &&
+              signupForm.get('contactNumber')?.touched
+            "
+          >
+            Contact Number is required
           </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Address</mat-label>
           <input matInput placeholder="address" formControlName="address" />
-          <mat-error *ngIf="signupForm.get('address')?.invalid && signupForm.get('address')?.touched">
+          <mat-error
+            *ngIf="
+              signupForm.get('address')?.invalid &&
+              signupForm.get('address')?.touched
+            "
+          >
             Address is required
-           </mat-error>
+          </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Date of Birth</mat-label>
-          <input matInput [matDatepicker]="picker2" formControlName="dateOfBirth" />
-          <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+          <input
+            matInput
+            [matDatepicker]="picker2"
+            formControlName="dateOfBirth"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker2"
+          ></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
-          <mat-error *ngIf="signupForm.get('dateOfBirth')?.invalid && signupForm.get('dateOfBirth')?.touched">
+          <mat-error
+            *ngIf="
+              signupForm.get('dateOfBirth')?.invalid &&
+              signupForm.get('dateOfBirth')?.touched
+            "
+          >
             Date of Birth is required
-           </mat-error>
+          </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Citizenship No</mat-label>
-          <input matInput placeholder="citizenshipno" formControlName="citizenshipNumber" />
-          <mat-error *ngIf="signupForm.get('citizenshipNumber')?.invalid && signupForm.get('citizenshipNumber')?.touched">
-            citizenship Number is required
-           </mat-error>
+          <input
+            matInput
+            placeholder="citizenshipno"
+            formControlName="citizenshipNumber"
+          />
+          <mat-error
+            *ngIf="
+              signupForm.get('citizenshipNumber')?.invalid &&
+              signupForm.get('citizenshipNumber')?.touched
+            "
+          >
+            Citizenship Number is required
+          </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Start Date</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="startDate" />
-          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="startDate"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
-          <mat-error *ngIf="signupForm.get('startDate')?.invalid && signupForm.get('startDate')?.touched">
+          <mat-error
+            *ngIf="
+              signupForm.get('startDate')?.invalid &&
+              signupForm.get('startDate')?.touched
+            "
+          >
             Start Date is required
-           </mat-error>
+          </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Department</mat-label>
@@ -91,9 +162,14 @@
             <option value="QA">Quality Assurance</option>
             <option value="ui/ux">UI/UX</option>
           </select>
-          <mat-error *ngIf="signupForm.get('department')?.invalid && signupForm.get('department')?.touched">
+          <mat-error
+            *ngIf="
+              signupForm.get('department')?.invalid &&
+              signupForm.get('department')?.touched
+            "
+          >
             Department is required
-           </mat-error>
+          </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Role</mat-label>
@@ -101,43 +177,82 @@
             <option value="user">User</option>
             <option value="admin">Admin</option>
           </select>
-          <mat-error *ngIf="signupForm.get('role')?.invalid && signupForm.get('role')?.touched">
+          <mat-error
+            *ngIf="
+              signupForm.get('role')?.invalid && signupForm.get('role')?.touched
+            "
+          >
             Role is required
-           </mat-error>
+          </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Designation</mat-label>
-          <input matInput placeholder="designation" formControlName="designation" />
-          <mat-error *ngIf="signupForm.get('designation')?.invalid && signupForm.get('designation')?.touched">
+          <input
+            matInput
+            placeholder="designation"
+            formControlName="designation"
+          />
+          <mat-error
+            *ngIf="
+              signupForm.get('designation')?.invalid &&
+              signupForm.get('designation')?.touched
+            "
+          >
             Designation is required
-           </mat-error>
+          </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Enter your email</mat-label>
-          <input type="email" matInput placeholder="pat@example.com" formControlName="email" />
+          <input
+            type="email"
+            matInput
+            placeholder="pat@example.com"
+            formControlName="email"
+          />
           <mat-error *ngIf="signupForm.get('email')?.errors?.['required']">
             Email is required
-           </mat-error>
-           <mat-error *ngIf="signupForm.get('email')?.errors?.['email']">
-           Invalid Email
-           </mat-error>
+          </mat-error>
+          <mat-error *ngIf="signupForm.get('email')?.errors?.['email']">
+            Invalid Email
+          </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Enter your password</mat-label>
-          <input matInput [type]="password_hide ? 'password' : 'text'" formControlName="password" />
-          <button mat-icon-button matSuffix (click)="password_hide = !password_hide" type="button">
+          <input
+            matInput
+            [type]="password_hide ? 'password' : 'text'"
+            formControlName="password"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="password_hide = !password_hide"
+            type="button"
+          >
             <mat-icon>{{
               password_hide ? "visibility_off" : "visibility"
-              }}</mat-icon>
+            }}</mat-icon>
           </button>
-          <mat-error *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched">
+          <mat-error
+            *ngIf="
+              signupForm.get('password')?.invalid &&
+              signupForm.get('password')?.touched
+            "
+          >
             Designation is required
-           </mat-error>
+          </mat-error>
         </mat-form-field>
-        <button class="signup-button" mat-raised-button color="primary" type="submit" [disabled]="!signupForm.valid">
+        <button
+          class="signup-button"
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="!signupForm.valid"
+        >
           Add Employee
         </button>
       </form>
     </mat-card-content>
   </mat-card>
 </div>
+<div class="spinner"></div>

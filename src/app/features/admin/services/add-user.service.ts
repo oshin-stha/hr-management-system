@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
-import { AUTH, USERDETAILSREF } from 'src/app/environments/environment';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { AUTH, USER_DETAILS_REF } from 'src/app/environments/environment';
 import { UserDetails } from '../models/adduser.model';
 
 @Injectable({
@@ -9,6 +9,7 @@ import { UserDetails } from '../models/adduser.model';
 })
 export class AddUserService {
   emailAlreadyExists = false;
+  employeeIdExist: Promise<boolean> | undefined;
 
   get emailAlreadyExistsStatus(): boolean {
     return this.emailAlreadyExists;
@@ -18,19 +19,28 @@ export class AddUserService {
     this.emailAlreadyExists = status;
   }
 
-  createAccount(email: string, password: string) {
+  async createAccount(email: string, password: string, employeeId: string) {
+    const employeeIdExist = await this.getEmployeeIdStatusCheck(employeeId);
+    if (employeeIdExist) {
+      alert('Employee Id already exists');
+      throw new Error('EmployeeId already in use');
+    }
     return createUserWithEmailAndPassword(AUTH, email, password);
   }
 
   addUserDetails(data: UserDetails, employeeId: string) {
-    return setDoc(doc(USERDETAILSREF, employeeId), data);
+    return setDoc(doc(USER_DETAILS_REF, employeeId), data);
   }
 
   getErrorMessage(message: string): boolean {
     if (message.includes('email-already-in-use')) {
       this.emailAlreadyExists = true;
-      console.log('in error', this, this.emailAlreadyExists);
     }
     return this.emailAlreadyExists;
+  }
+  async getEmployeeIdStatusCheck(employeeId: string): Promise<boolean> {
+    const userDoc = doc(USER_DETAILS_REF, employeeId);
+    const userSnapshot = await getDoc(userDoc);
+    return userSnapshot.exists();
   }
 }

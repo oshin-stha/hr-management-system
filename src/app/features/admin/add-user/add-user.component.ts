@@ -1,18 +1,18 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { UserDetails } from '../models/adduser.model';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+import { setLoadingSpinner } from 'src/app/shared/store/loader-spinner.action';
+import { getLoading } from 'src/app/shared/store/loader-spinner.selector';
+import { UserDetails } from '../models/adduser.model';
+import { AddUserService } from '../services/add-user.service';
 import {
   addUserFail,
   addUserStart,
   signupFail,
   signupStart,
 } from './store/add-user.action';
-import { Store } from '@ngrx/store';
-import { AddUserService } from '../services/add-user.service';
-import { setLoadingSpinner } from 'src/app/shared/store/loader-spinner.action';
-import { getLoading } from 'src/app/shared/store/loader-spinner.selector';
-import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-add-user',
   templateUrl: './add-user.component.html',
@@ -28,9 +28,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
     private store: Store,
   ) {}
   password_hide = true;
-  // get emailAlreadyExistsStatus():boolean{
-  //   return this.addUserService.emailAlreadyExistsStatus
-  // }
+
   ngOnInit() {
     console.log('Hello');
   }
@@ -56,6 +54,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
     const data = signupData.value;
     const email = data.email;
     const password = data.password;
+    const employeeId = data.employeeId;
     const userDetailsPayload: UserDetails = {
       employeeId: data.employeeId,
       firstName: data.firstName,
@@ -73,31 +72,23 @@ export class AddUserComponent implements OnInit, OnDestroy {
       email: data.email,
     };
     this.store.dispatch(setLoadingSpinner({ status: true }));
-    this.store.dispatch(signupStart({ email, password }));
+    this.store.dispatch(signupStart({ email, password, employeeId }));
 
     this.loadingSubscription = this.store
       .select(getLoading)
-      .subscribe((loading) => {
-        console.log(
-          'loading',
-          loading,
-          'email',
-          this.addUserService.emailAlreadyExists,
-        );
+      .subscribe(async (loading) => {
         const emailExist = this.addUserService.emailAlreadyExistsStatus;
         if (!loading && !emailExist) {
-          console.log(emailExist);
           this.store.dispatch(addUserStart({ data: userDetailsPayload }));
           this.signupForm.reset();
-          console.log('UserDetails called');
         } else {
-          console.log('Error');
           this.store.dispatch(signupFail());
           this.store.dispatch(addUserFail());
           return;
         }
       });
   }
+
   ngOnDestroy() {
     if (this.loadingSubscription) {
       this.loadingSubscription.unsubscribe();

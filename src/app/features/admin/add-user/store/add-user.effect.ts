@@ -30,7 +30,11 @@ export class AddUserEffect {
         ofType(signupStart),
         switchMap((action) =>
           from(
-            this.addUserService.createAccount(action.email, action.password),
+            this.addUserService.createAccount(
+              action.email,
+              action.password,
+              action.employeeId,
+            ),
           ).pipe(
             map(() => {
               this.addUserService.emailExists = false;
@@ -38,10 +42,10 @@ export class AddUserEffect {
               return signupSuccess(action);
             }),
             catchError((error) => {
-              this.addUserService.emailExists = true;
-              console.log(error);
-              this.addUserService.getErrorMessage(error.code);
               this.store.dispatch(setLoadingSpinner({ status: false }));
+              this.addUserService.emailExists = true;
+
+              this.addUserService.getErrorMessage(error.code);
               alert(error.code);
               return of(signupFail());
             }),

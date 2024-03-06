@@ -11,7 +11,7 @@ export const SET_ERROR_MESSAGE = '[adduser page] set error message';
 
 export const signupStart = createAction(
   SIGNUP_START,
-  props<{ email: string; password: string }>(),
+  props<{ email: string; password: string; employeeId: string }>(),
 );
 export const signupSuccess = createAction(
   SIGNUP_SUCCESS,

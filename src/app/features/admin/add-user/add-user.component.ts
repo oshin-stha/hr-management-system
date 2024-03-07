@@ -10,8 +10,10 @@ import { AddUserService } from '../services/add-user.service';
 import {
   addUserFail,
   addUserStart,
+  addUserSuccess,
   signupFail,
   signupStart,
+  signupSuccess,
 } from './store/add-user.action';
 @Component({
   selector: 'app-add-user',
@@ -73,13 +75,14 @@ export class AddUserComponent implements OnInit, OnDestroy {
     };
     this.store.dispatch(setLoadingSpinner({ status: true }));
     this.store.dispatch(signupStart({ email, password, employeeId }));
-
+    this.store.dispatch(signupSuccess());
     this.loadingSubscription = this.store
       .select(getLoading)
       .subscribe(async (loading) => {
         const emailExist = this.addUserService.emailAlreadyExistsStatus;
         if (!loading && !emailExist) {
           this.store.dispatch(addUserStart({ data: userDetailsPayload }));
+          this.store.dispatch(addUserSuccess({ redirect: true }));
           this.signupForm.reset();
         } else {
           this.store.dispatch(signupFail());

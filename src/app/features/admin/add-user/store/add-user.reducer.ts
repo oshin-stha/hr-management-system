@@ -1,4 +1,4 @@
-import { createReducer, on } from '@ngrx/store';
+import { Action, createReducer, on } from '@ngrx/store';
 import {
   addUserFail,
   addUserStart,
@@ -9,14 +9,12 @@ import {
   signupSuccess,
 } from './add-user.action';
 import { UserState, initialState } from './add-user.state';
-import { Action } from '@ngrx/store';
-import { UserDetails } from '../../models/adduser.model';
+
 const _addUserReducer = createReducer(
   initialState,
-  on(signupSuccess, (state, action: { email: string; password: string }) => {
+  on(signupSuccess, (state) => {
     return {
       ...state,
-      action: [action.email, action.password],
     };
   }),
 

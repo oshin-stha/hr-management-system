@@ -1,19 +1,18 @@
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
+import { catchError, from, map, of, switchMap, tap } from 'rxjs';
+import { setLoadingSpinner } from 'src/app/shared/store/loader-spinner.action';
+import { AddUserService } from '../../services/add-user.service';
 import {
   addUserFail,
   addUserStart,
   addUserSuccess,
-  setErrorMessage,
   signupFail,
   signupStart,
   signupSuccess,
 } from './add-user.action';
-import { catchError, of, map, from, tap, switchMap } from 'rxjs';
-import { Injectable } from '@angular/core';
-import { AddUserService } from '../../services/add-user.service';
-import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { setLoadingSpinner } from 'src/app/shared/store/loader-spinner.action';
 
 @Injectable()
 export class AddUserEffect {
@@ -39,7 +38,7 @@ export class AddUserEffect {
             map(() => {
               this.addUserService.emailExists = false;
               this.store.dispatch(setLoadingSpinner({ status: false }));
-              return signupSuccess(action);
+              return signupSuccess();
             }),
             catchError((error) => {
               this.store.dispatch(setLoadingSpinner({ status: false }));
@@ -66,7 +65,7 @@ export class AddUserEffect {
               action.data.employeeId,
             ),
           ).pipe(
-            map(() => addUserSuccess({ data: action.data })),
+            map(() => addUserSuccess({ redirect: true })),
             catchError(() => {
               return of(addUserFail());
             }),
@@ -80,10 +79,12 @@ export class AddUserEffect {
     () =>
       this.action$.pipe(
         ofType(addUserSuccess),
-        tap(() => {
-          this.store.dispatch(setErrorMessage({ message: '' }));
 
-          this.router.navigate(['/hrms']);
+        tap((action) => {
+          console.log(action.redirect);
+          if (action.redirect) {
+            this.router.navigate(['/hrms']);
+          }
         }),
       ),
     { dispatch: false },

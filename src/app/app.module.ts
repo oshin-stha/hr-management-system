@@ -29,10 +29,11 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         deps: [HttpClient],
       },
     }),
+
     BrowserAnimationsModule,
-    StoreDevtoolsModule.instrument(),
     StoreModule.forRoot(appReducer),
     EffectsModule.forRoot([]),
+    StoreDevtoolsModule.instrument(),
   ],
   providers: [],
   bootstrap: [AppComponent],

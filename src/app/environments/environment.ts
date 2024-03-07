@@ -2,8 +2,6 @@ import { initializeApp } from 'firebase/app';
 import { collection, getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
-export enum EnvironmentTs {}
-
 export const firebaseConfig = {
   apiKey: 'AIzaSyBsx_T67LomjTHbKSyNGoOv_dVv35Nny4Q',
   authDomain: 'hr-management-system-cbc1f.firebaseapp.com',

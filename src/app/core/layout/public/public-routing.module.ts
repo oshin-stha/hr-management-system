@@ -6,11 +6,15 @@ const routes: Routes = [
   {
     path: '',
     component: PublicComponent,
-    // children: [
-    //   {
-    //     // todo load login module/feature
-    //   },
-    // ],
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('../../../features/user/login/login.module').then(
+            (m) => m.LoginModule,
+          ),
+      },
+    ],
   },
 ];
 

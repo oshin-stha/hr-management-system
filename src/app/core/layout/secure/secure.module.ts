@@ -7,6 +7,8 @@ import { HeaderComponent } from './header/header.component';
 import { SecureRoutingModule } from './secure-routing.module';
 import { SecureComponent } from './secure.component';
 import { SideMenuComponent } from './side-menu/side-menu.component';
+import { RouterModule } from '@angular/router';
+
 @NgModule({
   declarations: [SecureComponent, HeaderComponent, SideMenuComponent],
   imports: [
@@ -14,6 +16,7 @@ import { SideMenuComponent } from './side-menu/side-menu.component';
     SecureRoutingModule,
     MaterialModule,
     LoadingSpinnerModule,
+    RouterModule,
   ],
 })
 export class SecureModule {}

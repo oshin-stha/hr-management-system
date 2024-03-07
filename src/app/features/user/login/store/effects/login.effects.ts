@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { LoginService } from '../../../services/login-services/login.service';
 import { loginFailure, loginStart, loginSuccess } from '../login.actions';
-import { catchError, exhaustMap, from, map, of, tap } from 'rxjs';
+import { catchError, exhaustMap, from, map, of } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable()
@@ -40,7 +40,7 @@ export class AuthEffects {
     () =>
       this.action$.pipe(
         ofType(loginSuccess),
-        tap(() => this.navigateToAttendance()),
+        map(() => this.navigateToAttendance()),
       ),
     { dispatch: false },
   );

@@ -10,11 +10,13 @@ const _authReducer = createReducer(
     isLoggedIn: false,
     error: null,
   })),
+
   on(loginSuccess, (state) => ({
     ...state,
     isLoggedIn: true,
     error: null,
   })),
+
   on(loginFailure, (state, { error }) => ({
     ...state,
     isLoggedIn: false,

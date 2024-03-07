@@ -9,6 +9,7 @@ import { AuthReducer } from './store/reducer/login.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './store/effects/login.effects';
 import { RouterModule } from '@angular/router';
+import { LOGIN_SELECTOR } from './store/selector/login.selector';
 @NgModule({
   declarations: [LoginComponent],
   imports: [
@@ -18,7 +19,7 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     RouterModule,
     MaterialModule,
-    StoreModule.forFeature('login', AuthReducer),
+    StoreModule.forFeature(LOGIN_SELECTOR, AuthReducer),
     EffectsModule.forFeature([AuthEffects]),
   ],
 })

@@ -11,16 +11,16 @@ import { loginStart } from './store/login.actions';
 export class LoginComponent {
   hide = true;
 
-  constructor(private store: Store){}
+  constructor(private store: Store) {}
 
   loginForm = new FormGroup({
     emailField: new FormControl('', [Validators.required, Validators.email]),
-    passwordField: new FormControl('', [Validators.required])
-  })
+    passwordField: new FormControl('', [Validators.required]),
+  });
 
-  logInUser(loginData: FormGroup) {
-    const email= loginData.value.emailField
-    const password= loginData.value.passwordField     
-    this.store.dispatch(loginStart({email, password}));
+  logInUser(loginData: FormGroup): void {
+    const email = loginData.value.emailField;
+    const password = loginData.value.passwordField;
+    this.store.dispatch(loginStart({ email, password }));
   }
 }

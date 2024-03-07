@@ -16,7 +16,7 @@ export const addUserStart = createAction(
 );
 
 export const addUserSuccess = createAction(
-  '[adduser page] signup success',
+  '[adduser page] adduser success',
   props<{ redirect: boolean }>(),
 );
 

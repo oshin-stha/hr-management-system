@@ -28,7 +28,7 @@ export class AddUserService {
     return createUserWithEmailAndPassword(AUTH, email, password);
   }
 
-  addUserDetails(data: UserDetails, employeeId: string) {
+  addUserDetails(data: UserDetails, employeeId: string): Promise<void> {
     return setDoc(doc(USER_DETAILS_REF, employeeId), data);
   }
 

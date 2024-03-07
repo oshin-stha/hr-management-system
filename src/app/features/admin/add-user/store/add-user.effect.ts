@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { catchError, from, map, of, switchMap, tap } from 'rxjs';
+import { catchError, from, map, of, switchMap } from 'rxjs';
 import { setLoadingSpinner } from 'src/app/shared/store/loader-spinner.action';
 import { AddUserService } from '../../services/add-user.service';
 import {
@@ -43,7 +43,6 @@ export class AddUserEffect {
             catchError((error) => {
               this.store.dispatch(setLoadingSpinner({ status: false }));
               this.addUserService.emailExists = true;
-
               this.addUserService.getErrorMessage(error.code);
               alert(error.code);
               return of(signupFail());
@@ -80,7 +79,7 @@ export class AddUserEffect {
       this.action$.pipe(
         ofType(addUserSuccess),
 
-        tap((action) => {
+        map((action) => {
           console.log(action.redirect);
           if (action.redirect) {
             this.router.navigate(['/hrms']);

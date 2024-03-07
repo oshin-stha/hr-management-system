@@ -13,7 +13,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./core/layout/secure/secure.module').then((m) => m.SecureModule),
   },
-  {path:'**', component:LoginComponent}
+  { path: '**', component: LoginComponent },
 ];
 
 @NgModule({

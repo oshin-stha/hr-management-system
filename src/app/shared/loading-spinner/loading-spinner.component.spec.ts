@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoadingSpinnerComponent } from './loading-spinner.component';
-import { MaterialModules } from '../material/material.module';
+import { MaterialModule } from '../material/material.module';
 
 describe('LoadingSpinnerComponent', () => {
   let component: LoadingSpinnerComponent;
@@ -9,7 +9,7 @@ describe('LoadingSpinnerComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [LoadingSpinnerComponent, MaterialModules],
+      declarations: [LoadingSpinnerComponent, MaterialModule],
     });
     fixture = TestBed.createComponent(LoadingSpinnerComponent);
     component = fixture.componentInstance;

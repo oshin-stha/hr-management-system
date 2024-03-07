@@ -19,7 +19,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { StoreModule } from '@ngrx/store';
 import { LoaderSpinnerReducer } from '../store/loader-spinner.reducer';
-export const MaterialModules = [
+export const Material = [
   MatButtonModule,
   MatIconModule,
   MatToolbarModule,
@@ -42,8 +42,8 @@ export const MaterialModules = [
   imports: [
     CommonModule,
     MaterialRoutingModule,
-    MaterialModules,
     StoreModule.forFeature('loader', { LoaderState: LoaderSpinnerReducer }),
   ],
+  exports: [Material],
 })
 export class MaterialModule {}

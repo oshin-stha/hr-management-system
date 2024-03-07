@@ -75,7 +75,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
     };
     this.store.dispatch(setLoadingSpinner({ status: true }));
     this.store.dispatch(signupStart({ email, password, employeeId }));
-    this.store.dispatch(signupSuccess());
+
     this.loadingSubscription = this.store
       .select(getLoading)
       .subscribe(async (loading) => {

@@ -14,7 +14,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MaterialRoutingModule } from './material-routing.module';
 
-const MaterialModules = [
+export const Material = [
   MatButtonModule,
   MatIconModule,
   MatToolbarModule,
@@ -30,6 +30,7 @@ const MaterialModules = [
 ];
 @NgModule({
   declarations: [],
-  imports: [CommonModule, MaterialRoutingModule, MaterialModules],
+  imports: [CommonModule, MaterialRoutingModule, Material],
+  exports: [Material],
 })
 export class MaterialModule {}

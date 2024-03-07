@@ -1,1 +1,36 @@
-<p>login works!</p>
+<div class="main">
+  <div class="login-image-left"></div>
+
+  <div class="example-container">
+    <div class="title">HR MANAGEMENT SYSTEM</div>
+
+    <div class="card">
+      <mat-card>
+        <mat-card-title>Login</mat-card-title>
+        <mat-card-content>
+          <form [formGroup]="loginForm" (ngSubmit)="logInUser(loginForm)">
+            <mat-form-field appearance="outline">
+              <mat-label>Enter your email</mat-label>
+              <input matInput placeholder="pat@example.com" required formControlName="emailField" />
+              <mat-error *ngIf="loginForm.get('emailField')?.errors?.['required']">Email is Required.</mat-error>
+              <mat-error *ngIf="loginForm.get('emailField')?.errors?.['email']">Invalid email.</mat-error>
+            </mat-form-field>
+            
+            <mat-form-field appearance="outline">
+              <mat-label>Enter your password</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'" formControlName="passwordField" />
+              <button mat-icon-button type="button" matSuffix (click)="hide = !hide">
+                <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+              </button>    
+              <mat-error *ngIf="loginForm.get('passwordField')?.touched && !loginForm.get('passwordField')?.valid">Password is required.</mat-error>        
+            </mat-form-field>
+
+            <button mat-raised-button class="login-button" color="primary" [disabled]="loginForm.invalid" type="submit">
+              Login
+            </button>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

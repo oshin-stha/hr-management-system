@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { LoginService } from '../../services/login-services/login.service';
-import { loginFailure, loginStart, loginSuccess } from './login.actions';
+import { LoginService } from '../../../services/login-services/login.service';
+import { loginFailure, loginStart, loginSuccess } from '../login.actions';
 import { catchError, exhaustMap, from, map, of, tap } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -26,7 +26,9 @@ export class AuthEffects {
             return loginSuccess();
           }),
           catchError((error) => {
-            const errorMessage = this.loginService.getErrorMessage(error.code);
+            const errorMessage = error.code;
+            console.log(errorMessage);
+            alert(errorMessage);
             return of(loginFailure({ error: errorMessage }));
           }),
         );

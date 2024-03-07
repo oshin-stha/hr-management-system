@@ -7,6 +7,7 @@ import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { PageContentComponent } from './page-content/page-content.component';
 import { SideMenuComponent } from './side-menu/side-menu.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,6 @@ import { SideMenuComponent } from './side-menu/side-menu.component';
     PageContentComponent,
     SideMenuComponent,
   ],
-  imports: [CommonModule, SecureRoutingModule],
+  imports: [CommonModule, RouterModule, SecureRoutingModule],
 })
 export class SecureModule {}

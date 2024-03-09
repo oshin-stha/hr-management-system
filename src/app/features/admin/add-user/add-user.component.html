@@ -1,1 +1,260 @@
-<p>add-user works!</p>
+<div class="employee-details-container">
+  <mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title>Add Employee</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="signupForm" (ngSubmit)="addUserDetail()">
+        <mat-form-field appearance="outline">
+          <mat-label>Employee Id</mat-label>
+          <input
+            matInput
+            placeholder="AN1001"
+            formControlName="{{ FORM_CONTROL_NAMES.EMPLOYEE_ID }}"
+          />
+          <mat-error
+            *ngIf="signupForm.get(FORM_CONTROL_NAMES.EMPLOYEE_ID)?.touched"
+          >
+            {{ FORM_ERRORS.employeeId.required }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input
+            matInput
+            placeholder="firstname"
+            formControlName="{{ FORM_CONTROL_NAMES.FIRST_NAME }}"
+          />
+          <mat-error
+            *ngIf="signupForm.get(FORM_CONTROL_NAMES.FIRST_NAME)?.touched"
+          >
+            {{ FORM_ERRORS.firstName.required }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Middle Name</mat-label>
+          <input
+            matInput
+            placeholder="middlename"
+            formControlName="{{ FORM_CONTROL_NAMES.MIDDLE_NAME }}"
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input
+            matInput
+            placeholder="lastname"
+            formControlName="{{ FORM_CONTROL_NAMES.LAST_NAME }}"
+          />
+          <mat-error
+            *ngIf="signupForm.get(FORM_CONTROL_NAMES.LAST_NAME)?.touched"
+          >
+            {{ FORM_ERRORS.lastName.required }}
+          </mat-error>
+        </mat-form-field>
+        <mat-radio-group
+          aria-label="Select an option"
+          formControlName="{{ FORM_CONTROL_NAMES.GENDER }}"
+        >
+          <mat-label>Gender</mat-label>
+          <mat-radio-button value="male">Male</mat-radio-button>
+          <mat-radio-button value="female">Female</mat-radio-button>
+          <mat-radio-button value="other">Others</mat-radio-button>
+        </mat-radio-group>
+        <mat-error
+          *ngIf="
+            signupForm.get(FORM_CONTROL_NAMES.GENDER)?.touched &&
+            signupForm.get(FORM_CONTROL_NAMES.GENDER)?.invalid
+          "
+        >
+          {{ FORM_ERRORS.gender.required }}
+        </mat-error>
+        <mat-form-field appearance="outline">
+          <mat-label>Contact Number</mat-label>
+          <input
+            matInput
+            placeholder="contactno"
+            formControlName="{{ FORM_CONTROL_NAMES.CONTACT_NUMBER }}"
+          />
+          <mat-error
+            *ngIf="signupForm.get(FORM_CONTROL_NAMES.CONTACT_NUMBER)?.touched"
+          >
+            {{ FORM_ERRORS.contactNumber.required }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Address</mat-label>
+          <input
+            matInput
+            placeholder="address"
+            formControlName="{{ FORM_CONTROL_NAMES.ADDRESS }}"
+          />
+          <mat-error
+            *ngIf="signupForm.get(FORM_CONTROL_NAMES.ADDRESS)?.touched"
+          >
+            {{ FORM_ERRORS.address.required }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Date of Birth</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker2"
+            formControlName="{{ FORM_CONTROL_NAMES.DATE_OF_BIRTH }}"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker2"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+          <mat-error
+            *ngIf="signupForm.get(FORM_CONTROL_NAMES.DATE_OF_BIRTH)?.touched"
+          >
+            {{ FORM_ERRORS.dateOfBirth.required }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Citizenship No</mat-label>
+          <input
+            matInput
+            placeholder="citizenshipno"
+            formControlName="{{ FORM_CONTROL_NAMES.CITIZENSHIP_NUMBER }}"
+          />
+          <mat-error
+            *ngIf="
+              signupForm.get(FORM_CONTROL_NAMES.CITIZENSHIP_NUMBER)?.touched
+            "
+          >
+            {{ FORM_ERRORS.citizenshipNumber.required }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Start Date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="{{ FORM_CONTROL_NAMES.START_DATE }}"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error
+            *ngIf="signupForm.get(FORM_CONTROL_NAMES.START_DATE)?.touched"
+          >
+            {{ FORM_ERRORS.startDate.required }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Department</mat-label>
+          <select
+            matNativeControl
+            required
+            formControlName="{{ FORM_CONTROL_NAMES.DEPARTMENT }}"
+          >
+            <option value="administration">Administration</option>
+            <option value="angular">Angular</option>
+            <option value="businessanalyst">Business Analyst</option>
+            <option value="digitalmarketing">Digital Marketing</option>
+            <option value="dotnet">Dot Net</option>
+            <option value="flutter">Flutter</option>
+            <option value="graphicsdesigner">Graphics Designer</option>
+            <option value="QA">Quality Assurance</option>
+            <option value="ui/ux">UI/UX</option>
+          </select>
+          <mat-error
+            *ngIf="signupForm.get(FORM_CONTROL_NAMES.DEPARTMENT)?.touched"
+          >
+            {{ FORM_ERRORS.department.required }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Role</mat-label>
+          <select
+            matNativeControl
+            required
+            formControlName="{{ FORM_CONTROL_NAMES.ROLE }}"
+          >
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </select>
+          <mat-error *ngIf="signupForm.get(FORM_CONTROL_NAMES.ROLE)?.touched">
+            {{ FORM_ERRORS.role.required }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Designation</mat-label>
+          <input
+            matInput
+            placeholder="designation"
+            formControlName="{{ FORM_CONTROL_NAMES.DESIGNATION }}"
+          />
+          <mat-error
+            *ngIf="signupForm.get(FORM_CONTROL_NAMES.DESIGNATION)?.touched"
+          >
+            {{ FORM_ERRORS.designation.required }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Enter your email</mat-label>
+          <input
+            type="email"
+            matInput
+            placeholder="pat@example.com"
+            formControlName="{{ FORM_CONTROL_NAMES.EMAIL }}"
+          />
+          <mat-error
+            *ngIf="
+              signupForm.get(FORM_CONTROL_NAMES.EMAIL)?.errors?.['required']
+            "
+          >
+            {{ FORM_ERRORS.email.required }}
+          </mat-error>
+          <mat-error
+            *ngIf="
+              signupForm.get(FORM_CONTROL_NAMES.EMAIL)?.errors?.[
+                FORM_CONTROL_NAMES.EMAIL
+              ]
+            "
+          >
+            {{ FORM_ERRORS.email.email }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Enter your password</mat-label>
+          <input
+            matInput
+            [type]="password_hide ? 'password' : 'text'"
+            formControlName="{{ FORM_CONTROL_NAMES.PASSWORD }}"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="password_hide = !password_hide"
+            type="button"
+          >
+            <mat-icon>{{
+              password_hide ? "visibility_off" : "visibility"
+            }}</mat-icon>
+          </button>
+          <mat-error
+            *ngIf="signupForm.get(FORM_CONTROL_NAMES.PASSWORD)?.touched"
+          >
+            {{ FORM_ERRORS.password.required }}
+          </mat-error>
+        </mat-form-field>
+        <button
+          class="signup-button"
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="!signupForm.valid"
+        >
+          Add Employee
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div class="spinner"></div>

@@ -5,9 +5,7 @@ import { LoginModule } from 'src/app/features/user/login/login.module';
 import { PublicComponent } from './public.component';
 
 @NgModule({
-  declarations: [
-    PublicComponent
-  ],
-  imports: [CommonModule, PublicRoutingModule , LoginModule],
+  declarations: [PublicComponent],
+  imports: [CommonModule, PublicRoutingModule, LoginModule],
 })
 export class PublicModule {}

@@ -1,6 +1,15 @@
-<div class="header-container">
+<div class="main">
+<div class="header">
   <app-header></app-header>
 </div>
-<div class="main-container">
-  <app-page-content></app-page-content>
+<div class="container">
+  <mat-drawer-container class="example-container">
+    <mat-drawer mode="side" opened class="drawer">
+      <app-side-menu></app-side-menu>
+    </mat-drawer>
+    <mat-drawer-content class="content">
+      <router-outlet></router-outlet>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>
 </div>

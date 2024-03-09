@@ -1,0 +1,17 @@
+export const FORM_CONTROL_NAMES = {
+  EMPLOYEE_ID: 'employeeId',
+  FIRST_NAME: 'firstName',
+  MIDDLE_NAME: 'middleName',
+  LAST_NAME: 'lastName',
+  GENDER: 'gender',
+  CONTACT_NUMBER: 'contactNumber',
+  ADDRESS: 'address',
+  DATE_OF_BIRTH: 'dateOfBirth',
+  CITIZENSHIP_NUMBER: 'citizenshipNumber',
+  START_DATE: 'startDate',
+  DEPARTMENT: 'department',
+  ROLE: 'role',
+  DESIGNATION: 'designation',
+  EMAIL: 'email',
+  PASSWORD: 'password',
+};

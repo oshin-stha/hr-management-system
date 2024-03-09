@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-
 import { LoadingSpinnerModule } from 'src/app/shared/loading-spinner/loading-spinner.module';
 import { MaterialModule } from 'src/app/shared/material/material.module';
 import { HeaderComponent } from './header/header.component';

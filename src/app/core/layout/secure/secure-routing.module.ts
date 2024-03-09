@@ -1,5 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import {
+  ADD_USER_COMPONENT_PATH,
+  DASHBOARD_COMPONENT_PATH,
+  LEAVE_COMPONENT_PATH,
+  POLICY_COMPONENT_PATH,
+} from 'src/app/shared/constants/routes.constanrs';
 import { SecureComponent } from './secure.component';
 const routes: Routes = [
   {
@@ -7,35 +13,35 @@ const routes: Routes = [
     component: SecureComponent,
     children: [
       {
-        path: '',
+        path: DASHBOARD_COMPONENT_PATH,
         loadChildren: () =>
           import('../../../features/user/dashboard/dashboard.module').then(
             (m) => m.DashboardModule,
           ),
       },
       {
-        path: 'attendance',
+        path: '',
         loadChildren: () =>
           import('../../../features/user/attendance/attendance.module').then(
             (m) => m.AttendanceModule,
           ),
       },
       {
-        path: 'leave',
+        path: LEAVE_COMPONENT_PATH,
         loadChildren: () =>
           import(
             '../../../features/user/leave-management/leave-management.module'
           ).then((m) => m.LeaveManagementModule),
       },
       {
-        path: 'policy',
+        path: POLICY_COMPONENT_PATH,
         loadChildren: () =>
           import('../../../features/user/policy/policy.module').then(
             (m) => m.PolicyModule,
           ),
       },
       {
-        path: 'adduser',
+        path: ADD_USER_COMPONENT_PATH,
         loadChildren: () =>
           import('../../../features/admin/add-user/add-user.module').then(
             (m) => m.AddUserModule,

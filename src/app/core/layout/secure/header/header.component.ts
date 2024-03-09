@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-
 import { getLoading } from 'src/app/shared/store/loader-spinner.selector';
 
 @Component({

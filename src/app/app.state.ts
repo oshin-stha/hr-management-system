@@ -15,7 +15,6 @@ export const appReducer: ActionReducerMap<AppState> = {
   user: AddUserReducer,
   login: AuthReducer,
 };
-
 export interface AppState {
   login: AuthState;
 }

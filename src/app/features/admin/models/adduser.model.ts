@@ -13,6 +13,7 @@ export interface UserDetails {
   role: string;
   designation: string;
   email: string;
+  password: string;
 }
 export interface ErrorMessage {
   message: string;

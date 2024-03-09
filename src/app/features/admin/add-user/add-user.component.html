@@ -4,29 +4,31 @@
       <mat-card-title>Add Employee</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <form [formGroup]="signupForm" (ngSubmit)="addUserDetail(signupForm)">
+      <form [formGroup]="signupForm" (ngSubmit)="addUserDetail()">
         <mat-form-field appearance="outline">
           <mat-label>Employee Id</mat-label>
-          <input matInput placeholder="AN1001" formControlName="employeeId" />
+          <input
+            matInput
+            placeholder="AN1001"
+            formControlName="{{ FORM_CONTROL_NAMES.EMPLOYEE_ID }}"
+          />
           <mat-error
-            *ngIf="
-              signupForm.get('employeeId')?.invalid &&
-              signupForm.get('employeeId')?.touched
-            "
+            *ngIf="signupForm.get(FORM_CONTROL_NAMES.EMPLOYEE_ID)?.touched"
           >
-            EmployeeId is required
+            {{ FORM_ERRORS.employeeId.required }}
           </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>First Name</mat-label>
-          <input matInput placeholder="firstname" formControlName="firstName" />
+          <input
+            matInput
+            placeholder="firstname"
+            formControlName="{{ FORM_CONTROL_NAMES.FIRST_NAME }}"
+          />
           <mat-error
-            *ngIf="
-              signupForm.get('firstName')?.invalid &&
-              signupForm.get('firstName')?.touched
-            "
+            *ngIf="signupForm.get(FORM_CONTROL_NAMES.FIRST_NAME)?.touched"
           >
-            firstName is required
+            {{ FORM_ERRORS.firstName.required }}
           </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
@@ -34,22 +36,26 @@
           <input
             matInput
             placeholder="middlename"
-            formControlName="middleName"
+            formControlName="{{ FORM_CONTROL_NAMES.MIDDLE_NAME }}"
           />
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Last Name</mat-label>
-          <input matInput placeholder="lastname" formControlName="lastName" />
+          <input
+            matInput
+            placeholder="lastname"
+            formControlName="{{ FORM_CONTROL_NAMES.LAST_NAME }}"
+          />
           <mat-error
-            *ngIf="
-              signupForm.get('lastName')?.invalid &&
-              signupForm.get('lastName')?.touched
-            "
+            *ngIf="signupForm.get(FORM_CONTROL_NAMES.LAST_NAME)?.touched"
           >
-            Last name is required
+            {{ FORM_ERRORS.lastName.required }}
           </mat-error>
         </mat-form-field>
-        <mat-radio-group aria-label="Select an option" formControlName="gender">
+        <mat-radio-group
+          aria-label="Select an option"
+          formControlName="{{ FORM_CONTROL_NAMES.GENDER }}"
+        >
           <mat-label>Gender</mat-label>
           <mat-radio-button value="male">Male</mat-radio-button>
           <mat-radio-button value="female">Female</mat-radio-button>
@@ -57,38 +63,36 @@
         </mat-radio-group>
         <mat-error
           *ngIf="
-            signupForm.get('gender')?.invalid &&
-            signupForm.get('gender')?.touched
+            signupForm.get(FORM_CONTROL_NAMES.GENDER)?.touched &&
+            signupForm.get(FORM_CONTROL_NAMES.GENDER)?.invalid
           "
         >
-          Gender is required
+          {{ FORM_ERRORS.gender.required }}
         </mat-error>
         <mat-form-field appearance="outline">
           <mat-label>Contact Number</mat-label>
           <input
             matInput
             placeholder="contactno"
-            formControlName="contactNumber"
+            formControlName="{{ FORM_CONTROL_NAMES.CONTACT_NUMBER }}"
           />
           <mat-error
-            *ngIf="
-              signupForm.get('contactNumber')?.invalid &&
-              signupForm.get('contactNumber')?.touched
-            "
+            *ngIf="signupForm.get(FORM_CONTROL_NAMES.CONTACT_NUMBER)?.touched"
           >
-            Contact Number is required
+            {{ FORM_ERRORS.contactNumber.required }}
           </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Address</mat-label>
-          <input matInput placeholder="address" formControlName="address" />
+          <input
+            matInput
+            placeholder="address"
+            formControlName="{{ FORM_CONTROL_NAMES.ADDRESS }}"
+          />
           <mat-error
-            *ngIf="
-              signupForm.get('address')?.invalid &&
-              signupForm.get('address')?.touched
-            "
+            *ngIf="signupForm.get(FORM_CONTROL_NAMES.ADDRESS)?.touched"
           >
-            Address is required
+            {{ FORM_ERRORS.address.required }}
           </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
@@ -96,7 +100,7 @@
           <input
             matInput
             [matDatepicker]="picker2"
-            formControlName="dateOfBirth"
+            formControlName="{{ FORM_CONTROL_NAMES.DATE_OF_BIRTH }}"
           />
           <mat-datepicker-toggle
             matIconSuffix
@@ -104,12 +108,9 @@
           ></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
           <mat-error
-            *ngIf="
-              signupForm.get('dateOfBirth')?.invalid &&
-              signupForm.get('dateOfBirth')?.touched
-            "
+            *ngIf="signupForm.get(FORM_CONTROL_NAMES.DATE_OF_BIRTH)?.touched"
           >
-            Date of Birth is required
+            {{ FORM_ERRORS.dateOfBirth.required }}
           </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
@@ -117,15 +118,14 @@
           <input
             matInput
             placeholder="citizenshipno"
-            formControlName="citizenshipNumber"
+            formControlName="{{ FORM_CONTROL_NAMES.CITIZENSHIP_NUMBER }}"
           />
           <mat-error
             *ngIf="
-              signupForm.get('citizenshipNumber')?.invalid &&
-              signupForm.get('citizenshipNumber')?.touched
+              signupForm.get(FORM_CONTROL_NAMES.CITIZENSHIP_NUMBER)?.touched
             "
           >
-            Citizenship Number is required
+            {{ FORM_ERRORS.citizenshipNumber.required }}
           </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
@@ -133,7 +133,7 @@
           <input
             matInput
             [matDatepicker]="picker"
-            formControlName="startDate"
+            formControlName="{{ FORM_CONTROL_NAMES.START_DATE }}"
           />
           <mat-datepicker-toggle
             matIconSuffix
@@ -141,17 +141,18 @@
           ></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
           <mat-error
-            *ngIf="
-              signupForm.get('startDate')?.invalid &&
-              signupForm.get('startDate')?.touched
-            "
+            *ngIf="signupForm.get(FORM_CONTROL_NAMES.START_DATE)?.touched"
           >
-            Start Date is required
+            {{ FORM_ERRORS.startDate.required }}
           </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Department</mat-label>
-          <select matNativeControl required formControlName="department">
+          <select
+            matNativeControl
+            required
+            formControlName="{{ FORM_CONTROL_NAMES.DEPARTMENT }}"
+          >
             <option value="administration">Administration</option>
             <option value="angular">Angular</option>
             <option value="businessanalyst">Business Analyst</option>
@@ -163,26 +164,23 @@
             <option value="ui/ux">UI/UX</option>
           </select>
           <mat-error
-            *ngIf="
-              signupForm.get('department')?.invalid &&
-              signupForm.get('department')?.touched
-            "
+            *ngIf="signupForm.get(FORM_CONTROL_NAMES.DEPARTMENT)?.touched"
           >
-            Department is required
+            {{ FORM_ERRORS.department.required }}
           </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Role</mat-label>
-          <select matNativeControl required formControlName="role">
+          <select
+            matNativeControl
+            required
+            formControlName="{{ FORM_CONTROL_NAMES.ROLE }}"
+          >
             <option value="user">User</option>
             <option value="admin">Admin</option>
           </select>
-          <mat-error
-            *ngIf="
-              signupForm.get('role')?.invalid && signupForm.get('role')?.touched
-            "
-          >
-            Role is required
+          <mat-error *ngIf="signupForm.get(FORM_CONTROL_NAMES.ROLE)?.touched">
+            {{ FORM_ERRORS.role.required }}
           </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
@@ -190,15 +188,12 @@
           <input
             matInput
             placeholder="designation"
-            formControlName="designation"
+            formControlName="{{ FORM_CONTROL_NAMES.DESIGNATION }}"
           />
           <mat-error
-            *ngIf="
-              signupForm.get('designation')?.invalid &&
-              signupForm.get('designation')?.touched
-            "
+            *ngIf="signupForm.get(FORM_CONTROL_NAMES.DESIGNATION)?.touched"
           >
-            Designation is required
+            {{ FORM_ERRORS.designation.required }}
           </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
@@ -207,13 +202,23 @@
             type="email"
             matInput
             placeholder="pat@example.com"
-            formControlName="email"
+            formControlName="{{ FORM_CONTROL_NAMES.EMAIL }}"
           />
-          <mat-error *ngIf="signupForm.get('email')?.errors?.['required']">
-            Email is required
+          <mat-error
+            *ngIf="
+              signupForm.get(FORM_CONTROL_NAMES.EMAIL)?.errors?.['required']
+            "
+          >
+            {{ FORM_ERRORS.email.required }}
           </mat-error>
-          <mat-error *ngIf="signupForm.get('email')?.errors?.['email']">
-            Invalid Email
+          <mat-error
+            *ngIf="
+              signupForm.get(FORM_CONTROL_NAMES.EMAIL)?.errors?.[
+                FORM_CONTROL_NAMES.EMAIL
+              ]
+            "
+          >
+            {{ FORM_ERRORS.email.email }}
           </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
@@ -221,7 +226,7 @@
           <input
             matInput
             [type]="password_hide ? 'password' : 'text'"
-            formControlName="password"
+            formControlName="{{ FORM_CONTROL_NAMES.PASSWORD }}"
           />
           <button
             mat-icon-button
@@ -234,12 +239,9 @@
             }}</mat-icon>
           </button>
           <mat-error
-            *ngIf="
-              signupForm.get('password')?.invalid &&
-              signupForm.get('password')?.touched
-            "
+            *ngIf="signupForm.get(FORM_CONTROL_NAMES.PASSWORD)?.touched"
           >
-            Designation is required
+            {{ FORM_ERRORS.password.required }}
           </mat-error>
         </mat-form-field>
         <button

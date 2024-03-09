@@ -1,26 +1,26 @@
-import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import { loginStart } from './store/login.actions';
-
+import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { FORM_ERRORS } from 'src/app/shared/constants/errors.constants';
+import { FORM_CONTROL_NAMES } from 'src/app/shared/constants/form-field.constant';
+import { FormService } from '../services/form/form.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   hide = true;
+  FORM_ERRORS = FORM_ERRORS;
+  FORM_CONTROL_NAMES = FORM_CONTROL_NAMES;
+  loginForm = new FormGroup({});
 
-  constructor(private store: Store) {}
+  constructor(private formService: FormService) {}
 
-  loginForm = new FormGroup({
-    emailField: new FormControl('', [Validators.required, Validators.email]),
-    passwordField: new FormControl('', [Validators.required]),
-  });
+  ngOnInit(): void {
+    this.loginForm = this.formService.loginForm;
+  }
 
-  logInUser(loginData: FormGroup): void {
-    const email = loginData.value.emailField;
-    const password = loginData.value.passwordField;
-    this.store.dispatch(loginStart({ email, password }));
+  logInUser(): void {
+    this.formService.logInUser();
   }
 }

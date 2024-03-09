@@ -1,7 +1,15 @@
 <div class="contents">
-  <a routerLink="/hrms/">Dashboard</a>
-  <a routerLink="/hrms/attendance">Attendance</a>
-  <a routerLink="/hrms/leave">Leave Details</a>
-  <a routerLink="/hrms/policy">Policy</a>
-  <a routerLink="/hrms/adduser">Add User</a>
+  <a routerLink="/{{ SECURE_MODULE_PATH }}/{{ DASHBOARD_COMPONENT_PATH }}"
+    >Dashboard</a
+  >
+  <a routerLink="/{{ SECURE_MODULE_PATH }}/">Attendance</a>
+  <a routerLink="/{{ SECURE_MODULE_PATH }}/{{ LEAVE_COMPONENT_PATH }}"
+    >Leave Details</a
+  >
+  <a routerLink="/{{ SECURE_MODULE_PATH }}/{{ POLICY_COMPONENT_PATH }}"
+    >Policy</a
+  >
+  <a routerLink="/{{ SECURE_MODULE_PATH }}/{{ ADD_USER_COMPONENT_PATH }}"
+    >Add User</a
+  >
 </div>

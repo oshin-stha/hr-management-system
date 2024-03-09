@@ -1,0 +1,9 @@
+export const SECURE_MODULE_PATH = 'hrms';
+export const ATTENDANCE_COMPONENT_PATH = 'attendance';
+export const DASHBOARD_COMPONENT_PATH = 'dashboard';
+export const LEAVE_COMPONENT_PATH = 'leave';
+export const POLICY_COMPONENT_PATH = 'policy';
+export const ADD_USER_COMPONENT_PATH = 'adduser';
+export const ATTENDANCE_REPORT_PATH = 'attendance-report';
+export const LEAVE_OVERVIEW_PATH = 'leave-overview';
+export const UPDATE_POLICY_PATH = 'update-policy';

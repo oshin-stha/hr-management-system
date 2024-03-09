@@ -1,1 +1,14 @@
-<p>header works!</p>
+<div class="fixed-header">
+  <mat-toolbar>
+    <button mat-icon-button class="example-icon" type="button">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <app-loading-spinner *ngIf="isLoading$ | async"></app-loading-spinner>
+    <span>My App</span>
+    <span class="example-spacer"></span>
+    <button mat-raised-button color="primary" type="click">Admin</button>
+    <button mat-icon-button class="example-icon" type="submit">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>

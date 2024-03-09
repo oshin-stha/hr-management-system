@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, exhaustMap, from, map, of } from 'rxjs';
-import { SECURE_MODULE_PATH } from 'src/app/shared/constants/routes.constanrs';
+import { SECURE_MODULE_PATH } from 'src/app/shared/constants/routes.constants';
 import { LoginService } from '../../../services/login-services/login.service';
 import { loginFailure, loginStart, loginSuccess } from '../login.actions';
 

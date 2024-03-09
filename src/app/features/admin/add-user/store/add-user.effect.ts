@@ -13,7 +13,7 @@ import {
   signupStart,
   signupSuccess,
 } from './add-user.action';
-import { SECURE_MODULE_PATH } from 'src/app/shared/constants/routes.constanrs';
+import { SECURE_MODULE_PATH } from 'src/app/shared/constants/routes.constants';
 @Injectable()
 export class AddUserEffect {
   constructor(

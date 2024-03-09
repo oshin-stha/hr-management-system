@@ -2,10 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {
   ADD_USER_COMPONENT_PATH,
+  ATTENDANCE_REPORT_PATH,
   DASHBOARD_COMPONENT_PATH,
   LEAVE_COMPONENT_PATH,
+  LEAVE_OVERVIEW_PATH,
   POLICY_COMPONENT_PATH,
-} from 'src/app/shared/constants/routes.constanrs';
+  UPDATE_POLICY_PATH,
+} from 'src/app/shared/constants/routes.constants';
 import { SecureComponent } from './secure.component';
 const routes: Routes = [
   {
@@ -46,6 +49,27 @@ const routes: Routes = [
           import('../../../features/admin/add-user/add-user.module').then(
             (m) => m.AddUserModule,
           ),
+      },
+      {
+        path: ATTENDANCE_REPORT_PATH,
+        loadChildren: () =>
+          import(
+            '../../../features/admin/attendance-report/attendance-report.module'
+          ).then((m) => m.AttendanceReportModule),
+      },
+      {
+        path: LEAVE_OVERVIEW_PATH,
+        loadChildren: () =>
+          import(
+            '../../../features/admin/leave-overview/leave-overview.module'
+          ).then((m) => m.LeaveOverviewModule),
+      },
+      {
+        path: UPDATE_POLICY_PATH,
+        loadChildren: () =>
+          import(
+            '../../../features/admin/update-policy/update-policy.module'
+          ).then((m) => m.UpdatePolicyModule),
       },
     ],
   },

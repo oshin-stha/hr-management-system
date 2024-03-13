@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SECURE_MODULE_PATH } from './shared/constants/routes.constants';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found/page-not-found.component';
+import { authGuard } from './core/guard/auth.guard';
 
 const routes: Routes = [
   {
@@ -11,6 +12,7 @@ const routes: Routes = [
   },
   {
     path: SECURE_MODULE_PATH,
+    canMatch: [authGuard],
     loadChildren: () =>
       import('./core/layout/secure/secure.module').then((m) => m.SecureModule),
   },

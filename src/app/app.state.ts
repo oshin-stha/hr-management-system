@@ -9,12 +9,10 @@ import { AuthState } from './features/user/models/login.model';
 export interface AppState {
   user: UserState;
   loader: LoaderState;
+  login: AuthState;
 }
 export const appReducer: ActionReducerMap<AppState> = {
   loader: LoaderSpinnerReducer,
   user: AddUserReducer,
   login: AuthReducer,
 };
-export interface AppState {
-  login: AuthState;
-}

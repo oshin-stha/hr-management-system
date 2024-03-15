@@ -18,6 +18,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { StoreModule } from '@ngrx/store';
 import { LoaderSpinnerReducer } from '../store/loader-spinner.reducer';
+import { MatDialogModule } from '@angular/material/dialog';
 
 export const Material = [
   MatButtonModule,
@@ -36,6 +37,7 @@ export const Material = [
   MatDatepickerModule,
   MatRadioModule,
   MatProgressSpinnerModule,
+  MatDialogModule,
 ];
 @NgModule({
   declarations: [],

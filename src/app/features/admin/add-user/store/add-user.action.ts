@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { UserDetails } from '../../models/adduser.model';
+import { UserDetails, leaveBalance } from '../../models/adduser.model';
 
 export const signupStart = createAction(
   '[adduser page] signup start',
@@ -25,6 +25,19 @@ export const addUserFail = createAction('[adduser page] adduser fail');
 export const setErrorMessage = createAction(
   '[adduser page] set error message',
   props<{ message: string }>(),
+);
+export const addleaveBalance = createAction(
+  '[leave balance] addleaveBalance',
+  props<{ email: string; leaveBalance: leaveBalance }>(),
+);
+
+export const addleaveBalanceSuccess = createAction(
+  '[leave balance] addleaveBalance success',
+);
+
+export const addleaveBalanceFail = createAction(
+  '[leave balance] addleaveBalance fail',
+  props<{ error: string }>(),
 );
 
 export const loaderSuccess = createAction(

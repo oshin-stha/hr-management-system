@@ -9,6 +9,9 @@ import {
   addUserFail,
   addUserStart,
   addUserSuccess,
+  addleaveBalance,
+  addleaveBalanceFail,
+  addleaveBalanceSuccess,
   signupFail,
   signupStart,
   signupSuccess,
@@ -41,8 +44,8 @@ export class AddUserEffect {
           }),
           catchError((error) => {
             this.addUserService.emailExists = true;
-            this.addUserService.getErrorMessage(error.code);
             this.store.dispatch(setLoadingSpinner({ status: false }));
+            this.addUserService.getErrorMessage(error.code);
             alert(error.code);
             return of(signupFail());
           }),
@@ -59,9 +62,11 @@ export class AddUserEffect {
           this.addUserService.addUserDetails(action.data, action.data.email),
         ).pipe(
           map(() => {
+            this.store.dispatch(setLoadingSpinner({ status: false }));
             return addUserSuccess({ redirect: true });
           }),
           catchError(() => {
+            this.store.dispatch(setLoadingSpinner({ status: false }));
             return of(addUserFail());
           }),
         ),
@@ -80,5 +85,21 @@ export class AddUserEffect {
         }),
       ),
     { dispatch: false },
+  );
+  addLeaveBalance$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(addleaveBalance),
+      switchMap((action) =>
+        from(
+          this.addUserService.addLoadLeaveBalance(
+            action.email,
+            action.leaveBalance,
+          ),
+        ).pipe(
+          map(() => addleaveBalanceSuccess()),
+          catchError((error) => of(addleaveBalanceFail({ error }))),
+        ),
+      ),
+    ),
   );
 }

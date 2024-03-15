@@ -3,6 +3,9 @@ import {
   addUserFail,
   addUserStart,
   addUserSuccess,
+  addleaveBalance,
+  addleaveBalanceFail,
+  addleaveBalanceSuccess,
   loaderSuccess,
   setErrorMessage,
   signupFail,
@@ -16,6 +19,8 @@ const _addUserReducer = createReducer(
   on(signupStart, (state) => {
     return {
       ...state,
+      isloading: true,
+      error: '',
     };
   }),
 
@@ -53,6 +58,23 @@ const _addUserReducer = createReducer(
       isLoading: action.status,
     };
   }),
+
+  on(addleaveBalance, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+
+  on(addleaveBalanceSuccess, (state) => ({
+    ...state,
+    loading: false,
+  })),
+
+  on(addleaveBalanceFail, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  })),
 );
 
 export function AddUserReducer(state: UserState | undefined, action: Action) {

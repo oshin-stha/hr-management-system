@@ -14,4 +14,9 @@ export const FORM_CONTROL_NAMES = {
   DESIGNATION: 'designation',
   EMAIL: 'email',
   PASSWORD: 'password',
+  LEAVE_FROM: 'leaveFrom',
+  LEAVE_TO: 'leaveTo',
+  TOTAL_LEAVE_DAYS: 'totalLeaveDays',
+  LEAVE_TYPE: 'leaveType',
+  REASON_FOR_LEAVE: 'reasonForLeave',
 };

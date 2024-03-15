@@ -1,1 +1,164 @@
-<p>leave-overview works!</p>
+<mat-form-field appearance="outline" class="department-search">
+  <mat-label>Department</mat-label>
+  <select
+    matNativeControl
+    [(ngModel)]="selectedDepartment"
+    (change)="applyDepartmentFilter()"
+  >
+    <option value="">All Departments</option>
+    <option value="administration">Administration</option>
+    <option value="angular">Angular</option>
+    <option value="businessanalyst">Business Analyst</option>
+    <option value="digitalmarketing">Digital Marketing</option>
+    <option value="dotnet">Dot Net</option>
+    <option value="flutter">Flutter</option>
+    <option value="graphicsdesigner">Graphics Designer</option>
+    <option value="qa">Quality Assurance</option>
+    <option value="ui/ux">UI/UX</option>
+  </select>
+</mat-form-field>
+<mat-form-field appearance="outline" class="filter-leave-dates">
+  <mat-label>Leave Dates</mat-label>
+  <select
+    matNativeControl
+    [(ngModel)]="selectedDateFilter"
+    (change)="applyDateFilter()"
+  >
+    <option value="all">All</option>
+    <option value="today">Today</option>
+    <option value="tomorrow">Tomorrow</option>
+  </select>
+</mat-form-field>
+
+<mat-form-field appearance="outline" class="leave-type-search">
+  <mat-label>Leave Type</mat-label>
+  <select
+    matNativeControl
+    [(ngModel)]="selectedLeaveType"
+    (change)="applyLeaveTypeFilter()"
+  >
+    <option value="">All Leave Type</option>
+    <option value="Sick Leave">Sick Leave</option>
+    <option value="Annual Leave">Annual Leave</option>
+    <option value="Special Leave">Special Leave</option>
+  </select>
+</mat-form-field>
+<mat-form-field appearance="outline" class="filter-leave-details">
+  <mat-label>Search</mat-label>
+  <div class="search-container">
+    <input
+      matInput
+      (keyup)="applyFilter($event)"
+      placeholder="Ex. administration"
+      #input
+      id="input"
+    />
+    <mat-icon>search</mat-icon>
+  </div>
+</mat-form-field>
+
+<div class="leave-overview">
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    matSort
+    class="leave-overview-table"
+  >
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>S.N.</th>
+      <td mat-cell *matCellDef="let row" let index="i">{{ row.sn }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="employeeName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee Name</th>
+      <td mat-cell *matCellDef="let row">{{ row.employeeName }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="department">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Department</th>
+      <td mat-cell *matCellDef="let row">{{ row.department }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="leaveType">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Leave Type</th>
+      <td mat-cell *matCellDef="let row">{{ row.leaveType }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="contactInformation">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        Contact Information
+      </th>
+      <td mat-cell *matCellDef="let row">{{ row.contactInformation }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="leaveFrom">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Leave From</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.leaveFrom | date: "YY-MM-dd" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="leaveTo">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Leave To</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.leaveTo | date: "YY-MM-dd" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="reasonForLeave">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Reason</th>
+      <td mat-cell *matCellDef="let row">{{ row.reasonForLeave }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="totalLeaveDays">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Days</th>
+      <td mat-cell *matCellDef="let row">{{ row.totalLeaveDays }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+      <td mat-cell *matCellDef="let row">{{ row.status }}</td>
+    </ng-container>
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+      <td mat-cell *matCellDef="let row" class="action-cell">
+        <div class="button-group">
+          <button
+            type="click"
+            class="small-button"
+            mat-raised-button
+            (click)="
+              acceptLeave(row.id, row.totalLeaveDays, row.email, row.leaveType)
+            "
+            [disabled]="row.status !== 'pending'"
+            color="primary"
+          >
+            Accept
+          </button>
+          <button
+            type="click"
+            class="small-button"
+            mat-raised-button
+            (click)="rejectLeave(row.id)"
+            [disabled]="row.status !== 'pending'"
+          >
+            Reject
+          </button>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">
+        No data matching the filter "{{ input.value }}"
+      </td>
+    </tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    aria-label="Select page of users"
+  ></mat-paginator>
+</div>

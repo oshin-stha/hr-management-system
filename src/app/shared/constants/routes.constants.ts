@@ -7,3 +7,5 @@ export const ADD_USER_COMPONENT_PATH = 'adduser';
 export const ATTENDANCE_REPORT_PATH = 'attendance-report';
 export const LEAVE_OVERVIEW_PATH = 'leave-overview';
 export const UPDATE_POLICY_PATH = 'update-policy';
+export const LEAVE_STATUS_PATH = 'leave-status';
+export const LEAVE_APPLY_PATH = 'leave-apply';

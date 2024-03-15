@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { UserDetails } from '../../models/adduser.model';
 import { FORM_CONTROL_NAMES } from 'src/app/shared/constants/form-field.constant';
-
+import { UserDetails, leaveBalance } from 'src/app/shared/models/adduser.model';
 @Injectable({
   providedIn: 'root',
 })
@@ -17,10 +16,11 @@ export class FormService {
       [FORM_CONTROL_NAMES.MIDDLE_NAME]: new FormControl(''),
       [FORM_CONTROL_NAMES.LAST_NAME]: new FormControl('', Validators.required),
       [FORM_CONTROL_NAMES.GENDER]: new FormControl('', Validators.required),
-      [FORM_CONTROL_NAMES.CONTACT_NUMBER]: new FormControl(
-        '',
+      [FORM_CONTROL_NAMES.CONTACT_NUMBER]: new FormControl('', [
         Validators.required,
-      ),
+        Validators.minLength(10),
+        Validators.maxLength(10),
+      ]),
       [FORM_CONTROL_NAMES.ADDRESS]: new FormControl('', Validators.required),
       [FORM_CONTROL_NAMES.DATE_OF_BIRTH]: new FormControl(
         '',
@@ -44,7 +44,16 @@ export class FormService {
       [FORM_CONTROL_NAMES.PASSWORD]: new FormControl('', Validators.required),
     });
   }
-
+  getUserSignupPayload(
+    form: FormGroup,
+  ): { email: string; password: string; employeeId: string } | null {
+    if (form.valid) {
+      const { email, password, employeeId } = form.value;
+      return { email, password, employeeId };
+    } else {
+      return null;
+    }
+  }
   getUserDetailsFromForm(form: FormGroup): UserDetails | null {
     if (form.valid) {
       const data = form.value;
@@ -63,10 +72,19 @@ export class FormService {
         role: data[FORM_CONTROL_NAMES.ROLE],
         designation: data[FORM_CONTROL_NAMES.DESIGNATION],
         email: data[FORM_CONTROL_NAMES.EMAIL],
-        password: data[FORM_CONTROL_NAMES.PASSWORD],
       };
     } else {
       return null;
     }
+  }
+  getLeaveBalance(): leaveBalance {
+    return {
+      sickLeaveTotal: 30,
+      annualLeaveTotal: 18,
+      specialLeaveTotal: 90,
+      sickLeaveRemaining: 30,
+      annualLeaveRemaining: 18,
+      specialLeaveRemaining: 90,
+    };
   }
 }

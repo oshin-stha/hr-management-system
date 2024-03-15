@@ -1,4 +1,4 @@
-export interface leaveDetails {
+export interface LeaveDetails {
   id: string;
   sn: string;
   employeeName: string;

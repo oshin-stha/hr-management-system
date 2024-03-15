@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { UserDetails, leaveBalance } from '../../models/adduser.model';
 import { FORM_CONTROL_NAMES } from 'src/app/shared/constants/form-field.constant';
-
+import { UserDetails, leaveBalance } from 'src/app/shared/models/adduser.model';
 @Injectable({
   providedIn: 'root',
 })

@@ -3,18 +3,18 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Store, select } from '@ngrx/store';
-import { UserDetails } from '../models/adduser.model';
-import { leaveDetails } from './models/leave-overview.model';
+import { UserDetails } from 'src/app/shared/models/adduser.model';
+import { LeaveDetails } from 'src/app/shared/models/leave-overview.model';
 import {
   acceptLeaveRequest,
-  loadLeaveDetails,
   rejectLeaveRequest,
   updateLeaveBalance,
 } from './store/leave-overview.action';
+import { loadLeaveDetails } from 'src/app/shared/store/leave-overview-store/leave-overview.action';
 import {
   getLeaveDetails,
   selectUserDetails,
-} from './store/selector/leave-overview.selector';
+} from 'src/app/shared/store/leave-overview-store/selector/leave-overview.selector';
 
 @Component({
   selector: 'app-leave-overview',
@@ -22,7 +22,7 @@ import {
   styleUrls: ['./leave-overview.component.scss'],
 })
 export class LeaveOverviewComponent implements AfterViewInit, OnInit {
-  leaveDetails: leaveDetails[] = [];
+  leaveDetails: LeaveDetails[] = [];
   userDetails: UserDetails[] = [];
   displayedColumns: string[] = [
     'id',
@@ -37,7 +37,7 @@ export class LeaveOverviewComponent implements AfterViewInit, OnInit {
     'totalLeaveDays',
     'action',
   ];
-  dataSource = new MatTableDataSource<leaveDetails>([]);
+  dataSource = new MatTableDataSource<LeaveDetails>([]);
   @ViewChild(MatSort) sort?: MatSort;
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   selectedDepartment = '';
@@ -141,7 +141,7 @@ export class LeaveOverviewComponent implements AfterViewInit, OnInit {
       currentDate.getMonth(),
       currentDate.getDate() + 1,
     );
-    let filteredLeaves: leaveDetails[] = [];
+    let filteredLeaves: LeaveDetails[] = [];
     if (this.selectedDateFilter === 'today') {
       filteredLeaves = this.leaveDetails.filter((leave) => {
         const leaveFrom = new Date(leave.leaveFrom);

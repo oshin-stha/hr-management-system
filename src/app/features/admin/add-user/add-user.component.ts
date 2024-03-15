@@ -3,8 +3,8 @@ import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { setLoadingSpinner } from 'src/app/shared/store/loader-spinner.action';
-import { getLoading } from 'src/app/shared/store/loader-spinner.selector';
+import { setLoadingSpinner } from 'src/app/shared/store/loader-store/loader-spinner.action';
+import { getLoading } from 'src/app/shared/store/loader-store/loader-spinner.selector';
 import { AddUserService } from '../services/add-user/add-user.service';
 import { FormService } from '../services/form/form.service';
 import {

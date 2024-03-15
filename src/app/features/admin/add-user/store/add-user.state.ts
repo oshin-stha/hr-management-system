@@ -1,4 +1,4 @@
-import { UserDetails } from '../../models/adduser.model';
+import { UserDetails } from 'src/app/shared/models/adduser.model';
 export interface UserState {
   user: UserDetails[];
   email: string;

@@ -26,14 +26,17 @@ th {
 .leave-overview-table {
   margin-right: 20px;
 }
+
 button {
   margin-bottom: 5px;
 }
+
 .department-search {
   margin-top: 20px;
   margin-left: 20px;
   width: 200px;
 }
+
 .leave-type-search {
   margin-top: 20px;
   margin-right: 20px;
@@ -41,11 +44,13 @@ button {
   margin-left: 20px;
   width: 200px;
 }
+
 .filter-leave-details {
   margin-top: 20px;
   margin-left: 20px;
   width: 500px;
 }
+
 .search-container {
   display: flex;
   align-items: center;
@@ -58,6 +63,7 @@ button {
 input {
   flex: 1;
 }
+
 .button-group {
   display: flex;
   align-items: center;
@@ -67,10 +73,12 @@ input {
   margin-right: 8px;
   min-width: auto;
 }
+
 .small-button {
   font-size: 12px;
   padding: 4px 8px;
 }
+
 .filter-leave-dates {
   margin-left: 30px;
   width: 200px;

@@ -11,8 +11,9 @@ import {
 } from 'firebase/firestore';
 import { Observable, catchError, from, map, switchMap, throwError } from 'rxjs';
 import { firebaseConfig } from 'src/app/environments/environment';
-import { UserDetails } from '../../models/adduser.model';
-import { leaveDetails } from '../models/leave-overview.model';
+import { UserDetails } from 'src/app/shared/models/adduser.model';
+import { LeaveDetails } from 'src/app/shared/models/leave-overview.model';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -23,13 +24,13 @@ export class LeaveOverviewService {
   USER_DETAILS_REF = collection(this.FIRESTORE, 'UserDetails');
   LEAVE_BALANCE_REF = collection(this.FIRESTORE, 'leaveBalance');
 
-  getLeaveDetails(): Observable<leaveDetails[]> {
-    return new Observable<leaveDetails[]>((observer) => {
+  getLeaveDetails(): Observable<LeaveDetails[]> {
+    return new Observable<LeaveDetails[]>((observer) => {
       getDocs(this.leaveDetails)
         .then((snapshot) => {
-          const leave: leaveDetails[] = [];
+          const leave: LeaveDetails[] = [];
           snapshot.docs.forEach((doc, index) => {
-            const leaveDetail: leaveDetails = {
+            const leaveDetail: LeaveDetails = {
               id: doc.id,
               sn: (index + 1).toString(),
               employeeName: doc.data()['employeeName'],
@@ -159,6 +160,7 @@ export class LeaveOverviewService {
             default:
               throw new Error('Invalid leave type.');
           }
+
           const newLeaveRemaining =
             leaveBalanceData[leaveRemainingField] - totalLeaveDays;
           const updateData = { [leaveRemainingField]: newLeaveRemaining };

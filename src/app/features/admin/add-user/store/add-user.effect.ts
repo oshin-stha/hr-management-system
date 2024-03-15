@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { catchError, from, map, of, switchMap } from 'rxjs';
-import { setLoadingSpinner } from 'src/app/shared/store/loader-spinner.action';
+import { setLoadingSpinner } from 'src/app/shared/store/loader-store/loader-spinner.action';
 import { AddUserService } from '../../services/add-user/add-user.service';
 import {
   addUserFail,

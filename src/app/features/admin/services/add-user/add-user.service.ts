@@ -15,7 +15,8 @@ import {
   setDoc,
   where,
 } from 'firebase/firestore';
-import { UserDetails, leaveBalance } from '../../models/adduser.model';
+import { UserDetails, leaveBalance } from 'src/app/shared/models/adduser.model';
+
 import { firebaseConfig } from 'src/app/environments/environment';
 import { Observable, catchError, from, map, switchMap, throwError } from 'rxjs';
 

@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { UserDetails, leaveBalance } from '../../models/adduser.model';
+import { UserDetails, leaveBalance } from 'src/app/shared/models/adduser.model';
 
 export const signupStart = createAction(
   '[adduser page] signup start',

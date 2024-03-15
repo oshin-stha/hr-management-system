@@ -2,17 +2,11 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
-import { UserDetails } from '../../../models/adduser.model';
-import { leaveDetails } from '../../models/leave-overview.model';
 import { LeaveOverviewService } from '../../services/leave-overview.service';
 import {
   acceptLeaveRequest,
   acceptLeaveRequestFail,
   acceptLeaveRequestSuccess,
-  loadLeaveDetails,
-  loadLeaveDetailsFail,
-  loadLeaveDetailsSuccess,
-  loadUserDetailsSuccess,
   rejectLeaveRequest,
   rejectLeaveRequestFail,
   rejectLeaveRequestSuccess,
@@ -29,20 +23,6 @@ export class LeaveOverviewEffects {
     private actions$: Actions,
     private leaveOverviewService: LeaveOverviewService,
   ) {}
-
-  loadLeaveDetails$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(loadLeaveDetails),
-      mergeMap(() =>
-        this.leaveOverviewService.getLeaveDetails().pipe(
-          map((leaveDetails: leaveDetails[]) =>
-            loadLeaveDetailsSuccess({ leaveDetails }),
-          ),
-          catchError((error) => of(loadLeaveDetailsFail({ error }))),
-        ),
-      ),
-    ),
-  );
 
   updateLeaveStatus$ = createEffect(() =>
     this.actions$.pipe(
@@ -77,20 +57,6 @@ export class LeaveOverviewEffects {
           catchError((error) => of(rejectLeaveRequestFail({ error }))),
         ),
       ),
-    ),
-  );
-
-  loadUserDetails$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(loadLeaveDetails),
-      mergeMap(() => {
-        return this.leaveOverviewService.getUserDetails().pipe(
-          map((userDetails: UserDetails[]) =>
-            loadUserDetailsSuccess({ userDetails }),
-          ),
-          catchError((error) => of(loadLeaveDetailsFail({ error }))),
-        );
-      }),
     ),
   );
 

@@ -1,0 +1,10 @@
+<h2>Reason Form</h2>
+<mat-dialog-content>
+  <p>Please provide a reason:</p>
+  <mat-form-field>
+    <textarea matInput [(ngModel)]="reason" placeholder="Reason"></textarea>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="reason" cdkFocusInitial>Submit</button>
+</mat-dialog-actions>

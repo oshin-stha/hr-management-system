@@ -19,6 +19,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { StoreModule } from '@ngrx/store';
 import { LoaderSpinnerReducer } from '../store/loader-store/loader-spinner.reducer';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatDialogModule } from '@angular/material/dialog';
+
 export const Material = [
   MatButtonModule,
   MatIconModule,
@@ -36,6 +38,7 @@ export const Material = [
   MatDatepickerModule,
   MatRadioModule,
   MatProgressSpinnerModule,
+  MatDialogModule,
   MatPaginatorModule,
 ];
 @NgModule({

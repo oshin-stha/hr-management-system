@@ -1,1 +1,54 @@
-<p>attendance works!</p>
+<div>
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="checkInStatus"
+    (click)="checkIn()"
+  >
+    Check In
+  </button>
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="!checkInStatus"
+    (click)="checkOut()"
+  >
+    Check Out
+  </button>
+</div>
+
+<div>
+  <div *ngIf="attendanceByDate$ | async as attendanceByDate">
+    <div *ngIf="attendanceByDate">
+      <div *ngFor="let date of attendanceByDate | keyvalue">
+        <h4>{{ date.key }}</h4>
+        <ul>
+          <li *ngFor="let entry of date.value">
+            {{ entry.checkInStatus }}
+          </li>
+          <li *ngFor="let entry of date.value">
+            {{ entry.checkOutStatus }}
+          </li>
+          <li *ngFor="let entry of date.value">
+            {{ entry.workingHours }}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div *ngIf="!attendanceByDate">No attendance data available.</div>
+  </div>
+
+  <mat-calendar
+    calender
+    *ngIf="attendanceData"
+    class="small-calendar"
+    [dateClass]="dateClassFunction"
+  >
+    <!-- <mat-calendar-cell *ngIf="!cell.empty" let-cell="cell"> -->
+    <!-- {{ getCheckInStatus(cell.value) || '' }}  -->
+    <!-- </mat-calendar-cell> -->
+
+    <!-- <ng-template matCalendarCell let-cell="cell">
+    </ng-template> -->
+  </mat-calendar>
+</div>

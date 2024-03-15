@@ -6,28 +6,27 @@ import { firebaseConfig } from 'src/app/environments/environment';
 import { LeaveBalanceDetails } from '../../models/leaveBalanceDetails.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LeaveBalanceService {
-  app = initializeApp(firebaseConfig)
-  firestore = getFirestore(this.app)
-  userRef = collection(this.firestore, 'leaveBalance')
+  app = initializeApp(firebaseConfig);
+  firestore = getFirestore(this.app);
+  userRef = collection(this.firestore, 'leaveBalance');
 
   getLeaveBalance(userEmail: string): Observable<LeaveBalanceDetails> {
-    return new Observable<LeaveBalanceDetails>(observer => {
+    return new Observable<LeaveBalanceDetails>((observer) => {
       getDoc(doc(this.userRef, userEmail))
         .then((docSnapshot) => {
           const leaveAvailable = docSnapshot.data();
           const leaveAvailableDetails: LeaveBalanceDetails = {
             totalLeave: leaveAvailable?.['totalLeave'],
-            leaveAvailable: leaveAvailable?.['leaveAvailable']
-          }
+            leaveAvailable: leaveAvailable?.['leaveAvailable'],
+          };
           observer.next(leaveAvailableDetails);
         })
-        .catch(error => {
+        .catch((error) => {
           observer.error(error);
         });
     });
-
   }
 }

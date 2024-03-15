@@ -1,1 +1,20 @@
-<p>leave-management works!</p>
+<div class="main">
+  <div class="header">
+    <a routerLink="/{{ SECURE_MODULE_PATH }}/{{ LEAVE_MANAGEMENT_PATH }}"
+      >Leave Balance</a
+    >
+    <a
+      routerLink="/{{ SECURE_MODULE_PATH }}/{{ LEAVE_MANAGEMENT_PATH }}/{{
+        LEAVE_APPLY_PATH
+      }}"
+      >Apply For Leave</a
+    >
+    <a
+      routerLink="/{{ SECURE_MODULE_PATH }}/{{ LEAVE_MANAGEMENT_PATH }}/{{
+        LEAVE_STATUS_PATH
+      }}"
+      >Leave Status</a
+    >
+  </div>
+  <router-outlet></router-outlet>
+</div>

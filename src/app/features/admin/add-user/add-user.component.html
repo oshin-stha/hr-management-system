@@ -77,9 +77,31 @@
             formControlName="{{ FORM_CONTROL_NAMES.CONTACT_NUMBER }}"
           />
           <mat-error
-            *ngIf="signupForm.get(FORM_CONTROL_NAMES.CONTACT_NUMBER)?.touched"
+            *ngIf="
+              signupForm
+                .get(FORM_CONTROL_NAMES.CONTACT_NUMBER)
+                ?.hasError('required')
+            "
           >
             {{ FORM_ERRORS.contactNumber.required }}
+          </mat-error>
+          <mat-error
+            *ngIf="
+              signupForm
+                .get(FORM_CONTROL_NAMES.CONTACT_NUMBER)
+                ?.hasError('minlength')
+            "
+          >
+            {{ FORM_ERRORS.contactNumber.minlength }}
+          </mat-error>
+          <mat-error
+            *ngIf="
+              signupForm
+                .get(FORM_CONTROL_NAMES.CONTACT_NUMBER)
+                ?.hasError('maxlength')
+            "
+          >
+            {{ FORM_ERRORS.contactNumber.maxlength }}
           </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
@@ -160,7 +182,7 @@
             <option value="dotnet">Dot Net</option>
             <option value="flutter">Flutter</option>
             <option value="graphicsdesigner">Graphics Designer</option>
-            <option value="QA">Quality Assurance</option>
+            <option value="qa">Quality Assurance</option>
             <option value="ui/ux">UI/UX</option>
           </select>
           <mat-error

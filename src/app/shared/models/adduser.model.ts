@@ -13,7 +13,14 @@ export interface UserDetails {
   role: string;
   designation: string;
   email: string;
-  password: string;
+}
+export interface leaveBalance {
+  sickLeaveTotal: number;
+  annualLeaveTotal: number;
+  specialLeaveTotal: number;
+  sickLeaveRemaining: number;
+  annualLeaveRemaining: number;
+  specialLeaveRemaining: number;
 }
 export interface ErrorMessage {
   message: string;

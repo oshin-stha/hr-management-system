@@ -3,9 +3,25 @@ import { CommonModule } from '@angular/common';
 
 import { LeaveOverviewRoutingModule } from './leave-overview-routing.module';
 import { LeaveOverviewComponent } from './leave-overview.component';
-
+import { MaterialModule } from 'src/app/shared/material/material.module';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { LeaveOverviewEffects } from './store/effects/leave-overview.effect';
+import { LeaveOverviewReducer } from './store/reducer/leave-overview.reducer';
+import { FormsModule } from '@angular/forms';
+import { SharedLeaveOverviewReducer } from 'src/app/shared/store/leave-overview-store/reducers/leave-overview.reducers';
+import { SharedLeaveOverviewEffects } from 'src/app/shared/store/leave-overview-store/effects/leave-overview.effects';
 @NgModule({
   declarations: [LeaveOverviewComponent],
-  imports: [CommonModule, LeaveOverviewRoutingModule],
+  imports: [
+    CommonModule,
+    LeaveOverviewRoutingModule,
+    MaterialModule,
+    FormsModule,
+    StoreModule.forFeature('leaveDetails', LeaveOverviewReducer),
+    StoreModule.forFeature('SharedleaveDetails', SharedLeaveOverviewReducer),
+    EffectsModule.forFeature([SharedLeaveOverviewEffects]),
+    EffectsModule.forFeature([LeaveOverviewEffects]),
+  ],
 })
 export class LeaveOverviewModule {}

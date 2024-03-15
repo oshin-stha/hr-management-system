@@ -6,7 +6,7 @@ import {
   selectStatus,
 } from '../../store/leaveStatusState/leaveStatus.selector';
 import { Subscription } from 'rxjs';
-import { setLoadingSpinner } from 'src/app/shared/store/loader-spinner.action';
+import { setLoadingSpinner } from 'src/app/shared/store/loader-store/loader-spinner.action';
 import { LeaveDetails } from '../../models/leaveDetails.interface';
 import { DatePipe } from '@angular/common';
 

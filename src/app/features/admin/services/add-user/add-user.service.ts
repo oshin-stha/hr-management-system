@@ -15,8 +15,10 @@ import {
   setDoc,
   where,
 } from 'firebase/firestore';
-import { UserDetails } from '../../models/adduser.model';
+import { UserDetails, leaveBalance } from 'src/app/shared/models/adduser.model';
+
 import { firebaseConfig } from 'src/app/environments/environment';
+import { Observable, catchError, from, map, switchMap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +30,7 @@ export class AddUserService {
   FIRESTORE = getFirestore(this.APP);
   AUTH = getAuth(this.APP);
   USER_DETAILS_REF = collection(this.FIRESTORE, 'UserDetails');
-
+  LOAD_BALANCE_REF = collection(this.FIRESTORE, 'leaveBalance');
   get emailAlreadyExistsStatus(): boolean {
     return this.emailAlreadyExists;
   }
@@ -37,36 +39,49 @@ export class AddUserService {
     this.emailAlreadyExists = status;
   }
 
-  async createAccount(
+  createAccount(
     email: string,
     password: string,
     employeeId: string,
-  ): Promise<UserCredential> {
-    const employeeIdExist = await this.getEmployeeIdStatusCheck(employeeId);
-    if (employeeIdExist) {
-      alert('Employee Id already exists');
-      throw new Error('EmployeeId already in use');
-    }
-    return createUserWithEmailAndPassword(this.AUTH, email, password);
+  ): Observable<UserCredential> {
+    return from(this.getEmployeeIdStatusCheck(employeeId)).pipe(
+      switchMap((employeeIdExist) => {
+        if (employeeIdExist) {
+          alert('Employee Id already exists');
+          return throwError(() => 'EmployeeId already in use');
+        } else {
+          return from(
+            createUserWithEmailAndPassword(this.AUTH, email, password),
+          );
+        }
+      }),
+      catchError((error) => {
+        return throwError(() => error);
+      }),
+    );
   }
 
-  addUserDetails(data: UserDetails, email: string): Promise<void> {
-    return setDoc(doc(this.USER_DETAILS_REF, email), data);
+  addUserDetails(data: UserDetails, email: string): Observable<void> {
+    return from(setDoc(doc(this.USER_DETAILS_REF, email), data));
   }
 
+  addLoadLeaveBalance(email: string, leave: leaveBalance): Observable<void> {
+    return from(setDoc(doc(this.LOAD_BALANCE_REF, email), leave));
+  }
+
+  getEmployeeIdStatusCheck(employeeId: string): Observable<boolean> {
+    const q = query(
+      this.USER_DETAILS_REF,
+      where('employeeId', '==', employeeId),
+    );
+    return from(getDocs(q)).pipe(
+      map((querySnapshot: QuerySnapshot) => !querySnapshot.empty),
+    );
+  }
   getErrorMessage(message: string): boolean {
     if (message.includes('email-already-in-use')) {
       this.emailAlreadyExists = true;
     }
     return this.emailAlreadyExists;
-  }
-
-  async getEmployeeIdStatusCheck(employeeId: string): Promise<boolean> {
-    const q = query(
-      this.USER_DETAILS_REF,
-      where('employeeId', '==', employeeId),
-    );
-    const querySnapshot: QuerySnapshot = await getDocs(q);
-    return !querySnapshot.empty;
   }
 }

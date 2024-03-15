@@ -1,5 +1,17 @@
 .contents a {
-    display: block;
-    margin-bottom: 5px;
-    width:200px;
+  display: block;
+  margin-bottom: 5px;
+  width: 200px;
+  margin-left: 20px;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+  text-decoration: none;
+}
+.contents {
+  background-color: white;
+  padding: 10px;
+}
+
+.contents a:hover {
+  background-color: #ddd;
 }

@@ -17,8 +17,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { StoreModule } from '@ngrx/store';
-import { LoaderSpinnerReducer } from '../store/loader-spinner.reducer';
-
+import { LoaderSpinnerReducer } from '../store/loader-store/loader-spinner.reducer';
+import { MatPaginatorModule } from '@angular/material/paginator';
 export const Material = [
   MatButtonModule,
   MatIconModule,
@@ -36,6 +36,7 @@ export const Material = [
   MatDatepickerModule,
   MatRadioModule,
   MatProgressSpinnerModule,
+  MatPaginatorModule,
 ];
 @NgModule({
   declarations: [],

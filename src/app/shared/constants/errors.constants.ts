@@ -13,6 +13,8 @@ export const FORM_ERRORS = {
   },
   contactNumber: {
     required: 'Contact Number is required',
+    minlength: 'Contact Number must be at least 10 digits',
+    maxlength: 'Contact Number must not exceed 10 digits',
   },
   address: {
     required: 'Address is required',

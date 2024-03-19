@@ -1,3 +1,5 @@
+import { Timestamp } from 'firebase/firestore';
+
 export interface LeaveDetails {
   id: string;
   sn: string;
@@ -5,8 +7,8 @@ export interface LeaveDetails {
   department: string;
   contactInformation: number;
   leaveType: string;
-  leaveFrom: Date;
-  leaveTo: Date;
+  leaveFrom: Timestamp;
+  leaveTo: Timestamp;
   reasonForLeave: string;
   status: string;
   totalLeaveDays: number;

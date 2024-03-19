@@ -1,15 +1,16 @@
 <div class="main">
-<div class="header">
-  <app-header></app-header>
-</div>
-<div class="container">
-  <mat-drawer-container class="example-container">
-    <mat-drawer mode="side" opened class="drawer">
-      <app-side-menu></app-side-menu>
-    </mat-drawer>
-    <mat-drawer-content class="content">
-      <router-outlet></router-outlet>
-    </mat-drawer-content>
-  </mat-drawer-container>
-</div>
+  <div class="header">
+    <app-header (isUserChange)="isUser = $event"></app-header>
+  </div>
+  <div class="container">
+    <mat-drawer-container class="example-container">
+      <mat-drawer mode="side" opened class="drawer">
+        <app-side-menu [isUser]="isUser"></app-side-menu>
+      </mat-drawer>
+      <mat-drawer-content class="content">
+        <router-outlet></router-outlet>
+        <app-loading-spinner *ngIf="isLoading$ | async"></app-loading-spinner>
+      </mat-drawer-content>
+    </mat-drawer-container>
+  </div>
 </div>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 import { LeaveOverviewService } from '../../services/leave-overview.service';
 import {
   acceptLeaveRequest,
@@ -39,7 +39,7 @@ export class LeaveOverviewEffects {
   acceptLeaveRequest$ = createEffect(() =>
     this.actions$.pipe(
       ofType(acceptLeaveRequest),
-      mergeMap(({ id }) =>
+      switchMap(({ id }) =>
         this.leaveOverviewService.acceptLeaveRequest(id).pipe(
           map(() => acceptLeaveRequestSuccess({ id })),
           catchError((error) => of(acceptLeaveRequestFail({ error }))),
@@ -51,7 +51,7 @@ export class LeaveOverviewEffects {
   rejectLeaveRequest$ = createEffect(() =>
     this.actions$.pipe(
       ofType(rejectLeaveRequest),
-      mergeMap(({ id }) =>
+      switchMap(({ id }) =>
         this.leaveOverviewService.rejectLeaveRequest(id).pipe(
           map(() => rejectLeaveRequestSuccess({ id })),
           catchError((error) => of(rejectLeaveRequestFail({ error }))),

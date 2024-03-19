@@ -5,8 +5,6 @@ export interface UserState {
   password: string;
   errorMessage: string;
   isLoading: boolean;
-  isDuplicate: boolean | undefined;
-  addUserError: string;
 }
 
 export const initialState: UserState = {
@@ -15,6 +13,4 @@ export const initialState: UserState = {
   password: '',
   errorMessage: '',
   isLoading: false,
-  isDuplicate: undefined,
-  addUserError: '',
 };

@@ -38,9 +38,9 @@
     (change)="applyLeaveTypeFilter()"
   >
     <option value="">All Leave Type</option>
-    <option value="Sick Leave">Sick Leave</option>
-    <option value="Annual Leave">Annual Leave</option>
-    <option value="Special Leave">Special Leave</option>
+    <option value="sickLeave">Sick Leave</option>
+    <option value="annualLeave">Annual Leave</option>
+    <option value="specialLeave">Special Leave</option>
   </select>
 </mat-form-field>
 <mat-form-field appearance="outline" class="filter-leave-details">
@@ -94,14 +94,14 @@
     <ng-container matColumnDef="leaveFrom">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Leave From</th>
       <td mat-cell *matCellDef="let row">
-        {{ row.leaveFrom | date: "YY-MM-dd" }}
+        {{ formatDate(row.leaveFrom) }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="leaveTo">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Leave To</th>
       <td mat-cell *matCellDef="let row">
-        {{ row.leaveTo | date: "YY-MM-dd" }}
+        {{ formatDate(row.leaveTo) }}
       </td>
     </ng-container>
 
@@ -120,7 +120,7 @@
       <td mat-cell *matCellDef="let row">{{ row.status }}</td>
     </ng-container>
     <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+      <th mat-header-cell *matHeaderCellDef>Action</th>
       <td mat-cell *matCellDef="let row" class="action-cell">
         <div class="button-group">
           <button

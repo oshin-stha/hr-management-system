@@ -1,10 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, exhaustMap, from, map, of } from 'rxjs';
+import { catchError, exhaustMap, from, map, mergeMap, of } from 'rxjs';
 import { SECURE_MODULE_PATH } from 'src/app/shared/constants/routes.constants';
 import { LoginService } from '../../../services/login-services/login.service';
-import { loginFailure, loginStart, loginSuccess } from '../login.actions';
+import {
+  getUserDetails,
+  getUserDetailsFailure,
+  getUserDetailsSuccess,
+  loginFailure,
+  loginStart,
+  loginSuccess,
+} from '../login.actions';
+import { UserDetails } from 'src/app/shared/models/adduser.model';
 
 @Injectable()
 export class AuthEffects {
@@ -42,6 +50,21 @@ export class AuthEffects {
         map(() => this.navigateToAttendance()),
       ),
     { dispatch: false },
+  );
+  getUserDetails$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(getUserDetails),
+      mergeMap((action) =>
+        this.loginService.getUserByEmail(action.email).pipe(
+          map((userDetails: UserDetails[]) => {
+            localStorage.setItem('role', userDetails[0].role);
+
+            return getUserDetailsSuccess({ userDetails });
+          }),
+          catchError((error) => of(getUserDetailsFailure({ error }))),
+        ),
+      ),
+    ),
   );
 
   private navigateToAttendance() {

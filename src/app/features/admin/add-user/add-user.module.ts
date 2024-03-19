@@ -9,6 +9,7 @@ import { AddUserEffect } from './store/add-user.effect';
 import { AddUserReducer } from './store/add-user.reducer';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { LoaderSpinnerReducer } from 'src/app/shared/store/loader-store/loader-spinner.reducer';
 @NgModule({
   declarations: [AddUserComponent],
   imports: [
@@ -18,6 +19,7 @@ import { EffectsModule } from '@ngrx/effects';
     FormsModule,
     ReactiveFormsModule,
     StoreModule.forFeature('USER_SELECTOR', AddUserReducer),
+    StoreModule.forFeature('loader', LoaderSpinnerReducer),
     EffectsModule.forFeature([AddUserEffect]),
   ],
 })

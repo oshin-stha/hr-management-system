@@ -4,10 +4,22 @@
       <mat-icon>menu</mat-icon>
     </button>
     <app-loading-spinner *ngIf="isLoading$ | async"></app-loading-spinner>
-    <span>My App</span>
+    <span>HR Managemnent System</span>
     <span class="example-spacer"></span>
-    <button mat-raised-button color="primary" type="click">Admin</button>
-    <button mat-icon-button class="example-icon" type="submit">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="toggleAdminMode()"
+      *ngIf="role === 'admin'"
+    >
+      {{ isUser ? "Admin" : "User" }}
+    </button>
+    <button
+      mat-icon-button
+      class="example-icon"
+      type="submit"
+      (click)="logout()"
+    >
       <mat-icon>logout</mat-icon>
     </button>
   </mat-toolbar>

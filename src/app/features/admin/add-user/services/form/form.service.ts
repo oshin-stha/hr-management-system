@@ -81,10 +81,9 @@ export class FormService {
     return {
       sickLeaveTotal: 30,
       annualLeaveTotal: 18,
-      specialLeaveTotal: 90,
+      specialLeaveTaken: 0,
       sickLeaveRemaining: 30,
       annualLeaveRemaining: 18,
-      specialLeaveRemaining: 90,
     };
   }
 }

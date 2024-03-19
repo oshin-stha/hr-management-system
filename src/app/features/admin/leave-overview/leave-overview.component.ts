@@ -46,7 +46,10 @@ export class LeaveOverviewComponent implements AfterViewInit, OnInit {
   constructor(private store: Store) {}
 
   ngOnInit(): void {
-    this.store.dispatch(loadLeaveDetails());
+    this.loadLeaveDetails();
+  }
+
+  loadLeaveDetails() {
     this.store.pipe(select(getLeaveDetails)).subscribe((data) => {
       this.leaveDetails = data;
       this.dataSource.data = this.leaveDetails;
@@ -58,6 +61,7 @@ export class LeaveOverviewComponent implements AfterViewInit, OnInit {
     });
     this.applyDepartmentFilter();
     this.applyLeaveTypeFilter();
+    this.store.dispatch(loadLeaveDetails());
   }
 
   ngAfterViewInit(): void {
@@ -69,6 +73,10 @@ export class LeaveOverviewComponent implements AfterViewInit, OnInit {
     }
   }
 
+  formatDate(timestamp: { seconds: number; nanoseconds: number }): string {
+    const date = new Date(timestamp.seconds * 1000);
+    return date.toLocaleString();
+  }
   acceptLeave(
     id: string,
     totalLeaveDays: number,
@@ -79,10 +87,12 @@ export class LeaveOverviewComponent implements AfterViewInit, OnInit {
     this.store.dispatch(
       updateLeaveBalance({ email, totalLeaveDays, leaveType }),
     );
+    this.loadLeaveDetails();
   }
 
   rejectLeave(id: string): void {
     this.store.dispatch(rejectLeaveRequest({ id }));
+    this.loadLeaveDetails();
   }
 
   updateDataSource(): void {
@@ -109,9 +119,6 @@ export class LeaveOverviewComponent implements AfterViewInit, OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
   }
   applyDepartmentFilter(): void {
     if (this.selectedDepartment) {
@@ -144,7 +151,7 @@ export class LeaveOverviewComponent implements AfterViewInit, OnInit {
     let filteredLeaves: LeaveDetails[] = [];
     if (this.selectedDateFilter === 'today') {
       filteredLeaves = this.leaveDetails.filter((leave) => {
-        const leaveFrom = new Date(leave.leaveFrom);
+        const leaveFrom = leave.leaveFrom.toDate();
         return (
           leaveFrom.getFullYear() === today.getFullYear() &&
           leaveFrom.getMonth() === today.getMonth() &&
@@ -153,11 +160,14 @@ export class LeaveOverviewComponent implements AfterViewInit, OnInit {
       });
     } else if (this.selectedDateFilter === 'tomorrow') {
       filteredLeaves = this.leaveDetails.filter((leave) => {
-        const leaveFrom = new Date(leave.leaveFrom);
-        return (
+        const leaveFrom = leave.leaveFrom.toDate();
+        const leaveTo = leave.leaveTo.toDate();
+        const leaveStartsTomorrow =
           leaveFrom.getFullYear() === tomorrow.getFullYear() &&
           leaveFrom.getMonth() === tomorrow.getMonth() &&
-          leaveFrom.getDate() === tomorrow.getDate()
+          leaveFrom.getDate() === tomorrow.getDate();
+        return (
+          (tomorrow >= leaveFrom && tomorrow <= leaveTo) || leaveStartsTomorrow
         );
       });
     } else {

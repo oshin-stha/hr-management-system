@@ -24,9 +24,9 @@ export class SharedLeaveOverviewEffects {
       ofType(loadLeaveDetails),
       mergeMap(() =>
         this.leaveOverviewService.getLeaveDetails().pipe(
-          map((leaveDetails: LeaveDetails[]) =>
-            loadLeaveDetailsSuccess({ leaveDetails }),
-          ),
+          map((leaveDetails: LeaveDetails[]) => {
+            return loadLeaveDetailsSuccess({ leaveDetails });
+          }),
           catchError((error) => of(loadLeaveDetailsFail({ error }))),
         ),
       ),

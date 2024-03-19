@@ -3,11 +3,12 @@ import { setLoadingSpinner } from './loader-spinner.action';
 import { LoaderState, initialState } from './loader-spinner.state';
 const _loaderSpinnerReducer = createReducer(
   initialState,
-  on(setLoadingSpinner, (state = initialState, action) => ({
+  on(setLoadingSpinner, (state = initialState, { status }) => ({
     ...state,
-    isLoading: action.status,
+    isLoading: status,
   })),
 );
+// Remove this
 export function LoaderSpinnerReducer(
   state: LoaderState | undefined,
   action: Action,

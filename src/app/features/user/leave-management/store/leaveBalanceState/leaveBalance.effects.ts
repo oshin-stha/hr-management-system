@@ -20,10 +20,7 @@ export class LeaveBalanceEffects {
       ofType(getLeavebalanceStart),
       switchMap((action) =>
         this.leaveBalanceService.getLeaveBalance(action.email).pipe(
-          map((data) => {
-            console.log(data, 'eff');
-            return getLeavebalanceSuccess({ leaveBalance: data });
-          }),
+          map((data) => getLeavebalanceSuccess({ leaveBalance: data })),
           catchError((error) =>
             of(getLeavebalanceFailure({ error: error.code })),
           ),

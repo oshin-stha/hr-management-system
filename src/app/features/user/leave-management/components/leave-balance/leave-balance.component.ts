@@ -10,8 +10,11 @@ import { getLeaveBalance } from '../../store/leaveBalanceState/leaveBalance.sele
 })
 export class LeaveBalanceComponent implements OnInit {
   userEmail: string | null = '';
-  totalLeave: number | undefined;
-  leaveAvailable: number | undefined;
+  annualLeaveRemaining: number | undefined;
+  annualLeaveTotal: number | undefined;
+  sickLeaveRemaining: number | undefined;
+  sickLeaveTotal: number | undefined;
+  specialLeaveTaken: number | undefined;
   leaveTaken: number | undefined;
 
   constructor(private store: Store) {}
@@ -30,10 +33,11 @@ export class LeaveBalanceComponent implements OnInit {
 
   getLeaveBalance(): void {
     this.store.select(getLeaveBalance).subscribe((res) => {
-      console.log(res, 'Leavebalance');
-      this.totalLeave = res.totalLeave;
-      this.leaveAvailable = res.leaveAvailable;
-      this.leaveTaken = res.totalLeave - res.leaveAvailable;
+      (this.annualLeaveTotal = res.annualLeaveTotal),
+        (this.annualLeaveRemaining = res.annualLeaveRemaining),
+        (this.sickLeaveTotal = res.sickLeaveTotal),
+        (this.sickLeaveRemaining = res.sickLeaveRemaining),
+        (this.specialLeaveTaken = res.specialLeaveTaken);
     });
   }
 }

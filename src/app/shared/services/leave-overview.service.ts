@@ -33,10 +33,10 @@ export class LeaveOverviewService {
               reasonForLeave: doc.data()['reasonForLeave'],
               status: doc.data()['status'],
               totalLeaveDays: doc.data()['totalLeaveDays'],
+              fromDepartment: doc.data()['fromDepartment'],
             };
             leave.push(leaveDetail);
           });
-          console.log(leave);
           observer.next(leave);
           observer.complete();
         })
@@ -69,7 +69,6 @@ export class LeaveOverviewService {
             };
             user.push(userDetails);
           });
-          console.log(user);
           observer.next(user);
           observer.complete();
         })

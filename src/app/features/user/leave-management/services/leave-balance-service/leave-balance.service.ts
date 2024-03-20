@@ -19,8 +19,11 @@ export class LeaveBalanceService {
         .then((docSnapshot) => {
           const leaveAvailable = docSnapshot.data();
           const leaveAvailableDetails: LeaveBalanceDetails = {
-            totalLeave: leaveAvailable?.['totalLeave'],
-            leaveAvailable: leaveAvailable?.['leaveAvailable'],
+            annualLeaveRemaining: leaveAvailable?.['annualLeaveRemaining'],
+            annualLeaveTotal: leaveAvailable?.['annualLeaveTotal'],
+            sickLeaveRemaining: leaveAvailable?.['sickLeaveRemaining'],
+            sickLeaveTotal: leaveAvailable?.['sickLeaveTotal'],
+            specialLeaveTaken: leaveAvailable?.['specialLeaveTaken'],
           };
           observer.next(leaveAvailableDetails);
         })

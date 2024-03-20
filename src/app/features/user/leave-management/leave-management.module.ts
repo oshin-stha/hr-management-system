@@ -19,6 +19,8 @@ import { LoaderSpinnerReducer } from 'src/app/shared/store/loader-store/loader-s
 import { LEAVE_BALANCE_SELECTOR } from './store/leaveBalanceState/leaveBalance.selector';
 import { LeaveBalanceReducer } from './store/leaveBalanceState/leaveBalance.reducer';
 import { LeaveBalanceEffects } from './store/leaveBalanceState/leaveBalance.effects';
+import { SharedLeaveOverviewReducer } from 'src/app/shared/store/leave-overview-store/reducers/leave-overview.reducers';
+import { SharedLeaveOverviewEffects } from 'src/app/shared/store/leave-overview-store/effects/leave-overview.effects';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { LeaveBalanceEffects } from './store/leaveBalanceState/leaveBalance.effe
     LeaveStatusComponent,
     LeaveBalanceComponent,
   ],
+
   imports: [
     CommonModule,
     LeaveManagementRoutingModule,
@@ -36,11 +39,13 @@ import { LeaveBalanceEffects } from './store/leaveBalanceState/leaveBalance.effe
       LeaveDetailsEffects,
       LeaveStausEffects,
       LeaveBalanceEffects,
+      SharedLeaveOverviewEffects,
     ),
     StoreModule.forFeature(LEAVE_STATUS_SELECTOR, LeaveStatusReducer),
     StoreModule.forFeature(LEAVE_APPLY_SELECTOR, LeaveApplyReducer),
     StoreModule.forFeature('loader', LoaderSpinnerReducer),
     StoreModule.forFeature(LEAVE_BALANCE_SELECTOR, LeaveBalanceReducer),
+    StoreModule.forFeature('SharedleaveDetails', SharedLeaveOverviewReducer),
   ],
 
   providers: [DatePipe],

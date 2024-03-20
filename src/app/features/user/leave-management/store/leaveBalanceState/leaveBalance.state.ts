@@ -2,8 +2,11 @@ import { LeaveBalanceState } from '../../models/leaveBalanceState.model';
 
 export const initialLeaveBalanceState: LeaveBalanceState = {
   leaveBalance: {
-    totalLeave: 0,
-    leaveAvailable: 0,
+    annualLeaveRemaining: 0,
+    annualLeaveTotal: 0,
+    sickLeaveRemaining: 0,
+    sickLeaveTotal: 0,
+    specialLeaveTaken: 0,
   },
   error: '',
 };

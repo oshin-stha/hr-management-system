@@ -4,15 +4,25 @@
       <mat-card-title>Leave Balance:</mat-card-title>
       <mat-card-content>
         <h3>
-          Total Leave:<strong> {{ totalLeave }}</strong> days
+          Total Sick Leave:<strong> {{ sickLeaveTotal }}</strong> days
         </h3>
         <h3>
-          Total Leave Taken:<strong>{{ leaveTaken }}</strong> days
+          Total Sick Leave Remaining:<strong> {{ sickLeaveRemaining }}</strong>
+          days
         </h3>
         <h3>
-          Total Leave Remaining: <strong>{{ leaveAvailable }}</strong> days
+          Total Annual Leave Leave:<strong> {{ annualLeaveTotal }}</strong> days
         </h3>
-        <!-- <button (click)="getLeaveBalance()">click</button> -->
+        <h3>
+          Total Annual Leave Remaining:<strong>
+            {{ annualLeaveRemaining }}</strong
+          >
+          days
+        </h3>
+        <h3>
+          Total Specialleave Taken:<strong> {{ specialLeaveTaken }}</strong>
+          days
+        </h3>
       </mat-card-content>
     </mat-card>
   </div>

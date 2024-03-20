@@ -6,10 +6,10 @@ export const selectLeaveBalance = createFeatureSelector<LeaveBalanceState>(
   LEAVE_BALANCE_SELECTOR,
 );
 
-export const getLeaveBalance = createSelector(selectLeaveBalance, (state) => {
-  console.log(state.leaveBalance, 'selector');
-  return state.leaveBalance;
-});
+export const getLeaveBalance = createSelector(
+  selectLeaveBalance,
+  (state) => state.leaveBalance,
+);
 
 export const getError = createSelector(
   selectLeaveBalance,

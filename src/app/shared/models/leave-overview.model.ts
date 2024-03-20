@@ -12,4 +12,5 @@ export interface LeaveDetails {
   totalLeaveDays: number;
   email: string;
   actionPerformed?: boolean;
+  fromDepartment?: string;
 }

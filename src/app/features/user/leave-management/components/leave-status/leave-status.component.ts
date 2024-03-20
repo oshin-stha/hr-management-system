@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { getLeaveStatusStart } from '../../store/leaveStatusState/leaveStatus.action';
 import {
@@ -9,18 +15,27 @@ import { Subscription } from 'rxjs';
 import { setLoadingSpinner } from 'src/app/shared/store/loader-store/loader-spinner.action';
 import { LeaveDetails } from '../../models/leaveDetails.interface';
 import { DatePipe } from '@angular/common';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-leave-status',
   templateUrl: './leave-status.component.html',
   styleUrls: ['./leave-status.component.scss'],
 })
-export default class LeaveStatusComponent implements OnInit, OnDestroy {
+export default class LeaveStatusComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
+  @ViewChild(MatSort) sort?: MatSort;
+  @ViewChild(MatPaginator) paginator?: MatPaginator;
   userEmail: string | null = '';
   status: LeaveDetails[] = [];
   displayedColumns: string[] = [
+    'id',
     'leaveFrom',
     'leaveTo',
+    'firstOrSecondHalf',
     'totalLeaveDays',
     'reasonForLeave',
     'leaveType',
@@ -29,17 +44,40 @@ export default class LeaveStatusComponent implements OnInit, OnDestroy {
   errorMessage: string | undefined;
   getStatusSubscriber: Subscription | undefined;
   getErrorSubscriber: Subscription | undefined;
+  dataSource: MatTableDataSource<LeaveDetails> =
+    new MatTableDataSource<LeaveDetails>([]);
 
   constructor(
     private store: Store,
     private datePipe: DatePipe,
   ) {}
+
   ngOnInit(): void {
     this.userEmail = localStorage.getItem('Email');
     this.getLeaveDetails();
     this.showLeaveStatus();
     this.getErrorMessage();
     this.alertError();
+  }
+
+  addingDataToDatasource(): void {
+    this.dataSource.data = this.status;
+  }
+
+  ngAfterViewInit(): void {
+    if (this.paginator) {
+      this.dataSource.paginator = this.paginator;
+    }
+    if (this.sort) {
+      this.dataSource.sort = this.sort;
+    }
+  }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   getLeaveDetails(): void {
@@ -55,6 +93,7 @@ export default class LeaveStatusComponent implements OnInit, OnDestroy {
       .subscribe((res) => {
         this.store.dispatch(setLoadingSpinner({ status: false }));
         this.status = res;
+        this.addingDataToDatasource();
       });
   }
 
@@ -63,7 +102,6 @@ export default class LeaveStatusComponent implements OnInit, OnDestroy {
       .select(selectError)
       .subscribe((res) => {
         this.errorMessage = res;
-        console.log('error');
       });
   }
   formatDate(

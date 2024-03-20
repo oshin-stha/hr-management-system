@@ -31,10 +31,12 @@ export class LeaveStatusService {
               email: data?.['email'],
               leaveFrom: data?.['leaveFrom'],
               leaveTo: data?.['leaveTo'],
+              firstOrSecondHalf: data?.['firstOrSecondHalf'],
               totalLeaveDays: data?.['totalLeaveDays'],
               leaveType: data?.['leaveType'],
               reasonForLeave: data?.['reasonForLeave'],
               status: data?.['status'],
+              fromDepartment: data?.['fromDepartment'],
             };
           });
           observer.next(leaveDetailsData);

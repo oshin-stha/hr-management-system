@@ -1,16 +1,33 @@
 <div class="main">
   <mat-card>
     <mat-card-title> Apply For Leave: </mat-card-title>
+
     <mat-card-content>
       <form
         [formGroup]="leaveApplicationForm"
         (ngSubmit)="applyForLeave(leaveApplicationForm)"
       >
         <mat-form-field appearance="outline">
+          <mat-label>Full/Half Leave</mat-label>
+          <mat-select
+            formControlName="{{ FORM_CONTROL_NAMES.HALF_OR_FULL_LEAVE }}"
+            (selectionChange)="onInputChange($event)"
+          >
+            <mat-option value="{{ FORM_CONTROL_NAMES.FULL_LEAVE }}"
+              >Full Leave</mat-option
+            >
+            <mat-option value="{{ FORM_CONTROL_NAMES.HALF_DAY_LEAVE }}"
+              >Half Leave</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>From:</mat-label>
           <input
             matInput
             [matDatepicker]="picker"
+            [min]="minDateForLeaveFrom"
+            (dateChange)="updateMinDateForLeaveTo($event)"
             formControlName="{{ FORM_CONTROL_NAMES.LEAVE_FROM }}"
           />
           <mat-hint>MM/DD/YYYY</mat-hint>
@@ -27,6 +44,7 @@
           <input
             matInput
             [matDatepicker]="picker2"
+            [min]="minDateForLeaveTo"
             formControlName="{{ FORM_CONTROL_NAMES.LEAVE_TO }}"
           />
           <mat-hint>MM/DD/YYYY</mat-hint>
@@ -36,13 +54,37 @@
           ></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
-
+        <mat-form-field appearance="outline" *ngIf="isHalfDay">
+          <mat-label>First/Second Half:</mat-label>
+          <mat-select
+            formControlName="{{ FORM_CONTROL_NAMES.FIRST_OR_SECOND_HALF }}"
+          >
+            <mat-option value="{{ LEAVE_TYPES.FIRST_HALF_LEAVE }}"
+              >First Half</mat-option
+            >
+            <mat-option value="{{ LEAVE_TYPES.SECOND_HALF_LEAVE }}"
+              >Second Half</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Leave Type:</mat-label>
           <mat-select formControlName="{{ FORM_CONTROL_NAMES.LEAVE_TYPE }}">
-            <mat-option value="Sick Leave">Sick Leave</mat-option>
-            <mat-option value="Annual Leave">Annual Leave</mat-option>
-            <mat-option value="Special Leave">Special Leave</mat-option>
+            <mat-option
+              [disabled]="checkingIfUserCanTakeSickLeave()"
+              value="{{ LEAVE_TYPES.SICK_LEAVE }}"
+              >Sick Leave</mat-option
+            >
+            <mat-option
+              [disabled]="checkingIfUserCanTakeAnnualLeave()"
+              value="{{ LEAVE_TYPES.ANNUAL_LEAVE }}"
+              >Annual Leave</mat-option
+            >
+            <mat-option
+              [disabled]="checkingIfUserCanTakeSpecialLeave()"
+              value="{{ LEAVE_TYPES.SPECIAL_LEAVE }}"
+              >Special Leave</mat-option
+            >
           </mat-select>
         </mat-form-field>
 

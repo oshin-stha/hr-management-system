@@ -11,7 +11,7 @@ import {
 } from 'firebase/firestore';
 import { Observable, from, map } from 'rxjs';
 import { firebaseConfig } from '../../../../environments/environment';
-import { AttendanceState } from '../../models/attendance.model';
+import { AttendanceState } from '../../../../shared/models/attendance.model';
 @Injectable({
   providedIn: 'root',
 })

@@ -7,6 +7,7 @@ export interface AttendanceState {
   checkInReason: string | null;
   checkOutReason: string | null;
   workingHours: number | null;
+  absent: string | null;
 }
 
 export interface AttendanceByDate {

@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { FORM_CONTROL_NAMES } from 'src/app/shared/constants/form-field.constant';
-import { loginStart } from '../../login/store/login.actions';
+import { loginStart } from '../store/login.actions';
 
 @Injectable({
   providedIn: 'root',
 })
-export class FormService {
+export class LoginFormService {
   loginForm: FormGroup;
 
   constructor(private store: Store) {
@@ -30,5 +30,9 @@ export class FormService {
     if (email && password) {
       this.store.dispatch(loginStart({ email, password }));
     }
+  }
+
+  resetLoginForm() {
+    this.loginForm.reset();
   }
 }

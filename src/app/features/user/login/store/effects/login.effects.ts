@@ -3,8 +3,9 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, exhaustMap, from, map, of } from 'rxjs';
 import { SECURE_MODULE_PATH } from 'src/app/shared/constants/routes.constants';
-import { LoginService } from '../../../services/login-services/login.service';
+import { LoginService } from '../../login-services/login.service';
 import { loginFailure, loginStart, loginSuccess } from '../login.actions';
+import { LoginFormService } from '../../login-form/login-form.service';
 
 @Injectable()
 export class AuthEffects {
@@ -12,6 +13,7 @@ export class AuthEffects {
     private action$: Actions,
     private loginService: LoginService,
     private router: Router,
+    private loginFormService: LoginFormService,
   ) {}
 
   login$ = createEffect(() => {
@@ -23,6 +25,7 @@ export class AuthEffects {
         ).pipe(
           map(() => {
             localStorage.setItem('Email', action.email);
+            this.loginFormService.resetLoginForm();
             return loginSuccess();
           }),
           catchError((error) => {

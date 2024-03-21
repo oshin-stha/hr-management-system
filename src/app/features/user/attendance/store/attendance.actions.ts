@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { AttendanceByDate } from '../../models/attendance.model';
+import { AttendanceByDate } from '../../../../shared/models/attendance.model';
 
 export const checkInStart = createAction('[Attendance] Check-in Start');
 export const checkInSuccess = createAction('[Attendance] Check-in Success');

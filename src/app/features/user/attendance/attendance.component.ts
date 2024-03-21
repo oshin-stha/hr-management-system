@@ -6,7 +6,7 @@ import {
 } from '@angular/material/datepicker';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { AttendanceByDate } from '../models/attendance.model';
+import { AttendanceByDate } from '../../../shared/models/attendance.model';
 import {
   checkInStart,
   checkOutStart,
@@ -24,6 +24,7 @@ import {
 })
 export class AttendanceComponent implements OnInit, OnDestroy {
   checkInStatusSubscription: Subscription | undefined;
+  dataForCalendarSubscription: Subscription | undefined;
   checkInStatus: boolean | undefined;
   attendanceByDate$: Observable<AttendanceByDate> = new Observable();
   attendanceData: AttendanceByDate | null = null;
@@ -46,12 +47,14 @@ export class AttendanceComponent implements OnInit, OnDestroy {
   }
 
   getDataForCalendar(): void {
-    this.attendanceByDate$.subscribe((data: AttendanceByDate) => {
-      if (Object.keys(data).length < 1) {
-        return;
-      }
-      this.attendanceData = data ?? null; //ensure data is not null
-    });
+    this.dataForCalendarSubscription = this.attendanceByDate$.subscribe(
+      (data: AttendanceByDate) => {
+        if (Object.keys(data).length < 1) {
+          return;
+        }
+        this.attendanceData = data ?? null; //ensure data is not null
+      },
+    );
   }
 
   // ngAfterViewChecked(): void {
@@ -90,6 +93,7 @@ export class AttendanceComponent implements OnInit, OnDestroy {
     if (date.getDay() === 0 || date.getDay() === 6) {
       classes['highlighted'] = true;
     }
+
     if (this.attendanceData) {
       for (const [dateKey, entry] of Object.entries(this.attendanceData)) {
         // Convert the dateKey string to a Date object
@@ -141,5 +145,6 @@ export class AttendanceComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.checkInStatusSubscription?.unsubscribe();
+    this.dataForCalendarSubscription?.unsubscribe();
   }
 }

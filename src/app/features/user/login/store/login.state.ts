@@ -1,4 +1,4 @@
-import { AuthState } from './../../models/login.model';
+import { AuthState } from '../login.model';
 
 export const initialState: AuthState = {
   isLoggedIn: false,

@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -15,13 +21,16 @@ import {
   getLeaveDetails,
   selectUserDetails,
 } from 'src/app/shared/store/leave-overview-store/selector/leave-overview.selector';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-leave-overview',
   templateUrl: './leave-overview.component.html',
   styleUrls: ['./leave-overview.component.scss'],
 })
-export class LeaveOverviewComponent implements AfterViewInit, OnInit {
+export class LeaveOverviewComponent
+  implements AfterViewInit, OnInit, OnDestroy
+{
   leaveDetails: LeaveDetails[] = [];
   userDetails: UserDetails[] = [];
   displayedColumns: string[] = [
@@ -43,6 +52,8 @@ export class LeaveOverviewComponent implements AfterViewInit, OnInit {
   selectedDepartment = '';
   selectedLeaveType = '';
   selectedDateFilter = 'all';
+  getLeaveDetailSubscription: Subscription | undefined;
+  getUserDetailsSubscription: Subscription | undefined;
   constructor(private store: Store) {}
 
   ngOnInit(): void {
@@ -50,15 +61,19 @@ export class LeaveOverviewComponent implements AfterViewInit, OnInit {
   }
 
   loadLeaveDetails() {
-    this.store.pipe(select(getLeaveDetails)).subscribe((data) => {
-      this.leaveDetails = data;
-      this.dataSource.data = this.leaveDetails;
-      this.updateDataSource();
-    });
-    this.store.pipe(select(selectUserDetails)).subscribe((data) => {
-      this.userDetails = data;
-      this.updateDataSource();
-    });
+    this.getLeaveDetailSubscription = this.store
+      .pipe(select(getLeaveDetails))
+      .subscribe((data) => {
+        this.leaveDetails = data;
+        this.dataSource.data = this.leaveDetails;
+        this.updateDataSource();
+      });
+    this.getUserDetailsSubscription = this.store
+      .pipe(select(selectUserDetails))
+      .subscribe((data) => {
+        this.userDetails = data;
+        this.updateDataSource();
+      });
     this.applyDepartmentFilter();
     this.applyLeaveTypeFilter();
     this.store.dispatch(loadLeaveDetails());
@@ -119,6 +134,7 @@ export class LeaveOverviewComponent implements AfterViewInit, OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    console.log(this.dataSource.filter);
   }
   applyDepartmentFilter(): void {
     if (this.selectedDepartment) {
@@ -189,5 +205,10 @@ export class LeaveOverviewComponent implements AfterViewInit, OnInit {
         contactInformation: userDetails ? userDetails.contactNumber : 0,
       };
     });
+  }
+
+  ngOnDestroy(): void {
+    this.getLeaveDetailSubscription?.unsubscribe();
+    this.getUserDetailsSubscription?.unsubscribe();
   }
 }

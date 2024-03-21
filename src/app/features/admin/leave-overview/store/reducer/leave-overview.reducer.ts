@@ -19,9 +19,9 @@ export const _leaveOverviewReducer = createReducer(
     ),
   })),
 
-  on(acceptLeaveRequestFail, (state, action) => ({
+  on(acceptLeaveRequestFail, (state, { error }) => ({
     ...state,
-    error: action.error,
+    error: error,
   })),
 
   on(rejectLeaveRequestSuccess, (state, { id }) => ({
@@ -31,9 +31,9 @@ export const _leaveOverviewReducer = createReducer(
     ),
   })),
 
-  on(rejectLeaveRequestFail, (state, action) => ({
+  on(rejectLeaveRequestFail, (state, { error }) => ({
     ...state,
-    error: action.error,
+    error: error,
   })),
 
   on(updateLeaveBalance, (state) => ({

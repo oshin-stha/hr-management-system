@@ -45,7 +45,6 @@ export class AddUserComponent implements OnDestroy {
       const { email, password, employeeId } = signupPayload;
       this.store.dispatch(setLoadingSpinner({ status: true }));
       this.store.dispatch(signupStart({ email, password, employeeId }));
-
       this.loadingSubscription = this.store
         .select(getLoading)
         .subscribe((loading) => {

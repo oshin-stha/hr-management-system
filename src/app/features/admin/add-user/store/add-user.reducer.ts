@@ -51,12 +51,6 @@ const _addUserReducer = createReducer(
       errorMessage: action.message,
     };
   }),
-  // on(loaderSuccess, (state, action) => {
-  //   return {
-  //     ...state,
-  //     isLoading: action.status,
-  //   };
-  // }),
 
   on(addleaveBalance, (state) => ({
     ...state,

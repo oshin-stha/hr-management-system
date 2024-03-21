@@ -29,6 +29,7 @@ export class SideMenuComponent implements OnInit {
   ATTENDANCE_REPORT_PATH = ATTENDANCE_REPORT_PATH;
   LEAVE_OVERVIEW_PATH = LEAVE_OVERVIEW_PATH;
   UPDATE_POLICY_PATH = UPDATE_POLICY_PATH;
+
   ngOnInit(): void {
     this.role = localStorage.getItem('role');
   }

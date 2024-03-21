@@ -1,26 +1,39 @@
 <div class="fixed-header">
-  <mat-toolbar>
-    <button mat-icon-button class="example-icon" type="button">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <app-loading-spinner *ngIf="isLoading$ | async"></app-loading-spinner>
-    <span>HR Managemnent System</span>
-    <span class="example-spacer"></span>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="toggleAdminMode()"
-      *ngIf="role === 'admin'"
-    >
-      {{ isUser ? "Admin" : "User" }}
-    </button>
-    <button
-      mat-icon-button
-      class="example-icon"
-      type="submit"
-      (click)="logout()"
-    >
-      <mat-icon>logout</mat-icon>
-    </button>
+  <mat-toolbar class="header">
+    <div class="header__left">
+      <button
+        mat-icon-button
+        class="example-icon"
+        type="button"
+        (click)="toggleSideMenu()"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+      <app-loading-spinner *ngIf="isLoading$ | async"></app-loading-spinner>
+      <img
+        src="../../../../../assets/images/hrms1.png"
+        alt="hrms"
+        class="header__logo"
+      />
+    </div>
+    <!-- <span class="example-spacer"></span> -->
+    <div class="header__right">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="toggleAdminMode()"
+        *ngIf="role === 'admin'"
+      >
+        {{ isUser ? "Switch To Admin" : "Switch To User" }}
+      </button>
+      <button
+        mat-icon-button
+        class="example-icon"
+        type="submit"
+        (click)="logout()"
+      >
+        <mat-icon>logout</mat-icon>
+      </button>
+    </div>
   </mat-toolbar>
 </div>

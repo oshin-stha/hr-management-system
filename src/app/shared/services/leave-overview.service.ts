@@ -68,6 +68,7 @@ export class LeaveOverviewService {
             };
             user.push(userDetails);
           });
+
           observer.next(user);
           observer.complete();
         })

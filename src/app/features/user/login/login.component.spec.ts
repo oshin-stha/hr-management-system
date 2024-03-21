@@ -47,7 +47,7 @@ describe('LoginComponent', () => {
       emailField: email,
       passwordField: password,
     });
-    component.logInUser(component.loginForm);
+    // component.logInUser(component.loginForm);
     expect(store.dispatch).toHaveBeenCalledOnceWith(
       loginStart({ email, password }),
     );

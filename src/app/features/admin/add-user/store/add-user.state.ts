@@ -3,14 +3,14 @@ export interface UserState {
   user: UserDetails[];
   email: string;
   password: string;
-  errorMessage: string;
   isLoading: boolean;
+  error: string | null;
 }
 
 export const initialState: UserState = {
   user: [],
   email: '',
   password: '',
-  errorMessage: '',
   isLoading: false,
+  error: '',
 };

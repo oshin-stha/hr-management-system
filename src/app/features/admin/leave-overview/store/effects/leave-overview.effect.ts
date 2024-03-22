@@ -27,7 +27,7 @@ export class LeaveOverviewEffects {
   updateLeaveStatus$ = createEffect(() =>
     this.actions$.pipe(
       ofType(updateLeaveStatus),
-      mergeMap(({ id, newStatus }) =>
+      switchMap(({ id, newStatus }) =>
         this.leaveOverviewService.updateLeaveStatus(id, newStatus).pipe(
           map(() => updateLeaveStatusSuccess({ id, newStatus })),
           catchError((error) => of(updateLeaveStatusFail({ error }))),
@@ -41,7 +41,10 @@ export class LeaveOverviewEffects {
       ofType(acceptLeaveRequest),
       switchMap(({ id }) =>
         this.leaveOverviewService.acceptLeaveRequest(id).pipe(
-          map(() => acceptLeaveRequestSuccess({ id })),
+          map(() => {
+            alert('Leave Accepted');
+            return acceptLeaveRequestSuccess({ id });
+          }),
           catchError((error) => of(acceptLeaveRequestFail({ error }))),
         ),
       ),
@@ -53,7 +56,10 @@ export class LeaveOverviewEffects {
       ofType(rejectLeaveRequest),
       switchMap(({ id }) =>
         this.leaveOverviewService.rejectLeaveRequest(id).pipe(
-          map(() => rejectLeaveRequestSuccess({ id })),
+          map(() => {
+            alert('Leave Rejected');
+            return rejectLeaveRequestSuccess({ id });
+          }),
           catchError((error) => of(rejectLeaveRequestFail({ error }))),
         ),
       ),

@@ -51,6 +51,7 @@ export class AuthEffects {
       ),
     { dispatch: false },
   );
+
   getUserDetails$ = createEffect(() =>
     this.action$.pipe(
       ofType(getUserDetails),

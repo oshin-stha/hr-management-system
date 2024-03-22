@@ -15,7 +15,7 @@ import { LeaveBalanceComponent } from './components/leave-balance/leave-balance.
 import { LeaveStausEffects } from './store/leaveStatusState/leaveStatus.effects';
 import { LEAVE_STATUS_SELECTOR } from './store/leaveStatusState/leaveStatus.selector';
 import { LeaveStatusReducer } from './store/leaveStatusState/leaveStatus.reducer';
-import { LoaderSpinnerReducer } from 'src/app/shared/store/loader-store/loader-spinner.reducer';
+import { LoaderSpinnerReducer } from 'src/app/shared/store/loader-store/reducer/loader-spinner.reducer';
 import { LEAVE_BALANCE_SELECTOR } from './store/leaveBalanceState/leaveBalance.selector';
 import { LeaveBalanceReducer } from './store/leaveBalanceState/leaveBalance.reducer';
 import { LeaveBalanceEffects } from './store/leaveBalanceState/leaveBalance.effects';

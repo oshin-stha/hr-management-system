@@ -6,7 +6,7 @@ import { StoreModule } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
-import { LoaderSpinnerReducer } from 'src/app/shared/store/loader-store/loader-spinner.reducer';
+import { LoaderSpinnerReducer } from 'src/app/shared/store/loader-store/reducer/loader-spinner.reducer';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;

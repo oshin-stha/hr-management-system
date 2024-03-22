@@ -4,7 +4,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { catchError, from, map, of, switchMap } from 'rxjs';
 import { setLoadingSpinner } from 'src/app/shared/store/loader-store/loader-spinner.action';
-import { AddUserService } from '../services/add-user/add-user.service';
+import { AddUserService } from '../../services/add-user/add-user.service';
 import {
   addUserFail,
   addUserStart,
@@ -15,7 +15,7 @@ import {
   signupFail,
   signupStart,
   signupSuccess,
-} from './add-user.action';
+} from '../add-user.action';
 import { SECURE_MODULE_PATH } from 'src/app/shared/constants/routes.constants';
 @Injectable()
 export class AddUserEffect {
@@ -47,7 +47,7 @@ export class AddUserEffect {
             this.store.dispatch(setLoadingSpinner({ status: false }));
             this.addUserService.getErrorMessage(error.code);
             alert(error.code);
-            return of(signupFail());
+            return of(signupFail(error));
           }),
         ),
       ),
@@ -65,9 +65,9 @@ export class AddUserEffect {
             this.store.dispatch(setLoadingSpinner({ status: false }));
             return addUserSuccess({ redirect: true });
           }),
-          catchError(() => {
+          catchError((error) => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
-            return of(addUserFail());
+            return of(addUserFail({ error }));
           }),
         ),
       ),

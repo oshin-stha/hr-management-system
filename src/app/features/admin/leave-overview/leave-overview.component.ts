@@ -14,6 +14,7 @@ import { LeaveDetails } from 'src/app/shared/models/leave-overview.model';
 import {
   acceptLeaveRequest,
   rejectLeaveRequest,
+  resetLeaveOverview,
   updateLeaveBalance,
 } from './store/leave-overview.action';
 import { loadLeaveDetails } from 'src/app/shared/store/leave-overview-store/leave-overview.action';
@@ -22,6 +23,9 @@ import {
   selectUserDetails,
 } from 'src/app/shared/store/leave-overview-store/selector/leave-overview.selector';
 import { Subscription } from 'rxjs';
+import { DEPARTMENT_OPTION } from 'src/app/shared/constants/departmentoption.constants';
+import { LEAVE_DATES } from 'src/app/shared/constants/leave-dates.constants';
+import { LEAVE_TYPE } from 'src/app/shared/constants/sickleave.constant';
 
 @Component({
   selector: 'app-leave-overview',
@@ -31,6 +35,9 @@ import { Subscription } from 'rxjs';
 export class LeaveOverviewComponent
   implements AfterViewInit, OnInit, OnDestroy
 {
+  DEPARTMENT_OPTION = DEPARTMENT_OPTION;
+  LEAVE_DATES = LEAVE_DATES;
+  LEAVE_TYPE = LEAVE_TYPE;
   leaveDetails: LeaveDetails[] = [];
   userDetails: UserDetails[] = [];
   displayedColumns: string[] = [
@@ -54,6 +61,19 @@ export class LeaveOverviewComponent
   selectedDateFilter = 'all';
   getLeaveDetailSubscription: Subscription | undefined;
   getUserDetailsSubscription: Subscription | undefined;
+  currentDate = new Date();
+  today = new Date(
+    this.currentDate.getFullYear(),
+    this.currentDate.getMonth(),
+    this.currentDate.getDate(),
+  );
+  tomorrow = new Date(
+    this.currentDate.getFullYear(),
+    this.currentDate.getMonth(),
+    this.currentDate.getDate() + 1,
+  );
+  filteredLeaves: LeaveDetails[] = [];
+
   constructor(private store: Store) {}
 
   ngOnInit(): void {
@@ -134,7 +154,6 @@ export class LeaveOverviewComponent
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-    console.log(this.dataSource.filter);
   }
   applyDepartmentFilter(): void {
     if (this.selectedDepartment) {
@@ -153,46 +172,44 @@ export class LeaveOverviewComponent
   }
 
   applyDateFilter(): void {
-    const currentDate = new Date();
-    const today = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth(),
-      currentDate.getDate(),
-    );
-    const tomorrow = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth(),
-      currentDate.getDate() + 1,
-    );
-    let filteredLeaves: LeaveDetails[] = [];
-    if (this.selectedDateFilter === 'today') {
-      filteredLeaves = this.leaveDetails.filter((leave) => {
-        const leaveFrom = leave.leaveFrom.toDate();
-        return (
-          leaveFrom.getFullYear() === today.getFullYear() &&
-          leaveFrom.getMonth() === today.getMonth() &&
-          leaveFrom.getDate() === today.getDate()
-        );
-      });
-    } else if (this.selectedDateFilter === 'tomorrow') {
-      filteredLeaves = this.leaveDetails.filter((leave) => {
-        const leaveFrom = leave.leaveFrom.toDate();
-        const leaveTo = leave.leaveTo.toDate();
-        const leaveStartsTomorrow =
-          leaveFrom.getFullYear() === tomorrow.getFullYear() &&
-          leaveFrom.getMonth() === tomorrow.getMonth() &&
-          leaveFrom.getDate() === tomorrow.getDate();
-        return (
-          (tomorrow >= leaveFrom && tomorrow <= leaveTo) || leaveStartsTomorrow
-        );
-      });
-    } else {
-      filteredLeaves = this.leaveDetails;
-    }
-    const filteredUserDetails = this.userDetails.filter((user) => {
-      return filteredLeaves.some((leave) => leave.email === user.email);
+    if (this.selectedDateFilter === 'today') this.filterTodayLeaveDetails();
+    else if (this.selectedDateFilter === 'tomorrow')
+      this.filterTommorowLeaveDetails();
+    else this.filteredLeaves = this.leaveDetails;
+    this.filterUserDetails();
+  }
+
+  filterTodayLeaveDetails(): void {
+    this.filteredLeaves = this.leaveDetails.filter((leave) => {
+      const leaveFrom = leave.leaveFrom.toDate();
+      return (
+        leaveFrom.getFullYear() === this.today.getFullYear() &&
+        leaveFrom.getMonth() === this.today.getMonth() &&
+        leaveFrom.getDate() === this.today.getDate()
+      );
     });
-    this.dataSource.data = filteredLeaves.map((leave) => {
+  }
+
+  filterTommorowLeaveDetails(): void {
+    this.filteredLeaves = this.leaveDetails.filter((leave) => {
+      const leaveFrom = leave.leaveFrom.toDate();
+      const leaveTo = leave.leaveTo.toDate();
+      const leaveStartsTomorrow =
+        leaveFrom.getFullYear() === this.tomorrow.getFullYear() &&
+        leaveFrom.getMonth() === this.tomorrow.getMonth() &&
+        leaveFrom.getDate() === this.tomorrow.getDate();
+      return (
+        (this.tomorrow >= leaveFrom && this.tomorrow <= leaveTo) ||
+        leaveStartsTomorrow
+      );
+    });
+  }
+
+  filterUserDetails(): void {
+    const filteredUserDetails = this.userDetails.filter((user) => {
+      return this.filteredLeaves.some((leave) => leave.email === user.email);
+    });
+    this.dataSource.data = this.filteredLeaves.map((leave) => {
       const userDetails = filteredUserDetails.find(
         (user) => user.email === leave.email,
       );
@@ -210,5 +227,6 @@ export class LeaveOverviewComponent
   ngOnDestroy(): void {
     this.getLeaveDetailSubscription?.unsubscribe();
     this.getUserDetailsSubscription?.unsubscribe();
+    this.store.dispatch(resetLeaveOverview());
   }
 }

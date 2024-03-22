@@ -2,45 +2,49 @@ import { createAction, props } from '@ngrx/store';
 import { UserDetails, leaveBalance } from 'src/app/shared/models/adduser.model';
 
 export const signupStart = createAction(
-  '[adduser page] signup start',
+  '[Signup] Signup Start',
   props<{ email: string; password: string; employeeId: string }>(),
 );
 
-export const signupSuccess = createAction(' [adduser page] signup success');
+export const signupSuccess = createAction(' [Signup] Signup Success');
 
-export const signupFail = createAction('[adduser page] signup fail');
+export const signupFail = createAction(
+  '[Signup] Signup Fail',
+  props<{ error: string }>(),
+);
 
 export const addUserStart = createAction(
-  '[adduser page] adduser start',
+  '[Add User] AddUser Start',
   props<{ data: UserDetails }>(),
 );
 
 export const addUserSuccess = createAction(
-  '[adduser page] adduser success',
+  '[Add User] AddUser Success',
   props<{ redirect: boolean }>(),
 );
 
-export const addUserFail = createAction('[adduser page] adduser fail');
-
-export const setErrorMessage = createAction(
-  '[adduser page] set error message',
-  props<{ message: string }>(),
+export const addUserFail = createAction(
+  '[Add User ] AddUser Fail',
+  props<{ error: string }>(),
 );
+
 export const addleaveBalance = createAction(
-  '[leave balance] addleaveBalance',
+  '[Leave Balance] AddLeaveBalance',
   props<{ email: string; leaveBalance: leaveBalance }>(),
 );
 
 export const addleaveBalanceSuccess = createAction(
-  '[leave balance] addleaveBalance success',
+  '[Leave Balance] AddLeaveBalance Success',
 );
 
 export const addleaveBalanceFail = createAction(
-  '[leave balance] addleaveBalance fail',
+  '[Leave Balance] AddLeaveBalance Fail',
   props<{ error: string }>(),
 );
 
 export const loaderSuccess = createAction(
-  '[loading] Load loader',
+  '[Loading] Load Loader',
   props<{ status: boolean }>(),
 );
+
+export const resetUserData = createAction('[Reset ] Reset User Data');

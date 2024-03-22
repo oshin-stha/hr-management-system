@@ -43,5 +43,10 @@ export const FORM_ERRORS = {
   },
   password: {
     required: 'Password is required',
+    minlength: 'Password must be at least 6 digits',
   },
+};
+export const LEAVE_OVERVIEW_ERRORS = {
+  LEAVE_BALANCE_ERROR: 'Leave balance document does not exist',
+  INVALID_LEAVE: 'Invalid leave type',
 };

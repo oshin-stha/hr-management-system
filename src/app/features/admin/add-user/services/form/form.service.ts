@@ -41,7 +41,10 @@ export class FormService {
         Validators.required,
         Validators.email,
       ]),
-      [FORM_CONTROL_NAMES.PASSWORD]: new FormControl('', Validators.required),
+      [FORM_CONTROL_NAMES.PASSWORD]: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+      ]),
     });
   }
   getUserSignupPayload(

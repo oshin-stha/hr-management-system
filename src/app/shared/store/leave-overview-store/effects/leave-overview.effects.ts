@@ -32,6 +32,7 @@ export class SharedLeaveOverviewEffects {
       ),
     ),
   );
+
   loadUserDetails$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadLeaveDetails),

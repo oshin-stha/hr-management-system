@@ -4,17 +4,20 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { setLoadingSpinner } from 'src/app/shared/store/loader-store/loader-spinner.action';
-import { getLoading } from 'src/app/shared/store/loader-store/loader-spinner.selector';
+import { getLoading } from 'src/app/shared/store/loader-store/selector/loader-spinner.selector';
 import { AddUserService } from './services/add-user/add-user.service';
 import { FormService } from './services/form/form.service';
 import {
   addUserStart,
   addleaveBalance,
+  resetUserData,
   signupStart,
 } from './store/add-user.action';
 import { FORM_ERRORS } from 'src/app/shared/constants/errors.constants';
 import { FORM_CONTROL_NAMES } from 'src/app/shared/constants/form-field.constant';
-
+import { GENDER } from 'src/app/shared/constants/gender.constants';
+import { ROLE } from 'src/app/shared/constants/role.constants';
+import { DEPARTMENT_OPTION } from 'src/app/shared/constants/departmentoption.constants';
 @Component({
   selector: 'app-add-user',
   templateUrl: './add-user.component.html',
@@ -23,10 +26,15 @@ import { FORM_CONTROL_NAMES } from 'src/app/shared/constants/form-field.constant
 export class AddUserComponent implements OnDestroy {
   FORM_CONTROL_NAMES = FORM_CONTROL_NAMES;
   FORM_ERRORS = FORM_ERRORS;
+  DEPARTMENT_OPTION = DEPARTMENT_OPTION;
+  GENDER = GENDER;
+  ROLE = ROLE;
   emailExists = false;
   errorMessage: string | null = null;
   loadingSubscription: Subscription | undefined;
   actionPerformed: boolean | undefined;
+  password_hide = true;
+
   constructor(
     private addUserService: AddUserService,
     private router: Router,
@@ -34,7 +42,6 @@ export class AddUserComponent implements OnDestroy {
     private formService: FormService,
   ) {}
 
-  password_hide = true;
   signupForm: FormGroup = this.formService.createSignupForm();
 
   addUserDetail(): void {
@@ -67,8 +74,7 @@ export class AddUserComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.loadingSubscription) {
-      this.loadingSubscription.unsubscribe();
-    }
+    this.store.dispatch(resetUserData());
+    this.loadingSubscription?.unsubscribe();
   }
 }

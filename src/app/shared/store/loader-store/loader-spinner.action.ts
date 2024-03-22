@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
 export const setLoadingSpinner = createAction(
-  '[loader state] set loading spinner',
+  '[Loader State] Set Loading Spinner',
   props<{ status: boolean }>(),
 );

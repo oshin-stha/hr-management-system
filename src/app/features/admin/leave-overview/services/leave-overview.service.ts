@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import {
+  DocumentData,
   DocumentSnapshot,
   collection,
   doc,
@@ -8,8 +9,9 @@ import {
   getFirestore,
   updateDoc,
 } from 'firebase/firestore';
-import { Observable, catchError, from, map, switchMap, throwError } from 'rxjs';
+import { Observable, catchError, from, switchMap, throwError } from 'rxjs';
 import { firebaseConfig } from 'src/app/environments/environment';
+import { LEAVE_OVERVIEW_ERRORS } from 'src/app/shared/constants/errors.constants';
 
 @Injectable({
   providedIn: 'root',
@@ -20,13 +22,13 @@ export class LeaveOverviewService {
   leaveDetails = collection(this.FIRESTORE, 'leaveApplicationDetails');
   USER_DETAILS_REF = collection(this.FIRESTORE, 'UserDetails');
   LEAVE_BALANCE_REF = collection(this.FIRESTORE, 'leaveBalance');
+  leaveBalanceData: DocumentData | undefined;
+  leaveRemainingField: string | undefined;
+  updateData = {};
 
   updateLeaveStatus(id: string, newStatus: string): Observable<void> {
     const leaveDocRef = doc(this.FIRESTORE, 'leaveApplicationDetails', id);
     return from(updateDoc(leaveDocRef, { status: newStatus })).pipe(
-      map(() => {
-        alert('leave updated successfully');
-      }),
       catchError((error) => throwError(() => new Error(error))),
     );
   }
@@ -71,32 +73,28 @@ export class LeaveOverviewService {
       }),
       switchMap((snapshot: DocumentSnapshot) => {
         if (snapshot.exists()) {
-          const leaveBalanceData = snapshot.data();
-          let leaveRemainingField: string;
-          let updateData = {};
-
+          this.leaveBalanceData = snapshot.data();
           if (leaveType === 'Sick Leave') {
-            leaveRemainingField = 'sickLeaveRemaining';
+            this.leaveRemainingField = 'sickLeaveRemaining';
             const newLeaveRemaining =
-              leaveBalanceData[leaveRemainingField] - totalLeaveDays;
-            updateData = { [leaveRemainingField]: newLeaveRemaining };
+              this.leaveBalanceData[this.leaveRemainingField] - totalLeaveDays;
+            this.updateData = { [this.leaveRemainingField]: newLeaveRemaining };
           } else if (leaveType === 'Annual Leave') {
-            leaveRemainingField = 'annualLeaveRemaining';
+            this.leaveRemainingField = 'annualLeaveRemaining';
             const newLeaveRemaining =
-              leaveBalanceData[leaveRemainingField] - totalLeaveDays;
-            updateData = { [leaveRemainingField]: newLeaveRemaining };
+              this.leaveBalanceData[this.leaveRemainingField] - totalLeaveDays;
+            this.updateData = { [this.leaveRemainingField]: newLeaveRemaining };
           } else if (leaveType === 'Special Leave') {
             const leaveTakenField = 'specialLeaveTaken';
             const newLeaveTaken =
-              leaveBalanceData[leaveTakenField] + totalLeaveDays;
-            updateData = { [leaveTakenField]: newLeaveTaken };
+              this.leaveBalanceData[leaveTakenField] + totalLeaveDays;
+            this.updateData = { [leaveTakenField]: newLeaveTaken };
           } else {
-            throw new Error('Invalid leave type.');
+            throw new Error(LEAVE_OVERVIEW_ERRORS.INVALID_LEAVE);
           }
-
-          return from(updateDoc(leaveBalanceDocRef, updateData));
+          return from(updateDoc(leaveBalanceDocRef, this.updateData));
         } else {
-          throw new Error('Leave balance document does not exist.');
+          throw new Error(LEAVE_OVERVIEW_ERRORS.LEAVE_BALANCE_ERROR);
         }
       }),
       catchError((error) => {

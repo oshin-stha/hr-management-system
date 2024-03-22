@@ -6,7 +6,7 @@ import {
   ATTENDANCE_REPORT_PATH,
   SECURE_MODULE_PATH,
 } from 'src/app/shared/constants/routes.constants';
-import { getLoading } from 'src/app/shared/store/loader-store/loader-spinner.selector';
+import { getLoading } from 'src/app/shared/store/loader-store/selector/loader-spinner.selector';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',

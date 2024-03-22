@@ -1,19 +1,18 @@
-import { AddUserReducer } from './add-user.reducer';
-import { initialState } from '../add-user.state';
 import { Action } from '@ngrx/store';
+import { UserDetails, leaveBalance } from 'src/app/shared/models/adduser.model';
 import {
+  addUserFail,
+  addUserStart,
+  addleaveBalance,
+  addleaveBalanceFail,
+  addleaveBalanceSuccess,
+  resetUserData,
+  signupFail,
   signupStart,
   signupSuccess,
-  signupFail,
-  addUserStart,
-  addUserSuccess,
-  addUserFail,
-  addleaveBalance,
-  addleaveBalanceSuccess,
-  addleaveBalanceFail,
-  resetUserData,
 } from '../add-user.action';
-import { UserDetails, leaveBalance } from 'src/app/shared/models/adduser.model';
+import { initialState } from '../add-user.state';
+import { AddUserReducer } from './add-user.reducer';
 
 describe('AddUserReducer', () => {
   it('should return the initial state', () => {

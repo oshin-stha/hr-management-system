@@ -15,13 +15,28 @@ import { LeaveDetails } from 'src/app/shared/models/leave-overview.model';
 import { loadLeaveDetails } from 'src/app/shared/store/leave-overview-store/leave-overview.action';
 import { getLeaveDetails } from 'src/app/shared/store/leave-overview-store/selector/leave-overview.selector';
 import Chart from 'chart.js/auto';
-import {
-  ACCEPTED_STATUS,
-  PENDING_STATUS,
-} from 'src/app/shared/constants/status.constant';
+import { ACCEPTED_STATUS } from 'src/app/shared/constants/status.constant';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
-import { LeaveCount } from '../../models/leave-count.interface';
+import { LEAVE_TYPE } from 'src/app/shared/constants/leaveType.constants';
+import {
+  DATE_FORMAT,
+  DAY,
+  DAYS,
+} from 'src/app/shared/constants/email.constant';
+import {
+  BACKGROUND_COLORS,
+  BORDER_COLORS,
+} from 'src/app/shared/constants/color-constsnts';
+import { DEPARTMENTS } from 'src/app/shared/constants/department.constants';
+import {
+  BAR,
+  BAR_CHART,
+  LEAVE_TREND_CONSTANTS,
+  PIE,
+  PIE_CHART,
+  TOTAL_LEAVES,
+} from 'src/app/shared/constants/leaveDetails.constants';
 
 @Component({
   selector: 'app-leave-trend',
@@ -42,6 +57,7 @@ export class LeaveTrendComponent implements OnInit, OnDestroy {
   leaveDetailsSubscriber: Subscription = new Subscription();
   data: number[] = [];
   dateData: string[] = [];
+  LEAVE_TREND_CONSTANTS = LEAVE_TREND_CONSTANTS;
 
   private pieChart: Chart<'pie', number[], string> | undefined;
   private myBarChart: Chart<'bar', number[], string> | undefined;
@@ -75,69 +91,76 @@ export class LeaveTrendComponent implements OnInit, OnDestroy {
   }
 
   findAcceptedLeavesOfAllEmployees(): void {
+    this.data = [];
+    this.dateData = [];
     const leaveCountsMap = new Map<string, number>();
     this.leaveDetails.forEach((data) => {
       if (data.status === ACCEPTED_STATUS) {
         const leaveFromDate = moment(data.leaveFrom);
         const leaveToDate = moment(data.leaveTo);
-
-        while (leaveFromDate.isBefore(leaveToDate)) {
-          const dateKey = leaveFromDate.format('YYYY-MM-DD');
-          const currentCount = leaveCountsMap.get(dateKey);
-          leaveCountsMap.set(dateKey, (currentCount ?? 0) + 1);
-          leaveFromDate.add(1, 'day');
-        }
+        this.getTotalLeaveCount(
+          data,
+          leaveFromDate,
+          leaveToDate,
+          leaveCountsMap,
+        );
       }
     });
-    const leaveCountsArray = Array.from(leaveCountsMap, ([date, count]) => ({
-      date,
-      count,
-    }));
-    const sevenDaysAgo = moment().subtract(7, 'days');
 
-    const leaveCountsLast7Days: LeaveCount[] = leaveCountsArray.filter((item) =>
-      moment(item.date).isSameOrAfter(sevenDaysAgo),
-    );
-
-    leaveCountsLast7Days.forEach((element) => {
-      this.data.push(element.count);
-      this.dateData.push(element.date);
-    });
+    this.getFifteenDaysCount(leaveCountsMap);
     this.createBarChart();
   }
 
+  getFifteenDaysCount(leaveCountsMap: Map<string, number>): void {
+    const today = moment();
+    const fifteenDaysAfterTomorrow = today.clone().add(16, DAYS);
+    for (
+      let date = today.clone();
+      date.isBefore(fifteenDaysAfterTomorrow, DAY);
+      date.add(1, DAY)
+    ) {
+      const dateKey = date.format(DATE_FORMAT);
+      const count = leaveCountsMap.get(dateKey) ?? 0;
+      this.data.push(count);
+      this.dateData.push(dateKey);
+    }
+  }
+
+  getTotalLeaveCount(
+    data: LeaveDetails,
+    leaveFromDate: moment.Moment,
+    leaveToDate: moment.Moment,
+    leaveCountsMap: Map<string, number>,
+  ): void {
+    while (leaveFromDate.isSameOrBefore(leaveToDate)) {
+      const dateKey = leaveFromDate.format(DATE_FORMAT);
+      const currentCount = leaveCountsMap.get(dateKey);
+      if (
+        data.firstOrSecondHalf === LEAVE_TYPE.FIRST_HALF_LEAVE ||
+        data.firstOrSecondHalf === LEAVE_TYPE.SECOND_HALF_LEAVE
+      )
+        leaveCountsMap.set(dateKey, (currentCount ?? 0) + 0.5);
+      else leaveCountsMap.set(dateKey, (currentCount ?? 0) + 1);
+      leaveFromDate.add(1, DAY);
+    }
+  }
+
   createBarChart(): void {
-    const ctx = document.getElementById('barChart') as HTMLCanvasElement;
+    const ctx = document.getElementById(BAR_CHART) as HTMLCanvasElement;
     if (this.myBarChart) {
       this.myBarChart.destroy();
     }
 
     this.myBarChart = new Chart(ctx, {
-      type: 'bar',
+      type: BAR,
       data: {
         labels: this.dateData,
         datasets: [
           {
-            label: '# of Votes',
+            label: TOTAL_LEAVES,
             data: this.data,
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.5)',
-              'rgba(54, 162, 235, 0.5)',
-              'rgba(255, 206, 86, 0.5)',
-              'rgba(75, 192, 192, 0.5)',
-              'rgba(153, 102, 255, 0.5)',
-              'rgba(255, 159, 64, 0.5)',
-              'rgba(0, 255, 255, 0.5)',
-            ],
-            borderColor: [
-              'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)',
-              'rgba(0, 255, 255, 1)',
-            ],
+            backgroundColor: BACKGROUND_COLORS,
+            borderColor: BORDER_COLORS,
             borderWidth: 1,
           },
         ],
@@ -148,7 +171,6 @@ export class LeaveTrendComponent implements OnInit, OnDestroy {
         plugins: {
           title: {
             display: true,
-            text: 'Leave trend from last & days',
           },
         },
       },
@@ -156,27 +178,17 @@ export class LeaveTrendComponent implements OnInit, OnDestroy {
   }
 
   createPieChart(): void {
-    const ctx = document.getElementById('pieChart') as HTMLCanvasElement;
+    const ctx = document.getElementById(PIE_CHART) as HTMLCanvasElement;
     if (this.pieChart) {
       this.pieChart.destroy();
     }
     this.pieChart = new Chart(ctx, {
-      type: 'pie',
+      type: PIE,
       data: {
-        labels: [
-          'Administration',
-          'Angular',
-          'Ba',
-          'DigitalMarketting',
-          'DotNet',
-          'Flutter',
-          'GraphicDesigner',
-          'Qa',
-          'Ui/UX',
-        ],
+        labels: DEPARTMENTS,
         datasets: [
           {
-            label: '# of Votes',
+            label: TOTAL_LEAVES,
             data: [
               this.totalLeaveTakenByAdministration,
               this.totalLeaveTakenByAngular,
@@ -188,28 +200,8 @@ export class LeaveTrendComponent implements OnInit, OnDestroy {
               this.totalLeaveTakenByQa,
               this.totalLeaveTakenByUiUx,
             ],
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.5)',
-              'rgba(54, 162, 235, 0.5)',
-              'rgba(255, 206, 86, 0.5)',
-              'rgba(75, 192, 192, 0.5)',
-              'rgba(153, 102, 255, 0.5)',
-              'rgba(255, 159, 64, 0.5)',
-              'rgba(0, 255, 255, 0.5)',
-              'rgba(255, 0, 255, 0.5)',
-              'rgba(0, 255, 0, 0.5)',
-            ],
-            borderColor: [
-              'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)',
-              'rgba(0, 255, 255, 1)',
-              'rgba(255, 0, 255, 1)',
-              'rgba(0, 255, 0, 1)',
-            ],
+            backgroundColor: BACKGROUND_COLORS,
+            borderColor: BORDER_COLORS,
             borderWidth: 1,
           },
         ],
@@ -220,14 +212,26 @@ export class LeaveTrendComponent implements OnInit, OnDestroy {
         plugins: {
           title: {
             display: true,
-            text: 'Leave Trend Of Each Department',
           },
         },
       },
     });
   }
 
+  resetLeaveDataOfAllDepartment(): void {
+    this.totalLeaveTakenByAdministration = 0;
+    this.totalLeaveTakenByQa = 0;
+    this.totalLeaveTakenByBa = 0;
+    this.totalLeaveTakenByAngular = 0;
+    this.totalLeaveTakenByFlutter = 0;
+    this.totalLeaveTakenByDotNet = 0;
+    this.totalLeaveTakenByGraphicDesigner = 0;
+    this.totalLeaveTakenByUiUx = 0;
+    this.totalLeaveTakenByDigitalMarketting = 0;
+  }
+
   findLeaveDetailsOfEachDepartment(): void {
+    this.resetLeaveDataOfAllDepartment();
     this.leaveDetails.forEach((data) => {
       if (data.status === ACCEPTED_STATUS) {
         this.findLeaveDetaildOfAdministration(data);

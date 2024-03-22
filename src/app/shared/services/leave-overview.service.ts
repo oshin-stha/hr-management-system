@@ -34,6 +34,7 @@ export class LeaveOverviewService {
               status: doc.data()['status'],
               totalLeaveDays: doc.data()['totalLeaveDays'],
               fromDepartment: doc.data()['fromDepartment'],
+              firstOrSecondHalf: doc.data()['firstOrSecondHalf'],
             };
             leave.push(leaveDetail);
           });

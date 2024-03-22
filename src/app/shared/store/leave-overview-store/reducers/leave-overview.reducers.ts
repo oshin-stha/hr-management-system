@@ -6,6 +6,8 @@ import {
   loadUserDetails,
   loadUserDetailsFail,
   loadUserDetailsSuccess,
+  resetLeaveDetails,
+  resetUserDetails,
 } from '../leave-overview.action';
 import { LeaveDetailsState, initialState } from '../leave-overview.state';
 
@@ -43,6 +45,8 @@ export const _leaveOverviewReducer = createReducer(
     ...state,
     error: action.error,
   })),
+  on(resetLeaveDetails, () => initialState),
+  on(resetUserDetails, () => initialState),
 );
 
 export function SharedLeaveOverviewReducer(

@@ -10,3 +10,4 @@ export const LEAVE_TREND_PATH = 'leave-trend';
 export const UPDATE_POLICY_PATH = 'update-policy';
 export const LEAVE_STATUS_PATH = 'leave-status';
 export const LEAVE_APPLY_PATH = 'leave-apply';
+export const EMPTY_PATH = '';

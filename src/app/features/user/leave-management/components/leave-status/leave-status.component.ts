@@ -7,10 +7,7 @@ import {
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { getLeaveStatusStart } from '../../store/leaveStatusState/leaveStatus.action';
-import {
-  selectError,
-  selectStatus,
-} from '../../store/leaveStatusState/leaveStatus.selector';
+import { selectStatus } from '../../store/leaveStatusState/leaveStatus.selector';
 import { Subscription } from 'rxjs';
 import { setLoadingSpinner } from 'src/app/shared/store/loader-store/loader-spinner.action';
 import { LeaveDetails } from '../../models/leaveDetails.interface';
@@ -18,6 +15,11 @@ import { DatePipe } from '@angular/common';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import {
+  LEAVE_STATUS_CONSTANTS,
+  TABLE_COLUMNS,
+} from 'src/app/shared/constants/leaveDetails.constants';
+import { EMAIL, FORMAT_DATE } from 'src/app/shared/constants/email.constant';
 
 @Component({
   selector: 'app-leave-status',
@@ -31,19 +33,11 @@ export default class LeaveStatusComponent
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   userEmail: string | null = '';
   status: LeaveDetails[] = [];
-  displayedColumns: string[] = [
-    'id',
-    'leaveFrom',
-    'leaveTo',
-    'firstOrSecondHalf',
-    'totalLeaveDays',
-    'reasonForLeave',
-    'leaveType',
-    'status',
-  ];
+  displayedColumns: string[] = TABLE_COLUMNS;
   errorMessage: string | undefined;
   getStatusSubscriber: Subscription | undefined;
   getErrorSubscriber: Subscription | undefined;
+  LEAVE_STATUS_CONSTANTS = LEAVE_STATUS_CONSTANTS;
   dataSource: MatTableDataSource<LeaveDetails> =
     new MatTableDataSource<LeaveDetails>([]);
 
@@ -53,11 +47,9 @@ export default class LeaveStatusComponent
   ) {}
 
   ngOnInit(): void {
-    this.userEmail = localStorage.getItem('Email');
+    this.userEmail = localStorage.getItem(EMAIL);
     this.getLeaveDetails();
     this.showLeaveStatus();
-    this.getErrorMessage();
-    this.alertError();
   }
 
   addingDataToDatasource(): void {
@@ -72,6 +64,7 @@ export default class LeaveStatusComponent
       this.dataSource.sort = this.sort;
     }
   }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -97,13 +90,6 @@ export default class LeaveStatusComponent
       });
   }
 
-  getErrorMessage(): void {
-    this.getErrorSubscriber = this.store
-      .select(selectError)
-      .subscribe((res) => {
-        this.errorMessage = res;
-      });
-  }
   formatDate(
     timestamp: { seconds: number; nanoseconds: number } | undefined,
   ): string {
@@ -111,11 +97,7 @@ export default class LeaveStatusComponent
       return '';
     }
     const date = new Date(timestamp.seconds * 1000);
-    return this.datePipe.transform(date, 'yyyy-MM-dd') ?? '';
-  }
-
-  alertError(): void {
-    if (this.errorMessage && this.errorMessage != '') alert(this.errorMessage);
+    return this.datePipe.transform(date, FORMAT_DATE) ?? '';
   }
 
   ngOnDestroy(): void {

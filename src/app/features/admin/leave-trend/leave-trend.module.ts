@@ -6,12 +6,14 @@ import { StoreModule } from '@ngrx/store';
 import { SharedLeaveOverviewReducer } from 'src/app/shared/store/leave-overview-store/reducers/leave-overview.reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { SharedLeaveOverviewEffects } from 'src/app/shared/store/leave-overview-store/effects/leave-overview.effects';
+import { MaterialModule } from 'src/app/shared/material/material.module';
 
 @NgModule({
   declarations: [LeaveTrendComponent],
   imports: [
     CommonModule,
     LeaveTrendRoutingModule,
+    MaterialModule,
     StoreModule.forFeature('SharedleaveDetails', SharedLeaveOverviewReducer),
     EffectsModule.forFeature([SharedLeaveOverviewEffects]),
   ],

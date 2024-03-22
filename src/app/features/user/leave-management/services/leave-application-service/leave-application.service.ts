@@ -4,6 +4,7 @@ import { addDoc, collection, getFirestore } from 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { firebaseConfig } from 'src/app/environments/environment';
 import { LeaveDetails } from '../../models/leaveDetails.interface';
+import { LEAVE_APPLICATION_DETAILS } from 'src/app/shared/constants/leaveDetails.constants';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ import { LeaveDetails } from '../../models/leaveDetails.interface';
 export class LeaveApplicationService {
   app = initializeApp(firebaseConfig);
   firestore = getFirestore(this.app);
-  userRef = collection(this.firestore, 'leaveApplicationDetails');
+  userRef = collection(this.firestore, LEAVE_APPLICATION_DETAILS);
 
   addLeaveApplicationDetails(data: LeaveDetails): Observable<LeaveDetails> {
     return new Observable<LeaveDetails>((observer) => {

@@ -13,4 +13,5 @@ export interface LeaveDetails {
   email: string;
   actionPerformed?: boolean;
   fromDepartment?: string;
+  firstOrSecondHalf?: string;
 }

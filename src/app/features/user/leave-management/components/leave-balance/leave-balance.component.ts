@@ -1,14 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { getLeavebalanceStart } from '../../store/leaveBalanceState/leaveBalance.action';
+import {
+  getLeavebalanceReset,
+  getLeavebalanceStart,
+} from '../../store/leaveBalanceState/leaveBalance.action';
 import { getLeaveBalance } from '../../store/leaveBalanceState/leaveBalance.selector';
+import { LEAVE_BALANCE_CONSTANTS } from 'src/app/shared/constants/leaveDetails.constants';
+import { EMAIL } from 'src/app/shared/constants/email.constant';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-leave-balance',
   templateUrl: './leave-balance.component.html',
   styleUrls: ['./leave-balance.component.scss'],
 })
-export class LeaveBalanceComponent implements OnInit {
+export class LeaveBalanceComponent implements OnInit, OnDestroy {
   userEmail: string | null = '';
   annualLeaveRemaining: number | undefined;
   annualLeaveTotal: number | undefined;
@@ -16,13 +22,18 @@ export class LeaveBalanceComponent implements OnInit {
   sickLeaveTotal: number | undefined;
   specialLeaveTaken: number | undefined;
   leaveTaken: number | undefined;
+  LEAVE_BALANCE_CONSTANTS = LEAVE_BALANCE_CONSTANTS;
+  getLeavebalanceSubscriber: Subscription = new Subscription();
 
   constructor(private store: Store) {}
 
   ngOnInit(): void {
-    this.userEmail = localStorage.getItem('Email');
-    this.startGetLeaveBalance();
+    this.userEmail = localStorage.getItem(EMAIL);
     this.getLeaveBalance();
+  }
+  ngOnDestroy(): void {
+    this.getLeavebalanceSubscriber.unsubscribe();
+    this.store.dispatch(getLeavebalanceReset());
   }
 
   startGetLeaveBalance(): void {
@@ -32,12 +43,15 @@ export class LeaveBalanceComponent implements OnInit {
   }
 
   getLeaveBalance(): void {
-    this.store.select(getLeaveBalance).subscribe((res) => {
-      (this.annualLeaveTotal = res.annualLeaveTotal),
-        (this.annualLeaveRemaining = res.annualLeaveRemaining),
-        (this.sickLeaveTotal = res.sickLeaveTotal),
-        (this.sickLeaveRemaining = res.sickLeaveRemaining),
-        (this.specialLeaveTaken = res.specialLeaveTaken);
-    });
+    this.getLeavebalanceSubscriber = this.store
+      .select(getLeaveBalance)
+      .subscribe((res) => {
+        (this.annualLeaveTotal = res.annualLeaveTotal),
+          (this.annualLeaveRemaining = res.annualLeaveRemaining),
+          (this.sickLeaveTotal = res.sickLeaveTotal),
+          (this.sickLeaveRemaining = res.sickLeaveRemaining),
+          (this.specialLeaveTaken = res.specialLeaveTaken);
+      });
+    this.startGetLeaveBalance();
   }
 }

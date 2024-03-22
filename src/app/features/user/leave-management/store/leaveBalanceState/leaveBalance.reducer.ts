@@ -2,6 +2,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 import { initialLeaveBalanceState } from './leaveBalance.state';
 import {
   getLeavebalanceFailure,
+  getLeavebalanceReset,
   getLeavebalanceStart,
   getLeavebalanceSuccess,
 } from './leaveBalance.action';
@@ -30,6 +31,7 @@ const _leaveBalanceReducer = createReducer(
     ...state,
     error: action.error,
   })),
+  on(getLeavebalanceReset, () => initialLeaveBalanceState),
 );
 
 export function LeaveBalanceReducer(

@@ -15,3 +15,6 @@ export const getLeavebalanceFailure = createAction(
   '[Leave Balance Page] failure get leave balance',
   props<{ error: string }>(),
 );
+export const getLeavebalanceReset = createAction(
+  '[Leave Balance Page] reset get leave balance',
+);

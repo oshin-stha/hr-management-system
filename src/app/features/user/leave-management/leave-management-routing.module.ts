@@ -4,6 +4,7 @@ import { LeaveManagementComponent } from './leave-management.component';
 import { LeaveApplyComponent } from './components/leave-apply/leave-apply.component';
 import LeaveStatusComponent from './components/leave-status/leave-status.component';
 import {
+  EMPTY_PATH,
   LEAVE_APPLY_PATH,
   LEAVE_STATUS_PATH,
 } from 'src/app/shared/constants/routes.constants';
@@ -11,10 +12,10 @@ import { LeaveBalanceComponent } from './components/leave-balance/leave-balance.
 
 const routes: Routes = [
   {
-    path: '',
+    path: EMPTY_PATH,
     component: LeaveManagementComponent,
     children: [
-      { path: '', component: LeaveBalanceComponent },
+      { path: EMPTY_PATH, component: LeaveBalanceComponent },
       { path: LEAVE_APPLY_PATH, component: LeaveApplyComponent },
       { path: LEAVE_STATUS_PATH, component: LeaveStatusComponent },
     ],

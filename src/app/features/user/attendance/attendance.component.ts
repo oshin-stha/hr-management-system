@@ -11,6 +11,7 @@ import {
   checkInStart,
   checkOutStart,
   fetchAttendanceData,
+  fetchAttendanceDataReset,
 } from './store/attendance.actions';
 import {
   selectAttendanceDataFetchStatus,
@@ -57,37 +58,7 @@ export class AttendanceComponent implements OnInit, OnDestroy {
     );
   }
 
-  // ngAfterViewChecked(): void {
-  //  this.dateClassFunction(new Date(), "month");
-  // }
-
   dateClassFunction: MatCalendarCellClassFunction<Date> = (date: Date) => {
-    // const cells = Array.from(document.querySelectorAll<HTMLDivElement>('.mat-calendar-body-cell'));
-    // for(let i=0; i < cells.length; i++){
-    //   if (this.attendanceData) {
-    //     for (const [dateKey, entry] of Object.entries(this.attendanceData)) {
-    //       const entryDate = new Date(dateKey);
-    //       console.log('outside cell')
-
-    //       if ( date.getDate() === entryDate.getDate() &&
-    //         date.getMonth() === entryDate.getMonth() &&
-    //         date.getFullYear() === entryDate.getFullYear()) {
-    //           console.log('inside cell')
-    //           const checkInStatus = entry[0].checkInStatus;
-    //           console.log(checkInStatus)
-    //           if (checkInStatus === 'Late-Arrival' || checkInStatus === 'Early-Depature') {
-    //             cells[i].textContent = checkInStatus;
-    //             console.log(cells[i].textContent,"I am the content")
-    //           }
-    //           break;
-    //       }
-
-    //     }
-    //     cells[i].textContent = `xxxxxxxx`;
-    //   }
-
-    // }
-
     const classes: MatCalendarCellCssClasses = {};
 
     if (date.getDay() === 0 || date.getDay() === 6) {
@@ -146,5 +117,6 @@ export class AttendanceComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.checkInStatusSubscription?.unsubscribe();
     this.dataForCalendarSubscription?.unsubscribe();
+    this.store.dispatch(fetchAttendanceDataReset());
   }
 }

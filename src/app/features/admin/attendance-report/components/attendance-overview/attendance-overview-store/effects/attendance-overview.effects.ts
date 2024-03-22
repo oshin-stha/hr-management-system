@@ -3,9 +3,10 @@ import { AttendanceReportService } from '../../attendance-overview-service/atten
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {
   fetchTodaysAttendnaceData,
-  setTodaysAttendnaceData,
+  fetchTodaysAttendnaceDataFail,
+  fetchTodaysAttendnaceDataSuccess,
 } from '../attendance-overview.actions';
-import { map, switchMap } from 'rxjs';
+import { catchError, map, of, switchMap } from 'rxjs';
 
 @Injectable()
 export class AttendanceReport {
@@ -21,7 +22,10 @@ export class AttendanceReport {
         return this.attendanceReportService
           .getTodaysAttendanceWithUserDetails()
           .pipe(
-            map((data) => setTodaysAttendnaceData({ todaysAttendance: data })),
+            map((data) =>
+              fetchTodaysAttendnaceDataSuccess({ todaysAttendance: data }),
+            ),
+            catchError((error) => of(fetchTodaysAttendnaceDataFail({ error }))),
           );
       }),
     ),

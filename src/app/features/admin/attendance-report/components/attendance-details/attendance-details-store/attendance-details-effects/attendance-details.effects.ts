@@ -5,10 +5,11 @@ import { AttendanceState } from 'src/app/shared/models/attendance.model';
 import { AttendanceDetailsService } from '../../attendance-details-service/attendance-details.service';
 import {
   loadAttendanceDetails,
+  loadEmployeeNameFail,
   loademployeeName,
-  setAttendanceDetails,
-  setemployeeName,
-  someDefaultAction,
+  loademployeeNameSuccess,
+  loadAttendanceDetailsSuccess,
+  loadAttendanceDetailsFail,
 } from '../attendance-details.actions';
 
 @Injectable()
@@ -26,8 +27,9 @@ export class AttendanceDetails {
           .getAttendanceDetailsByEmployeeId(action.employeeId)
           .pipe(
             map((attendanceList: AttendanceState[]) => {
-              return setAttendanceDetails({ attendanceList });
+              return loadAttendanceDetailsSuccess({ attendanceList });
             }),
+            catchError((error) => of(loadAttendanceDetailsFail({ error }))),
           ),
       ),
     ),
@@ -42,12 +44,13 @@ export class AttendanceDetails {
           .pipe(
             map((employeeName: string) => {
               if (employeeName) {
-                return setemployeeName({ employeeName });
+                return loademployeeNameSuccess({ employeeName });
               } else {
-                return someDefaultAction();
+                const error = 'Empty EMployee Name';
+                return loadEmployeeNameFail({ error });
               }
             }),
-            catchError(() => of(someDefaultAction())),
+            catchError((error) => of(loadEmployeeNameFail({ error }))),
           ),
       ),
     ),

@@ -16,5 +16,5 @@ export interface AttendanceByDate {
 
 export interface CheckInState {
   checkInStatus: boolean;
-  error: unknown;
+  error: string | null;
 }

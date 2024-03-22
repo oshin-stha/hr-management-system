@@ -1,14 +1,21 @@
-<button
-  mat-raised-button
-  class="back"
-  color="primary"
-  type="button"
-  (click)="attendanceOverview()"
->
-  Back
-</button>
 <div class="header">
   <h2>Attendance Details of {{ employeeName$ | async }}</h2>
+</div>
+
+<div>
+  <mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" #input />
+  </mat-form-field>
+  <button
+    mat-flat-button
+    class="back-button"
+    color="primary"
+    type="button"
+    (click)="attendanceOverview()"
+  >
+    Back Overview
+  </button>
 </div>
 
 <div class="mat-table-container">

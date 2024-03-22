@@ -1,26 +1,31 @@
 .main-container {
   display: flex;
-  position: relative;
-}
-
-.calendar-container {
-  flex: 1;
-  display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 30px;
+}
+
+.calendar-info-container {
+  display: flex;
 }
 
 .small-calendar {
-  width: 550px;
-  height: 450px;
+  min-width: 600px;
+  min-height: 450px;
+  border: 1px solid rgb(101, 117, 121);
+}
+
+.calendar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+  overflow: auto;
 }
 
 .info-container {
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin-right: 170px;
-  margin-top: 45px;
+  position: relative;
+  margin-bottom: 500px;
 }
 
 .info-list {
@@ -60,11 +65,11 @@
 }
 
 .button-container {
-  display: flex;
-  justify-content: center;
+  margin-bottom: 500px;
+  margin-right: 80px;
+  margin-left: 10px;
 }
 
 .button {
-  margin: 10px;
   min-width: 120px;
 }

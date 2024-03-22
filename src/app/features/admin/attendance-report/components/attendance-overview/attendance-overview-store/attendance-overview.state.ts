@@ -1,11 +1,17 @@
-import { UserDetails } from 'src/app/shared/models/adduser.model';
 import { AttendanceState } from 'src/app/shared/models/attendance.model';
 
 export const initialStateTodaysAttendance: TodaysAttendanceState[] = [];
 
 export interface TodaysAttendanceState {
   attendance: AttendanceState;
-  userDetails: UserDetails;
+  userNameEmployeeID: NameEmployeeId;
+}
+
+export interface NameEmployeeId {
+  employeeId: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
 }
 
 export interface TableDataForTodaysAttendance {

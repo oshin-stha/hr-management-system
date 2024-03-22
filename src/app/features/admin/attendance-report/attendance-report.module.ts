@@ -16,7 +16,7 @@ import {
   USER_NAME,
 } from './components/attendance-details/attendance-details-store/attendance-details-selector/attendance-details.selector';
 import { AttendanceDetailsComponent } from './components/attendance-details/attendance-details.component';
-import { AttendanceReport } from './components/attendance-overview/attendance-overview-store/effects/attendance-report.effects';
+import { AttendanceReport } from './components/attendance-overview/attendance-overview-store/effects/attendance-overview.effects';
 import { TodaysAttendanceReducer } from './components/attendance-overview/attendance-overview-store/reducer/attendance-report.reducer';
 import { TODAYS_ATTENDANCE_DATA } from './components/attendance-overview/attendance-overview-store/selector/attendance-report.selector';
 import { AttendanceOverviewComponent } from './components/attendance-overview/attendance-overview.component';

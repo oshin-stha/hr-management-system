@@ -20,7 +20,8 @@ import {
   checkOutStart,
   checkOutSuccess,
   fetchAttendanceData,
-  setAttendanceData,
+  fetchAttendanceDataFail,
+  fetchAttendanceDataSuccess,
 } from '../attendance.actions';
 
 @Injectable()
@@ -134,7 +135,7 @@ export class AttendanceEffects {
       switchMap(() => {
         const email = localStorage.getItem('Email');
         if (!email) {
-          return of(setAttendanceData({ attendanceByDate: {} }));
+          return of(fetchAttendanceDataSuccess({ attendanceByDate: {} }));
         }
         return this.attendanceService.getAttendanceData(email).pipe(
           map((attendanceData) => {
@@ -152,9 +153,11 @@ export class AttendanceEffects {
                 console.error('Invalid checkInTime:', entry.checkInTime);
               }
             });
-            return setAttendanceData({ attendanceByDate: attendanceByDate });
+            return fetchAttendanceDataSuccess({
+              attendanceByDate: attendanceByDate,
+            });
           }),
-          catchError(() => of({ type: 'error fetching attendance data' })),
+          catchError((error) => of(fetchAttendanceDataFail({ error }))),
         );
       }),
     ),

@@ -1,27 +1,26 @@
-<div class="button-container">
-  <button
-    mat-raised-button
-    color="primary"
-    [disabled]="checkInStatus"
-    type="submit"
-    class="button check-in"
-    (click)="checkIn()"
-  >
-    Check In
-  </button>
-  <button
-    mat-raised-button
-    color="primary"
-    [disabled]="!checkInStatus"
-    type="submit"
-    class="button check-out"
-    (click)="checkOut()"
-  >
-    Check Out
-  </button>
-</div>
-
 <div class="main-container">
+  <div class="button-container">
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="checkInStatus"
+      type="submit"
+      class="button check-in"
+      (click)="checkIn()"
+    >
+      Check In
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="!checkInStatus"
+      type="submit"
+      class="button check-out"
+      (click)="checkOut()"
+    >
+      Check Out
+    </button>
+  </div>
   <div class="calendar-container">
     <mat-calendar
       calender
@@ -41,21 +40,3 @@
     </ul>
   </div>
 </div>
-
-<!-- <div class="calendar-container">
-  <mat-calendar calender *ngIf="attendanceData" class="small-calendar" [dateClass]="dateClassFunction"></mat-calendar>
-</div>
-
-<div class="info-container">
-  <ul class="info-list">
-    <li class="sufficient-hours">
-      <span class="color-box"></span> Sufficient Hours
-    </li>
-    <li class="less-hours">
-      <span class="color-box"></span> Less Hours
-    </li>
-    <li class="weekends">
-      <span class="color-box"></span> Weekends
-    </li>
-  </ul>
-</div> -->

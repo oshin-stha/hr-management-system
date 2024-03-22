@@ -34,14 +34,32 @@ export class AttendanceDetailsService {
       map((querySnapshot: QuerySnapshot<DocumentData>) => {
         const attendanceList: AttendanceState[] = [];
         querySnapshot.forEach((doc: QueryDocumentSnapshot<DocumentData>) => {
-          const data = doc.data();
-          if (data['email'] === email) {
-            attendanceList.push(data as AttendanceState);
+          const attendanceDataDoc = doc.data();
+          if (attendanceDataDoc['email'] === email) {
+            const attendanceData =
+              this.extractAttendanceData(attendanceDataDoc);
+            attendanceList.push(attendanceData);
           }
         });
         return attendanceList;
       }),
     );
+  }
+
+  private extractAttendanceData(
+    attendanceDataDoc: DocumentData,
+  ): AttendanceState {
+    return {
+      email: attendanceDataDoc?.['email'],
+      checkInTime: attendanceDataDoc?.['checkInTime'],
+      checkOutTime: attendanceDataDoc?.['checkOutTime'],
+      checkInStatus: attendanceDataDoc?.['checkInStatus'],
+      checkOutStatus: attendanceDataDoc?.['checkOutStatus'],
+      checkInReason: attendanceDataDoc?.['checkInReason'],
+      checkOutReason: attendanceDataDoc?.['checkOutReason'],
+      workingHours: attendanceDataDoc?.['workingHours'],
+      absent: attendanceDataDoc?.['absent'],
+    };
   }
 
   private getEmailByEmployeeId(id: string): Observable<string | undefined> {
@@ -64,16 +82,15 @@ export class AttendanceDetailsService {
         let employeeName = '';
         querySnapshot.forEach((doc) => {
           if (doc.data()['employeeId'] === id) {
-            employeeName =
-              doc.data()['firstName'] +
-              ' ' +
-              doc.data()['middleName'] +
-              ' ' +
-              doc.data()['lastName'];
+            employeeName = this.constructEmployeeName(doc.data());
           }
         });
         return employeeName;
       }),
     );
+  }
+
+  private constructEmployeeName(data: DocumentData): string {
+    return `${data['firstName']} ${data['middleName']} ${data['lastName']}`;
   }
 }

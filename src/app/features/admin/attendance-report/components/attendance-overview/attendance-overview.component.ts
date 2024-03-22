@@ -39,6 +39,18 @@ export class AttendanceOverviewComponent
     new MatTableDataSource();
   ATTENDANCE_REPORT_DETAILS = ATTENDANCE_REPORT_DETAILS;
   todaysAttendanceDataSubscrition: Subscription | undefined;
+  displayedColumns: string[] = [
+    'index',
+    'name',
+    'checkInTime',
+    'checkInStatus',
+    'checkOutTime',
+    'checkOutStatus',
+    'absent',
+    'workingHours',
+    'actions',
+  ];
+
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
 
@@ -53,10 +65,6 @@ export class AttendanceOverviewComponent
     this.formatData();
   }
 
-  resetState() {
-    this.store.dispatch(resetTodaysAttendance());
-  }
-
   formatData() {
     this.todaysAttendanceDataSubscrition = this.todaysAttendanceData$.subscribe(
       (data) => {
@@ -64,9 +72,9 @@ export class AttendanceOverviewComponent
           const transformedData: TableDataForTodaysAttendance[] = [];
           data.forEach((entry) => {
             const attendance = entry.attendance;
-            const userDetails = entry.userDetails;
+            const userNameEmployeeID = entry.userNameEmployeeID;
             const transformedEntry: TableDataForTodaysAttendance = {
-              name: `${userDetails.firstName} ${userDetails.lastName}`,
+              name: `${userNameEmployeeID.firstName} ${userNameEmployeeID.lastName}`,
               checkInTime: attendance.checkInTime
                 ? this.formatDate(attendance.checkInTime)
                 : null,
@@ -77,7 +85,7 @@ export class AttendanceOverviewComponent
               checkOutStatus: attendance.checkOutStatus,
               absent: attendance.absent ? attendance.absent : 'Present',
               workingHours: attendance.workingHours,
-              employeeId: userDetails.employeeId,
+              employeeId: userNameEmployeeID.employeeId,
             };
 
             transformedData.push(transformedEntry);
@@ -102,18 +110,6 @@ export class AttendanceOverviewComponent
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  displayedColumns: string[] = [
-    'index',
-    'name',
-    'checkInTime',
-    'checkInStatus',
-    'checkOutTime',
-    'checkOutStatus',
-    'absent',
-    'workingHours',
-    'actions',
-  ];
-
   attendanceDetails(id: string) {
     this.router.navigate([
       `/${SECURE_MODULE_PATH}/${ATTENDANCE_REPORT_PATH}/${ATTENDANCE_REPORT_DETAILS}/${id}`,
@@ -130,6 +126,6 @@ export class AttendanceOverviewComponent
 
   ngOnDestroy(): void {
     this.todaysAttendanceDataSubscrition?.unsubscribe();
-    this.resetState();
+    this.store.dispatch(resetTodaysAttendance());
   }
 }

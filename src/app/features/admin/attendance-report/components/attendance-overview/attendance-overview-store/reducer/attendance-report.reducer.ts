@@ -1,7 +1,8 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import {
   resetTodaysAttendance,
-  setTodaysAttendnaceData,
+  fetchTodaysAttendnaceDataSuccess,
+  fetchTodaysAttendnaceDataFail,
 } from '../attendance-overview.actions';
 import {
   TodaysAttendanceState,
@@ -10,10 +11,14 @@ import {
 
 const _TodaysAttendanceDataReducer = createReducer(
   initialStateTodaysAttendance,
-  on(setTodaysAttendnaceData, (state, { todaysAttendance }) => [
+  on(fetchTodaysAttendnaceDataSuccess, (state, { todaysAttendance }) => [
     ...state,
     ...todaysAttendance,
   ]),
+  on(fetchTodaysAttendnaceDataFail, (state, { error }) => ({
+    ...state,
+    error,
+  })),
   on(resetTodaysAttendance, () => initialStateTodaysAttendance),
 );
 

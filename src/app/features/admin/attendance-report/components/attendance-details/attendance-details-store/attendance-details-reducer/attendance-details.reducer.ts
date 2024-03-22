@@ -1,7 +1,10 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import {
-  setAttendanceDetails,
-  setemployeeName,
+  loadAttendanceDetailsFail,
+  loadAttendanceDetailsReset,
+  loadAttendanceDetailsSuccess,
+  loadEmployeeNameFail,
+  loademployeeNameSuccess,
 } from '../attendance-details.actions';
 import {
   AttendanceListState,
@@ -12,9 +15,18 @@ import {
 
 const _AttendanceListReducer = createReducer(
   initialStateAttendanceList,
-  on(setAttendanceDetails, (state, { attendanceList }) => ({
+  on(loadAttendanceDetailsSuccess, (state, { attendanceList }) => {
+    console.log(attendanceList);
+    return {
+      ...state,
+      attendanceList,
+      error: null,
+    };
+  }),
+  on(loadAttendanceDetailsReset, () => initialStateAttendanceList),
+  on(loadAttendanceDetailsFail, (state, { error }) => ({
     ...state,
-    attendanceList,
+    error,
   })),
 );
 
@@ -27,9 +39,14 @@ export function AttendanceListReducer(
 
 const _employeeNameReducer = createReducer(
   initialStateemployeeName,
-  on(setemployeeName, (state, { employeeName }) => ({
+  on(loademployeeNameSuccess, (state, { employeeName }) => ({
     ...state,
     employeeName,
+    error: null,
+  })),
+  on(loadEmployeeNameFail, (state, { error }) => ({
+    ...state,
+    error,
   })),
 );
 

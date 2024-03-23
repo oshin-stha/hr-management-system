@@ -11,6 +11,8 @@ import {
   UPDATE_POLICY_PATH,
 } from 'src/app/shared/constants/routes.constants';
 import { SecureComponent } from './secure.component';
+import { adminGuard } from '../../guard/admin-guard/admin.guard';
+import { PageNotFoundComponent } from 'src/app/shared/page-not-found/page-not-found/page-not-found.component';
 const routes: Routes = [
   {
     path: '',
@@ -46,6 +48,7 @@ const routes: Routes = [
       },
       {
         path: ADD_USER_COMPONENT_PATH,
+        canMatch: [adminGuard],
         loadChildren: () =>
           import('../../../features/admin/add-user/add-user.module').then(
             (m) => m.AddUserModule,
@@ -53,6 +56,7 @@ const routes: Routes = [
       },
       {
         path: ATTENDANCE_REPORT_PATH,
+        canMatch: [adminGuard],
         loadChildren: () =>
           import(
             '../../../features/admin/attendance-report/attendance-report.module'
@@ -60,6 +64,7 @@ const routes: Routes = [
       },
       {
         path: LEAVE_OVERVIEW_PATH,
+        canMatch: [adminGuard],
         loadChildren: () =>
           import(
             '../../../features/admin/leave-overview/leave-overview.module'
@@ -74,11 +79,13 @@ const routes: Routes = [
       },
       {
         path: UPDATE_POLICY_PATH,
+        canMatch: [adminGuard],
         loadChildren: () =>
           import(
             '../../../features/admin/update-policy/update-policy.module'
           ).then((m) => m.UpdatePolicyModule),
       },
+      { path: '**', component: PageNotFoundComponent },
     ],
   },
 ];

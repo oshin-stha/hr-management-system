@@ -19,17 +19,16 @@ export class LeaveOverviewService {
       getDocs(this.leaveDetails)
         .then((snapshot) => {
           const leave: LeaveDetails[] = [];
-          snapshot.docs.forEach((doc, index) => {
+          snapshot.docs.forEach((doc) => {
             const leaveDetail: LeaveDetails = {
               id: doc.id,
-              sn: (index + 1).toString(),
               employeeName: doc.data()['employeeName'],
               department: doc.data()['department'],
               email: doc.data()['email'],
               contactInformation: doc.data()['contactInformation'],
               leaveType: doc.data()['leaveType'],
-              leaveFrom: doc.data()['leaveFrom'].toDate(),
-              leaveTo: doc.data()['leaveTo'].toDate(),
+              leaveFrom: doc.data()['leaveFrom'],
+              leaveTo: doc.data()['leaveTo'],
               reasonForLeave: doc.data()['reasonForLeave'],
               status: doc.data()['status'],
               totalLeaveDays: doc.data()['totalLeaveDays'],

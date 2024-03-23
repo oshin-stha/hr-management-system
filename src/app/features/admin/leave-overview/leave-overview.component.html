@@ -5,16 +5,25 @@
     [(ngModel)]="selectedDepartment"
     (change)="applyDepartmentFilter()"
   >
-    <option value="">All Departments</option>
-    <option value="administration">Administration</option>
-    <option value="angular">Angular</option>
-    <option value="businessanalyst">Business Analyst</option>
-    <option value="digitalmarketing">Digital Marketing</option>
-    <option value="dotnet">Dot Net</option>
-    <option value="flutter">Flutter</option>
-    <option value="graphicsdesigner">Graphics Designer</option>
-    <option value="qa">Quality Assurance</option>
-    <option value="ui/ux">UI/UX</option>
+    <option value="">{{ DEPARTMENT_OPTION.ALL }}</option>
+    <option value="administration">
+      {{ DEPARTMENT_OPTION.ADMINISTRATION }}
+    </option>
+    <option value="angular">{{ DEPARTMENT_OPTION.ANGULAR }}</option>
+    <option value="businessanalyst">
+      {{ DEPARTMENT_OPTION.BUSINESS_ANALYST }}
+    </option>
+    <option value="digitalmarketing">
+      {{ DEPARTMENT_OPTION.DIGITAL_MARKETING }}
+    </option>
+    <option value="dotnet">{{ DEPARTMENT_OPTION.DOTNET }}</option>
+    <option value="devops">{{ DEPARTMENT_OPTION.DEVOPS }}</option>
+    <option value="flutter">{{ DEPARTMENT_OPTION.FLUTTER }}</option>
+    <option value="graphicsdesigner">
+      {{ DEPARTMENT_OPTION.GRAPHICS_DESIGNER }}
+    </option>
+    <option value="qa">{{ DEPARTMENT_OPTION.QA }}</option>
+    <option value="ui/ux">{{ DEPARTMENT_OPTION.UIUX }}</option>
   </select>
 </mat-form-field>
 <mat-form-field appearance="outline" class="filter-leave-dates">
@@ -24,9 +33,9 @@
     [(ngModel)]="selectedDateFilter"
     (change)="applyDateFilter()"
   >
-    <option value="all">All</option>
-    <option value="today">Today</option>
-    <option value="tomorrow">Tomorrow</option>
+    <option value="all">{{ LEAVE_DATES.ALL }}</option>
+    <option value="today">{{ LEAVE_DATES.TODAY }}</option>
+    <option value="tomorrow">{{ LEAVE_DATES.TOMMOROW }}</option>
   </select>
 </mat-form-field>
 
@@ -37,10 +46,10 @@
     [(ngModel)]="selectedLeaveType"
     (change)="applyLeaveTypeFilter()"
   >
-    <option value="">All Leave Type</option>
-    <option value="Sick Leave">Sick Leave</option>
-    <option value="Annual Leave">Annual Leave</option>
-    <option value="Special Leave">Special Leave</option>
+    <option value="">{{ LEAVE_TYPE.ALL_LEAVE_TYPE }}</option>
+    <option value="sickLeave">{{ LEAVE_TYPE.ANNUAL_LEAVE }}</option>
+    <option value="annualLeave">{{ LEAVE_TYPE.SICK_LEAVE }}</option>
+    <option value="specialLeave">{{ LEAVE_TYPE.SPECIAL_LEAVE }}</option>
   </select>
 </mat-form-field>
 <mat-form-field appearance="outline" class="filter-leave-details">
@@ -65,8 +74,10 @@
     class="leave-overview-table"
   >
     <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>S.N.</th>
-      <td mat-cell *matCellDef="let row" let index="i">{{ row.sn }}</td>
+      <th mat-header-cell *matHeaderCellDef>S.N.</th>
+      <td mat-cell *matCellDef="let element; let i = index">
+        {{ i + 1 + (paginator?.pageIndex || 0) * (paginator?.pageSize || 0) }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="employeeName">
@@ -94,14 +105,14 @@
     <ng-container matColumnDef="leaveFrom">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Leave From</th>
       <td mat-cell *matCellDef="let row">
-        {{ row.leaveFrom | date: "YY-MM-dd" }}
+        {{ formatDate(row.leaveFrom) }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="leaveTo">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Leave To</th>
       <td mat-cell *matCellDef="let row">
-        {{ row.leaveTo | date: "YY-MM-dd" }}
+        {{ formatDate(row.leaveTo) }}
       </td>
     </ng-container>
 
@@ -117,10 +128,20 @@
 
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-      <td mat-cell *matCellDef="let row">{{ row.status }}</td>
+      <td
+        mat-cell
+        *matCellDef="let row"
+        [ngClass]="{
+          'yellow-text': row.status === 'pending',
+          'green-text': row.status === 'accepted',
+          'red-text': row.status === 'rejected'
+        }"
+      >
+        {{ row.status }}
+      </td>
     </ng-container>
     <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+      <th mat-header-cell *matHeaderCellDef>Action</th>
       <td mat-cell *matCellDef="let row" class="action-cell">
         <div class="button-group">
           <button

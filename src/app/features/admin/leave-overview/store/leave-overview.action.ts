@@ -57,3 +57,7 @@ export const updateLeaveBalanceFail = createAction(
   '[Leave Balance] Update Leave Balance',
   props<{ error: string }>(),
 );
+
+export const resetLeaveOverview = createAction(
+  '[Reset LeaveOverview] Reset Leave Overview',
+);

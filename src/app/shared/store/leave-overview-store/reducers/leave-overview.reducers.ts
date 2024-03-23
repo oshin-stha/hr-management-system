@@ -19,9 +19,9 @@ export const _leaveOverviewReducer = createReducer(
     loading: true,
   })),
 
-  on(loadUserDetailsSuccess, (state, action) => ({
+  on(loadUserDetailsSuccess, (state, { userDetails }) => ({
     ...state,
-    userDetails: action.userDetails,
+    userDetails,
     loading: false,
   })),
 
@@ -36,14 +36,14 @@ export const _leaveOverviewReducer = createReducer(
     loading: true,
   })),
 
-  on(loadLeaveDetailsSuccess, (state, action) => ({
+  on(loadLeaveDetailsSuccess, (state, { leaveDetails }) => ({
     ...state,
-    leaveDetails: action.leaveDetails,
+    leaveDetails,
   })),
 
-  on(loadLeaveDetailsFail, (state, action) => ({
+  on(loadLeaveDetailsFail, (state, { error }) => ({
     ...state,
-    error: action.error,
+    error: error,
   })),
   on(resetLeaveDetails, () => initialState),
   on(resetUserDetails, () => initialState),

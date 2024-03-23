@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.loginForm = this.formService.loginForm;
     localStorage.removeItem('Email');
+    localStorage.removeItem('role');
   }
 
   logInUser(): void {

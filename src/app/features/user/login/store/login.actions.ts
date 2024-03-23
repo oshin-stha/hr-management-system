@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+import { UserDetails } from 'src/app/shared/models/adduser.model';
 
 export const loginStart = createAction(
   '[Auth/API] login start',
@@ -11,3 +12,15 @@ export const loginFailure = createAction(
 );
 
 export const loginSuccess = createAction('[Auth/API] login success');
+export const getUserDetails = createAction(
+  '[User] Get User Details',
+  props<{ email: string }>(),
+);
+export const getUserDetailsSuccess = createAction(
+  '[User] Get User Details Success',
+  props<{ userDetails: UserDetails[] }>(),
+);
+export const getUserDetailsFailure = createAction(
+  '[User] Get User Details Failure',
+  props<{ error: string }>(),
+);

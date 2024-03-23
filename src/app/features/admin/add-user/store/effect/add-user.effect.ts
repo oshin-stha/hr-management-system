@@ -15,7 +15,7 @@ import {
   signupFail,
   signupStart,
   signupSuccess,
-} from './add-user.action';
+} from '../add-user.action';
 import { SECURE_MODULE_PATH } from 'src/app/shared/constants/routes.constants';
 @Injectable()
 export class AddUserEffect {
@@ -47,7 +47,7 @@ export class AddUserEffect {
             this.store.dispatch(setLoadingSpinner({ status: false }));
             this.addUserService.getErrorMessage(error.code);
             alert(error.code);
-            return of(signupFail());
+            return of(signupFail(error));
           }),
         ),
       ),
@@ -65,9 +65,9 @@ export class AddUserEffect {
             this.store.dispatch(setLoadingSpinner({ status: false }));
             return addUserSuccess({ redirect: true });
           }),
-          catchError(() => {
+          catchError((error) => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
-            return of(addUserFail());
+            return of(addUserFail({ error }));
           }),
         ),
       ),
@@ -86,6 +86,7 @@ export class AddUserEffect {
       ),
     { dispatch: false },
   );
+
   addLeaveBalance$ = createEffect(() =>
     this.action$.pipe(
       ofType(addleaveBalance),

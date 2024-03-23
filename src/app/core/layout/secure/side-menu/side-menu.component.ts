@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
   SECURE_MODULE_PATH,
   DASHBOARD_COMPONENT_PATH,
@@ -16,7 +16,11 @@ import {
   templateUrl: './side-menu.component.html',
   styleUrls: ['./side-menu.component.scss'],
 })
-export class SideMenuComponent {
+export class SideMenuComponent implements OnInit {
+  role: string | undefined | null;
+  @Input() isUser = true;
+  showAdminLinks = true;
+
   SECURE_MODULE_PATH = SECURE_MODULE_PATH;
   DASHBOARD_COMPONENT_PATH = DASHBOARD_COMPONENT_PATH;
   ATTENDANCE_COMPONENT_PATH = ATTENDANCE_COMPONENT_PATH;
@@ -27,4 +31,8 @@ export class SideMenuComponent {
   LEAVE_OVERVIEW_PATH = LEAVE_OVERVIEW_PATH;
   LEAVE_TREND_PATH = LEAVE_TREND_PATH;
   UPDATE_POLICY_PATH = UPDATE_POLICY_PATH;
+
+  ngOnInit(): void {
+    this.role = localStorage.getItem('role');
+  }
 }

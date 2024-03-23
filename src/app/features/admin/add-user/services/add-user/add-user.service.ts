@@ -70,11 +70,11 @@ export class AddUserService {
   }
 
   getEmployeeIdStatusCheck(employeeId: string): Observable<boolean> {
-    const q = query(
+    const employee_id_check = query(
       this.USER_DETAILS_REF,
       where('employeeId', '==', employeeId),
     );
-    return from(getDocs(q)).pipe(
+    return from(getDocs(employee_id_check)).pipe(
       map((querySnapshot: QuerySnapshot) => !querySnapshot.empty),
     );
   }

@@ -41,7 +41,10 @@ export class FormService {
         Validators.required,
         Validators.email,
       ]),
-      [FORM_CONTROL_NAMES.PASSWORD]: new FormControl('', Validators.required),
+      [FORM_CONTROL_NAMES.PASSWORD]: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+      ]),
     });
   }
   getUserSignupPayload(
@@ -81,10 +84,9 @@ export class FormService {
     return {
       sickLeaveTotal: 30,
       annualLeaveTotal: 18,
-      specialLeaveTotal: 90,
+      specialLeaveTaken: 0,
       sickLeaveRemaining: 30,
       annualLeaveRemaining: 18,
-      specialLeaveRemaining: 90,
     };
   }
 }

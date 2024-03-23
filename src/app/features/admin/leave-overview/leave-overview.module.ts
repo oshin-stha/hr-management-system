@@ -19,7 +19,7 @@ import { SharedLeaveOverviewEffects } from 'src/app/shared/store/leave-overview-
     MaterialModule,
     FormsModule,
     StoreModule.forFeature('leaveDetails', LeaveOverviewReducer),
-    StoreModule.forFeature('SharedleaveDetails', SharedLeaveOverviewReducer),
+    StoreModule.forFeature('SHARED_LEAVE_DETAILS', SharedLeaveOverviewReducer),
     EffectsModule.forFeature([SharedLeaveOverviewEffects]),
     EffectsModule.forFeature([LeaveOverviewEffects]),
   ],

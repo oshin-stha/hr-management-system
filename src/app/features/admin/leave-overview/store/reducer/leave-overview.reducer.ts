@@ -4,6 +4,7 @@ import {
   acceptLeaveRequestSuccess,
   rejectLeaveRequestFail,
   rejectLeaveRequestSuccess,
+  resetLeaveOverview,
   updateLeaveBalance,
   updateLeaveBalanceFail,
   updateLeaveBalanceSuccess,
@@ -19,21 +20,21 @@ export const _leaveOverviewReducer = createReducer(
     ),
   })),
 
-  on(acceptLeaveRequestFail, (state, action) => ({
+  on(acceptLeaveRequestFail, (state, { error }) => ({
     ...state,
-    error: action.error,
+    error: error,
   })),
 
   on(rejectLeaveRequestSuccess, (state, { id }) => ({
     ...state,
-    leaveDetails: state.leaveDetails.map((leave) =>
-      leave.id === id ? { ...leave, status: 'rejected' } : leave,
+    leaveDetails: state.leaveDetails.map(
+      (leave) => (leave.id === id ? { ...leave, status: 'rejected' } : leave), //checks if the id of the current leave matches the id passed in the action payload
     ),
   })),
 
-  on(rejectLeaveRequestFail, (state, action) => ({
+  on(rejectLeaveRequestFail, (state, { error }) => ({
     ...state,
-    error: action.error,
+    error: error,
   })),
 
   on(updateLeaveBalance, (state) => ({
@@ -52,6 +53,8 @@ export const _leaveOverviewReducer = createReducer(
     loading: false,
     error: error,
   })),
+
+  on(resetLeaveOverview, () => initialState),
 );
 
 export function LeaveOverviewReducer(

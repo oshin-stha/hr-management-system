@@ -1,20 +1,30 @@
 <div class="main">
   <div class="header">
-    <a routerLink="/{{ SECURE_MODULE_PATH }}/{{ LEAVE_MANAGEMENT_PATH }}"
-      >Leave Balance</a
+    <button
+      color="primary"
+      mat-flat-button
+      routerLink="/{{ SECURE_MODULE_PATH }}/{{ LEAVE_MANAGEMENT_PATH }}"
     >
-    <a
+      {{ LEAVE_MANAGEMENT_CONSTANTS.LEAVE_BALANCE }}
+    </button>
+    <button
+      color="primary"
+      mat-flat-button
       routerLink="/{{ SECURE_MODULE_PATH }}/{{ LEAVE_MANAGEMENT_PATH }}/{{
         LEAVE_APPLY_PATH
       }}"
-      >Apply For Leave</a
     >
-    <a
+      {{ LEAVE_MANAGEMENT_CONSTANTS.APPLY_FOR_LEAVE }}
+    </button>
+    <button
+      color="primary"
+      mat-flat-button
       routerLink="/{{ SECURE_MODULE_PATH }}/{{ LEAVE_MANAGEMENT_PATH }}/{{
         LEAVE_STATUS_PATH
       }}"
-      >Leave Status</a
     >
+      {{ LEAVE_MANAGEMENT_CONSTANTS.TRACE_LEAVE }}
+    </button>
   </div>
   <router-outlet></router-outlet>
 </div>

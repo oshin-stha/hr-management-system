@@ -1,18 +1,61 @@
 <div class="main">
-  <div class="leave-balance-card">
-    <mat-card>
-      <mat-card-title>Leave Balance:</mat-card-title>
-      <mat-card-content>
-        <h3>
-          Total Leave:<strong> {{ totalLeave }}</strong> days
-        </h3>
-        <h3>
-          Total Leave Taken:<strong>{{ leaveTaken }}</strong> days
-        </h3>
-        <h3>
-          Total Leave Remaining: <strong>{{ leaveAvailable }}</strong> days
-        </h3>
-        <!-- <button (click)="getLeaveBalance()">click</button> -->
+  <div>
+    <mat-card class="leave-balance-card">
+      <mat-card-title>{{
+        LEAVE_BALANCE_CONSTANTS.LEAVE_BALANCE
+      }}</mat-card-title>
+      <mat-card-content
+        ><div class="main-card-content">
+          <mat-card>
+            <mat-card-title>{{
+              LEAVE_BALANCE_CONSTANTS.SICK_LEAVE
+            }}</mat-card-title>
+
+            <mat-card-content>
+              <h3>
+                {{ LEAVE_BALANCE_CONSTANTS.TOTAL_LEAVE
+                }}<strong> {{ sickLeaveTotal }}</strong>
+                {{ LEAVE_BALANCE_CONSTANTS.DAYS }}
+              </h3>
+              <h3>
+                {{ LEAVE_BALANCE_CONSTANTS.REMAINING
+                }}<strong> {{ sickLeaveRemaining }}</strong>
+                {{ LEAVE_BALANCE_CONSTANTS.DAYS }}
+              </h3>
+            </mat-card-content>
+          </mat-card>
+          <mat-card>
+            <mat-card-title>{{
+              LEAVE_BALANCE_CONSTANTS.ANNUAL_LEAVE
+            }}</mat-card-title>
+
+            <mat-card-content>
+              <h3>
+                {{ LEAVE_BALANCE_CONSTANTS.TOTAL_LEAVE
+                }}<strong> {{ annualLeaveTotal }}</strong>
+                {{ LEAVE_BALANCE_CONSTANTS.DAYS }}
+              </h3>
+              <h3>
+                {{ LEAVE_BALANCE_CONSTANTS.REMAINING
+                }}<strong> {{ annualLeaveRemaining }}</strong>
+                {{ LEAVE_BALANCE_CONSTANTS.DAYS }}
+              </h3>
+            </mat-card-content>
+          </mat-card>
+          <mat-card>
+            <mat-card-title>{{
+              LEAVE_BALANCE_CONSTANTS.SPECIAL_LEAVE
+            }}</mat-card-title>
+
+            <mat-card-content>
+              <h3>
+                {{ LEAVE_BALANCE_CONSTANTS.TOTAL_LEAVE
+                }}<strong> {{ specialLeaveTaken }}</strong>
+                {{ LEAVE_BALANCE_CONSTANTS.DAYS }}
+              </h3>
+            </mat-card-content>
+          </mat-card>
+        </div>
       </mat-card-content>
     </mat-card>
   </div>

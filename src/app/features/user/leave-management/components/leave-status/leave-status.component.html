@@ -1,54 +1,117 @@
 <div class="main">
   <div class="leave-status-card">
     <mat-card>
-      <mat-card-title> Track Your Leave: </mat-card-title>
+      <div class="head">
+        <mat-card-title>
+          {{ LEAVE_STATUS_CONSTANTS.TRACK_YOUR_LEAVE }}
+        </mat-card-title>
+        <mat-form-field appearance="outline" class="filter-leave-details">
+          <mat-label>{{ LEAVE_STATUS_CONSTANTS.SEARCH }}</mat-label>
+          <div class="search-container">
+            <input matInput (keyup)="applyFilter($event)" #input />
+            <mat-icon>{{ LEAVE_STATUS_CONSTANTS.SEARCH_ICON }}</mat-icon>
+          </div>
+        </mat-form-field>
+      </div>
       <mat-card-content>
-        <table mat-table [dataSource]="status" class="mat-elevation-z8">
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          matSort
+          class="leave-status-table"
+        >
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ LEAVE_STATUS_CONSTANTS.SN }}
+            </th>
+            <td mat-cell *matCellDef="let row; let i = index">
+              {{
+                i + 1 + (paginator?.pageIndex || 0) * (paginator?.pageSize || 0)
+              }}
+            </td>
+          </ng-container>
+
           <ng-container matColumnDef="leaveFrom">
-            <th mat-header-cell *matHeaderCellDef>Leave From:</th>
+            <th mat-header-cell *matHeaderCellDef>
+              {{ LEAVE_STATUS_CONSTANTS.LEAVE_FROM }}
+            </th>
             <td mat-cell *matCellDef="let element">
               {{ formatDate(element.leaveFrom) }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="leaveTo">
-            <th mat-header-cell *matHeaderCellDef>Leave To:</th>
+            <th mat-header-cell *matHeaderCellDef>
+              {{ LEAVE_STATUS_CONSTANTS.LEAVE_TO }}
+            </th>
             <td mat-cell *matCellDef="let element">
               {{ formatDate(element.leaveTo) }}
             </td>
           </ng-container>
 
+          <ng-container matColumnDef="firstOrSecondHalf">
+            <th mat-header-cell *matHeaderCellDef>
+              {{ LEAVE_STATUS_CONSTANTS.FULL_OR_HALF_DAY }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.firstOrSecondHalf | uppercase }}
+            </td>
+          </ng-container>
+
           <ng-container matColumnDef="totalLeaveDays">
-            <th mat-header-cell *matHeaderCellDef>Total Leave Days</th>
+            <th mat-header-cell *matHeaderCellDef>
+              {{ LEAVE_STATUS_CONSTANTS.TOTAL_LEAVE_DAYS }}
+            </th>
             <td mat-cell *matCellDef="let element">
               {{ element.totalLeaveDays }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="reasonForLeave">
-            <th mat-header-cell *matHeaderCellDef>Reason</th>
+            <th mat-header-cell *matHeaderCellDef>
+              {{ LEAVE_STATUS_CONSTANTS.REASON }}
+            </th>
             <td mat-cell *matCellDef="let element">
               {{ element.reasonForLeave }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="leaveType">
-            <th mat-header-cell *matHeaderCellDef>Leave Type</th>
-            <td mat-cell *matCellDef="let element">{{ element.leaveType }}</td>
+            <th mat-header-cell *matHeaderCellDef>
+              {{ LEAVE_STATUS_CONSTANTS.LEAVE_TYPE }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.leaveType | uppercase }}
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef>Status</th>
-            <td mat-cell *matCellDef="let element">{{ element.status }}</td>
+            <th mat-header-cell *matHeaderCellDef>
+              {{ LEAVE_STATUS_CONSTANTS.STATUS }}
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let element"
+              [ngClass]="{
+                accepted: element.status === 'accepted',
+                rejected: element.status === 'rejected',
+                pending: element.status === 'pending'
+              }"
+            >
+              {{ element.status | uppercase }}
+            </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">
+              {{ LEAVE_STATUS_CONSTANTS.NO_DATA }}
+            </td>
+          </tr>
         </table>
-        <!-- <ul *ngFor="let value of status">
-          <li>{{ value.leaveFrom  }}</li>
-          <li>{{ value.status }}</li>
-        </ul> -->
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
       </mat-card-content>
     </mat-card>
   </div>

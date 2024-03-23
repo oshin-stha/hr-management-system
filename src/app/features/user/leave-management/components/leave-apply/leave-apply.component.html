@@ -1,19 +1,42 @@
 <div class="main">
   <mat-card>
-    <mat-card-title> Apply For Leave: </mat-card-title>
+    <mat-card-title>
+      {{ LEAVE_APPLY_FORM_CONSTANTS.APPLY_FOR_LEAVE }}
+    </mat-card-title>
+
     <mat-card-content>
       <form
         [formGroup]="leaveApplicationForm"
         (ngSubmit)="applyForLeave(leaveApplicationForm)"
       >
         <mat-form-field appearance="outline">
-          <mat-label>From:</mat-label>
+          <mat-label>{{
+            LEAVE_APPLY_FORM_CONSTANTS.FULL_LEAVE_OR_HALF_LEAVE
+          }}</mat-label>
+          <mat-select
+            [formControlName]="FORM_CONTROL_NAMES.HALF_OR_FULL_LEAVE"
+            (selectionChange)="onInputChange($event)"
+          >
+            <mat-option [value]="FORM_CONTROL_NAMES.FULL_LEAVE">{{
+              LEAVE_APPLY_FORM_CONSTANTS.FULL_LEAVE
+            }}</mat-option>
+            <mat-option [value]="FORM_CONTROL_NAMES.HALF_DAY_LEAVE"
+              >{{ LEAVE_APPLY_FORM_CONSTANTS.HAlF_LEAVE }}
+            </mat-option>
+          </mat-select>
+          <mat-error>{{ FORM_ERRORS.leaveType.required }}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>{{ LEAVE_APPLY_FORM_CONSTANTS.FROM }}</mat-label>
           <input
             matInput
             [matDatepicker]="picker"
-            formControlName="{{ FORM_CONTROL_NAMES.LEAVE_FROM }}"
+            [min]="minDateForLeaveFrom"
+            (dateChange)="updateMinDateForLeaveTo($event)"
+            [formControlName]="FORM_CONTROL_NAMES.LEAVE_FROM"
           />
-          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-hint>{{ LEAVE_APPLY_FORM_CONSTANTS.DATE_HINT }}</mat-hint>
+          <mat-error>{{ FORM_ERRORS.startDate.required }} </mat-error>
           <mat-datepicker-toggle
             matIconSuffix
             [for]="picker"
@@ -22,36 +45,72 @@
           <mat-error></mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>To:</mat-label>
+        <mat-form-field appearance="outline" *ngIf="!isHalfDay">
+          <mat-label>{{ LEAVE_APPLY_FORM_CONSTANTS.TO }}</mat-label>
           <input
             matInput
             [matDatepicker]="picker2"
-            formControlName="{{ FORM_CONTROL_NAMES.LEAVE_TO }}"
+            [min]="minDateForLeaveTo"
+            [formControlName]="FORM_CONTROL_NAMES.LEAVE_TO"
           />
-          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-hint>{{ LEAVE_APPLY_FORM_CONSTANTS.DATE_HINT }}</mat-hint>
+          <mat-error>{{ FORM_ERRORS.startDate.required }} </mat-error>
           <mat-datepicker-toggle
             matIconSuffix
             [for]="picker2"
           ></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Leave Type:</mat-label>
-          <mat-select formControlName="{{ FORM_CONTROL_NAMES.LEAVE_TYPE }}">
-            <mat-option value="Sick Leave">Sick Leave</mat-option>
-            <mat-option value="Annual Leave">Annual Leave</mat-option>
-            <mat-option value="Special Leave">Special Leave</mat-option>
+        <mat-form-field appearance="outline" *ngIf="isHalfDay">
+          <mat-label>{{
+            LEAVE_APPLY_FORM_CONSTANTS.FIRST_HALF_ORSECOND_HALF
+          }}</mat-label>
+          <mat-select
+            [formControlName]="FORM_CONTROL_NAMES.FIRST_OR_SECOND_HALF"
+          >
+            <mat-option [value]="LEAVE_TYPES.FIRST_HALF_LEAVE">{{
+              LEAVE_APPLY_FORM_CONSTANTS.FIRST_HALF
+            }}</mat-option>
+            <mat-option [value]="LEAVE_TYPES.SECOND_HALF_LEAVE">{{
+              LEAVE_APPLY_FORM_CONSTANTS.SECOND_HALF
+            }}</mat-option>
           </mat-select>
+          <mat-error>{{ FORM_ERRORS.leaveType.required }}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>{{ LEAVE_APPLY_FORM_CONSTANTS.LEAVE_TYPE }}</mat-label>
+          <mat-select [formControlName]="FORM_CONTROL_NAMES.LEAVE_TYPE">
+            <mat-option
+              [disabled]="isSickLeaveDisabled"
+              [value]="LEAVE_TYPES.SICK_LEAVE"
+              >{{ LEAVE_APPLY_FORM_CONSTANTS.SICK_LEAVE }}
+            </mat-option>
+            <mat-option
+              [disabled]="isAnnualLeaveDisabled"
+              [value]="LEAVE_TYPES.ANNUAL_LEAVE"
+              >{{ LEAVE_APPLY_FORM_CONSTANTS.ANNUAL_LEAVE }}</mat-option
+            >
+            <mat-option
+              [disabled]="isSpeciaalLeaveDisable"
+              [value]="LEAVE_TYPES.SPECIAL_LEAVE"
+              >{{ LEAVE_APPLY_FORM_CONSTANTS.SPECIAL_LEAVE }}</mat-option
+            >
+          </mat-select>
+          <mat-error>{{ FORM_ERRORS.leaveType.required }}</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Reason for Leave:</mat-label>
-          <input
+          <mat-label>{{
+            LEAVE_APPLY_FORM_CONSTANTS.REASON_FOR_LEAVE
+          }}</mat-label>
+          <textarea
             matInput
-            formControlName="{{ FORM_CONTROL_NAMES.REASON_FOR_LEAVE }}"
-          />
+            [formControlName]="FORM_CONTROL_NAMES.REASON_FOR_LEAVE"
+          ></textarea>
+          <mat-hint>{{
+            LEAVE_APPLY_FORM_CONSTANTS.MINIMUM_CHARACTERS
+          }}</mat-hint>
+          <mat-error>{{ FORM_ERRORS.reason.reason }} </mat-error>
         </mat-form-field>
 
         <button
@@ -60,7 +119,7 @@
           color="primary"
           [disabled]="leaveApplicationForm.invalid"
         >
-          Submit
+          {{ LEAVE_APPLY_FORM_CONSTANTS.SUBMIT }}
         </button>
       </form>
     </mat-card-content>

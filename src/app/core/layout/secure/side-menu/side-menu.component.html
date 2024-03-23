@@ -1,48 +1,14 @@
 <div class="contents" *ngIf="isUser">
-  <a
-    [routerLink]="['/', SECURE_MODULE_PATH, DASHBOARD_COMPONENT_PATH]"
-    routerLinkActive="active"
-    >Dashboard</a
-  >
-  <a
-    [routerLink]="['/', SECURE_MODULE_PATH]"
-    routerLinkActive="active"
-    [routerLinkActiveOptions]="{ exact: true }"
-    >Attendance</a
-  >
-  <a
-    [routerLink]="['/', SECURE_MODULE_PATH, LEAVE_COMPONENT_PATH]"
-    routerLinkActive="active"
-    >Leave Details</a
-  >
-  <a
-    [routerLink]="['/', SECURE_MODULE_PATH, POLICY_COMPONENT_PATH]"
-    routerLinkActive="active"
-    >Policy</a
-  >
+  <a [routerLink]="['/', SECURE_MODULE_PATH, DASHBOARD_COMPONENT_PATH]" routerLinkActive="active">Dashboard</a>
+  <a [routerLink]="['/', SECURE_MODULE_PATH]" routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }">Attendance</a>
+  <a [routerLink]="['/', SECURE_MODULE_PATH, LEAVE_COMPONENT_PATH]" routerLinkActive="active">Leave Details</a>
+  <a [routerLink]="['/', SECURE_MODULE_PATH, POLICY_COMPONENT_PATH]" routerLinkActive="active">Policy</a>
 </div>
 <div class="contents" *ngIf="!isUser">
-  <a
-    [routerLink]="['/', SECURE_MODULE_PATH, ADD_USER_COMPONENT_PATH]"
-    routerLinkActive="active"
-    >Register User</a
-  >
-  <a
-    [routerLink]="['/', SECURE_MODULE_PATH, ATTENDANCE_REPORT_PATH]"
-    routerLinkActive="active"
-    >Attendance Report</a
-  >
-  <a
-    [routerLink]="['/', SECURE_MODULE_PATH, LEAVE_OVERVIEW_PATH]"
-    routerLinkActive="active"
-    >Leave Overview</a
-  >
-  <a routerLink="/{{ SECURE_MODULE_PATH }}/{{ LEAVE_TREND_PATH }}"
-    >Leave Trend</a
-  >
-  <a
-    [routerLink]="['/', SECURE_MODULE_PATH, UPDATE_POLICY_PATH]"
-    routerLinkActive="active"
-    >Update Policy</a
-  >
+  <a [routerLink]="['/', SECURE_MODULE_PATH, ADD_USER_COMPONENT_PATH]" routerLinkActive="active">Register User</a>
+  <a [routerLink]="['/', SECURE_MODULE_PATH, ATTENDANCE_REPORT_PATH]" routerLinkActive="active">Attendance Report</a>
+  <a [routerLink]="['/', SECURE_MODULE_PATH, LEAVE_OVERVIEW_PATH]" routerLinkActive="active">Leave Overview</a>
+  <a [routerLink]="['/', SECURE_MODULE_PATH ,LEAVE_TREND_PATH ]" routerLinkActive="active" >Leave Trend</a>
+  <a [routerLink]="['/', SECURE_MODULE_PATH, UPDATE_POLICY_PATH]" routerLinkActive="active">Update Policy</a>
 </div>

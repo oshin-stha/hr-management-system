@@ -6,6 +6,7 @@ import {
   getLeaveStatusStart,
   getLeaveStatusSuccess,
 } from './leaveStatus.action';
+import { getLeavebalanceReset } from '../leaveBalanceState/leaveBalance.action';
 
 const _leaveStatusreducer = createReducer(
   initialStatusState,
@@ -21,6 +22,7 @@ const _leaveStatusreducer = createReducer(
     ...state,
     error: action.error,
   })),
+  on(getLeavebalanceReset, () => initialStatusState),
 );
 export function LeaveStatusReducer(
   state: LeaveStatusState | undefined,

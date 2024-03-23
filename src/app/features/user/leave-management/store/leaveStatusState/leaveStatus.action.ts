@@ -14,3 +14,6 @@ export const getLeaveStatusFailure = createAction(
   '[Leave Status Page] failure get leave status',
   props<{ error: string }>(),
 );
+export const getLeaveStatusReset = createAction(
+  '[Leave Status Page] reset get leave status',
+);

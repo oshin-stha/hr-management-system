@@ -3,6 +3,7 @@ import { LeaveApplicationState } from '../../models/leaveApplicationState.interf
 import { initialState } from './applyLeave.state';
 import {
   leaveApplicationFailure,
+  leaveApplicationReset,
   leaveApplicationStart,
   leaveApplicationSuccess,
 } from './applyLeave.action';
@@ -25,6 +26,7 @@ const _leaveApplyReducer = createReducer(
     isLeaveApplied: false,
     error: action.error,
   })),
+  on(leaveApplicationReset, () => initialState),
 );
 
 export function LeaveApplyReducer(

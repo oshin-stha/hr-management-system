@@ -6,6 +6,7 @@ import {
   DASHBOARD_COMPONENT_PATH,
   LEAVE_COMPONENT_PATH,
   LEAVE_OVERVIEW_PATH,
+  LEAVE_TREND_PATH,
   POLICY_COMPONENT_PATH,
   UPDATE_POLICY_PATH,
 } from 'src/app/shared/constants/routes.constants';
@@ -63,6 +64,13 @@ const routes: Routes = [
           import(
             '../../../features/admin/leave-overview/leave-overview.module'
           ).then((m) => m.LeaveOverviewModule),
+      },
+      {
+        path: LEAVE_TREND_PATH,
+        loadChildren: () =>
+          import('../../../features/admin/leave-trend/leave-trend.module').then(
+            (m) => m.LeaveTrendModule,
+          ),
       },
       {
         path: UPDATE_POLICY_PATH,

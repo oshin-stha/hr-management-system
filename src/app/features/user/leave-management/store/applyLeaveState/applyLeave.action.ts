@@ -13,3 +13,6 @@ export const leaveApplicationFailure = createAction(
   '[leave application page] failure apply for leave',
   props<{ error: string }>(),
 );
+export const leaveApplicationReset = createAction(
+  '[leave application page] reset apply for leave',
+);

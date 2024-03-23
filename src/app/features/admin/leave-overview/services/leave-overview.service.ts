@@ -46,7 +46,6 @@ export class LeaveOverviewService {
             };
             leave.push(leaveDetail);
           });
-          console.log(leave);
           observer.next(leave);
           observer.complete();
         })
@@ -71,12 +70,10 @@ export class LeaveOverviewService {
     return new Observable<void>((observer) => {
       updateDoc(leaveDocRef, { status: 'accepted' })
         .then(() => {
-          console.log('hello from service');
           observer.next();
           observer.complete();
         })
         .catch((error) => {
-          console.log('hello from error service');
           observer.error(error);
         });
     });
@@ -87,12 +84,10 @@ export class LeaveOverviewService {
     return new Observable<void>((observer) => {
       updateDoc(leaveDocRef, { status: 'rejected' })
         .then(() => {
-          console.log('hello from service');
           observer.next();
           observer.complete();
         })
         .catch((error) => {
-          console.log('hello from error service');
           observer.error(error);
         });
     });
@@ -122,7 +117,6 @@ export class LeaveOverviewService {
             };
             user.push(userDetails);
           });
-          console.log(user);
           observer.next(user);
           observer.complete();
         })
@@ -139,7 +133,6 @@ export class LeaveOverviewService {
     const leaveBalanceDocRef = doc(this.LEAVE_BALANCE_REF, email);
     return from(getDoc(leaveBalanceDocRef)).pipe(
       catchError((error) => {
-        console.error('Error getting leave balance document:', error);
         return throwError(() => error);
       }),
       switchMap((snapshot: DocumentSnapshot) => {
@@ -170,7 +163,6 @@ export class LeaveOverviewService {
         }
       }),
       catchError((error) => {
-        console.error('Error updating leave balance:', error);
         return throwError(() => error);
       }),
     );

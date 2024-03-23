@@ -20,6 +20,7 @@ import { StoreModule } from '@ngrx/store';
 import { LoaderSpinnerReducer } from '../store/loader-store/loader-spinner.reducer';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTabsModule } from '@angular/material/tabs';
 
 export const Material = [
   MatButtonModule,
@@ -32,6 +33,7 @@ export const Material = [
   MatSnackBarModule,
   MatSlideToggleModule,
   MatTableModule,
+  MatTabsModule,
   MatAutocompleteModule,
   MatSidenavModule,
   MatNativeDateModule,

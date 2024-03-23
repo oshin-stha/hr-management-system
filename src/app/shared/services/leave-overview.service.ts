@@ -32,6 +32,8 @@ export class LeaveOverviewService {
               reasonForLeave: doc.data()['reasonForLeave'],
               status: doc.data()['status'],
               totalLeaveDays: doc.data()['totalLeaveDays'],
+              fromDepartment: doc.data()['fromDepartment'],
+              firstOrSecondHalf: doc.data()['firstOrSecondHalf'],
             };
             leave.push(leaveDetail);
           });
@@ -67,7 +69,6 @@ export class LeaveOverviewService {
             };
             user.push(userDetails);
           });
-
           observer.next(user);
           observer.complete();
         })

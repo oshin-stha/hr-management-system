@@ -26,7 +26,8 @@ export const FORM_ERRORS = {
     required: 'Citizenship Number is required',
   },
   startDate: {
-    required: 'Start Date is required',
+    required: 'Date is required',
+    date: 'Invalid date',
   },
   department: {
     required: 'Department is required',
@@ -44,6 +45,13 @@ export const FORM_ERRORS = {
   password: {
     required: 'Password is required',
     minlength: 'Password must be at least 6 digits',
+  },
+  leaveType: {
+    required: 'Leave type required',
+  },
+  reason: {
+    required: 'Reason for leave required',
+    reason: 'Reason must be at least 8 letters. ',
   },
 };
 export const LEAVE_OVERVIEW_ERRORS = {

@@ -1,14 +1,24 @@
 mat-card {
-  justify-content: center;
-  width: 100%;
-  margin: auto;
   padding: 16px;
 }
 mat-card-content {
   padding: 20px;
 }
 
-.leave-balance-card {
-  justify-content: center;
-  margin: 20px;
+.main-card-content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+
+  mat-card {
+    background: #e3e6f7;
+    height: 180px;
+
+    mat-card-title {
+      padding-left: 8px;
+    }
+  }
+}
+.main {
+  padding: 1rem;
 }

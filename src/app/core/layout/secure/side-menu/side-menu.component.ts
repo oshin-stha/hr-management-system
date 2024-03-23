@@ -9,6 +9,7 @@ import {
   ATTENDANCE_REPORT_PATH,
   LEAVE_OVERVIEW_PATH,
   UPDATE_POLICY_PATH,
+  LEAVE_TREND_PATH,
 } from 'src/app/shared/constants/routes.constants';
 @Component({
   selector: 'app-side-menu',
@@ -28,6 +29,7 @@ export class SideMenuComponent implements OnInit {
   ADD_USER_COMPONENT_PATH = ADD_USER_COMPONENT_PATH;
   ATTENDANCE_REPORT_PATH = ATTENDANCE_REPORT_PATH;
   LEAVE_OVERVIEW_PATH = LEAVE_OVERVIEW_PATH;
+  LEAVE_TREND_PATH = LEAVE_TREND_PATH;
   UPDATE_POLICY_PATH = UPDATE_POLICY_PATH;
 
   ngOnInit(): void {

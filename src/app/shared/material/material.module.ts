@@ -21,6 +21,8 @@ import { LoaderSpinnerReducer } from '../store/loader-store/reducer/loader-spinn
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSortModule } from '@angular/material/sort';
+import { MatTabsModule } from '@angular/material/tabs';
+
 export const Material = [
   MatButtonModule,
   MatIconModule,
@@ -32,6 +34,7 @@ export const Material = [
   MatSnackBarModule,
   MatSlideToggleModule,
   MatTableModule,
+  MatTabsModule,
   MatAutocompleteModule,
   MatSidenavModule,
   MatNativeDateModule,

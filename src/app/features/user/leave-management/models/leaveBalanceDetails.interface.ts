@@ -1,4 +1,7 @@
 export interface LeaveBalanceDetails {
-  totalLeave: number;
-  leaveAvailable: number;
+  annualLeaveRemaining: number;
+  annualLeaveTotal: number;
+  sickLeaveRemaining: number;
+  sickLeaveTotal: number;
+  specialLeaveTaken: number;
 }

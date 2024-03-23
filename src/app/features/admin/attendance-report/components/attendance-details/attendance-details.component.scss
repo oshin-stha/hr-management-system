@@ -1,0 +1,25 @@
+.back-button {
+  float: right;
+  margin-right: 20px;
+  margin-top: 10px;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.mat-table-container {
+  margin: 10px 20px 10px 20px;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 30%;
+  margin-left: 20px;
+}

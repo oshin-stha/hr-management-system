@@ -72,6 +72,7 @@ const routes: Routes = [
       },
       {
         path: LEAVE_TREND_PATH,
+        canMatch: [adminGuard],
         loadChildren: () =>
           import('../../../features/admin/leave-trend/leave-trend.module').then(
             (m) => m.LeaveTrendModule,

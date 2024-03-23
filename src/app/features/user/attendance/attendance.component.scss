@@ -1,4 +1,75 @@
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.calendar-info-container {
+  display: flex;
+}
+
 .small-calendar {
-  width: 800px;
-  height: 600px;
+  min-width: 600px;
+  min-height: 450px;
+  border: 1px solid rgb(101, 117, 121);
+}
+
+.calendar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+  overflow: auto;
+}
+
+.info-container {
+  position: relative;
+  margin-bottom: 500px;
+}
+
+.info-list {
+  list-style: none;
+  padding: 0;
+}
+
+.info-list li {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.color-box {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  border-radius: 4px;
+}
+
+.sufficient-hours .color-box {
+  background-color: rgb(74, 230, 60);
+}
+
+.less-hours .color-box {
+  background-color: rgb(234, 234, 24);
+}
+
+.weekends .color-box {
+  background-color: rgb(106, 240, 231);
+}
+
+.sufficient-hours,
+.less-hours,
+.weekends {
+  color: #333;
+}
+
+.button-container {
+  margin-bottom: 500px;
+  margin-right: 80px;
+  margin-left: 10px;
+}
+
+.button {
+  min-width: 120px;
 }

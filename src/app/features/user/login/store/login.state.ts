@@ -1,5 +1,5 @@
+import { AuthState } from '../login.model';
 import { UserDetails } from 'src/app/shared/models/adduser.model';
-import { AuthState } from './../../models/login.model';
 
 export const initialState: AuthState = {
   isLoggedIn: false,

@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { AuthState } from '../../../models/login.model';
+import { AuthState } from '../../login.model';
 import { initialState } from '../login.state';
 import {
   getUserDetailsFailure,

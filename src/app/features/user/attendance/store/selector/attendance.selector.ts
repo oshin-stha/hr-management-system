@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { CheckInState } from '../../../models/attendance.model';
+import { CheckInState } from '../../../../../shared/models/attendance.model';
 import { AttendanceFetchState } from '../attendance.state';
 
 export const CHECK_IN_STATE_SELECTOR = 'checkInState';

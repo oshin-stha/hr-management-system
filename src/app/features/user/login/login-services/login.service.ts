@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { UserCredential, signInWithEmailAndPassword } from 'firebase/auth';
 import { Observable, from, catchError } from 'rxjs';
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
@@ -14,7 +14,7 @@ export class LoginService {
   FIRESTORE = getFirestore(this.APP);
   AUTH = getAuth(this.APP);
   USER_DETAILS_REF = collection(this.FIRESTORE, 'UserDetails');
-  logInUser(email: string, password: string): Observable<unknown> {
+  logInUser(email: string, password: string): Observable<UserCredential> {
     return from(signInWithEmailAndPassword(this.AUTH, email, password)).pipe(
       catchError((error) => {
         throw error;

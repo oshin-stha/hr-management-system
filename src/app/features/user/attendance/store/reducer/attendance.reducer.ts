@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { CheckInState } from '../../../models/attendance.model';
+import { CheckInState } from '../../../../../shared/models/attendance.model';
 import {
   AttendanceFetchState,
   initialAttendanceFetchState,
@@ -12,7 +12,7 @@ import {
   checkOutFailure,
   checkOutStart,
   checkOutSuccess,
-  setAttendanceData,
+  fetchAttendanceDataSuccess,
 } from '../attendance.actions';
 
 const _AttendanceReducer = createReducer(
@@ -58,7 +58,7 @@ export function AttendanceReducer(
 
 const _AttendanceDataFetchReducer = createReducer(
   initialAttendanceFetchState,
-  on(setAttendanceData, (state, { attendanceByDate }) => ({
+  on(fetchAttendanceDataSuccess, (state, { attendanceByDate }) => ({
     ...state,
     attendanceByDate,
   })),

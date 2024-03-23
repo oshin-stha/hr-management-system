@@ -11,7 +11,7 @@ import {
 } from 'firebase/firestore';
 import { Observable, from, map } from 'rxjs';
 import { firebaseConfig } from '../../../../environments/environment';
-import { AttendanceState } from '../../models/attendance.model';
+import { AttendanceState } from '../../../../shared/models/attendance.model';
 @Injectable({
   providedIn: 'root',
 })
@@ -31,12 +31,8 @@ export class AttendanceService {
         this.hasDuplicateCheckIn(email, checkInTime).subscribe(
           (hasDuplicate) => {
             if (hasDuplicate) {
-              alert(
-                'Another entry exists for the same email and check-in time',
-              );
-              observer.error(
-                'Another entry exists for the same email and check-in time',
-              );
+              alert('You cannot checkin multiple times in a day.');
+              observer.error('You cannot checkin multiple times in a day.');
             } else {
               addDoc(this.attendanceRef, data)
                 .then(() => {
@@ -148,8 +144,19 @@ export class AttendanceService {
       map((querySnapshot) => {
         const attendanceData: AttendanceState[] = [];
         querySnapshot.forEach((doc) => {
-          const data = doc.data() as AttendanceState;
-          attendanceData.push({ ...data });
+          const attendanceDataDoc = doc.data();
+          const attendanceList: AttendanceState = {
+            email: attendanceDataDoc?.['email'],
+            checkInTime: attendanceDataDoc?.['checkInTime'],
+            checkOutTime: attendanceDataDoc?.['checkOutTime'],
+            checkInStatus: attendanceDataDoc?.['checkInStatus'],
+            checkOutStatus: attendanceDataDoc?.['checkOutStatus'],
+            checkInReason: attendanceDataDoc?.['checkInReason'],
+            checkOutReason: attendanceDataDoc?.['checkOutReason'],
+            workingHours: attendanceDataDoc?.['workingHours'],
+            absent: attendanceDataDoc?.['absent'],
+          };
+          attendanceData.push({ ...attendanceList });
         });
         return attendanceData;
       }),

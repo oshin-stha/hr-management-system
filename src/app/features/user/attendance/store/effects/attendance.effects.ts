@@ -1,9 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { of } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
 
+import { Store } from '@ngrx/store';
+import { Timestamp } from 'firebase/firestore';
+import {
+  AttendanceByDate,
+  AttendanceState,
+} from '../../../../../shared/models/attendance.model';
+import { AttendanceService } from '../../attendance-service/attendance.service';
+import { DialogComponent } from '../../components/dialog/dialog.component';
 import {
   checkInFailure,
   checkInStart,
@@ -12,18 +20,9 @@ import {
   checkOutStart,
   checkOutSuccess,
   fetchAttendanceData,
-  setAttendanceData,
+  fetchAttendanceDataFail,
+  fetchAttendanceDataSuccess,
 } from '../attendance.actions';
-import { AttendanceService } from '../../../services/attendance/attendance.service';
-import {
-  AttendanceByDate,
-  AttendanceState,
-} from '../../../models/attendance.model';
-import { DialogComponent } from '../../components/dialog/dialog.component';
-import { Timestamp } from 'firebase/firestore';
-import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { selectAttendanceDataFetchStatus } from '../selector/attendance.selector';
 
 @Injectable()
 export class AttendanceEffects {
@@ -31,7 +30,6 @@ export class AttendanceEffects {
     private actions$: Actions,
     private dialog: MatDialog,
     private attendanceService: AttendanceService,
-    private router: Router,
     private store: Store,
   ) {}
 
@@ -53,10 +51,11 @@ export class AttendanceEffects {
             }
 
             const data: Partial<AttendanceState> = {
-              email,
+              email: email,
               checkInTime: now,
               checkInStatus: isLateArrival ? 'Late-Arrival' : 'Checked-In',
               checkInReason: reason,
+              absent: null,
             };
 
             return this.attendanceService.addCheckIn(data).pipe(
@@ -117,7 +116,6 @@ export class AttendanceEffects {
         ofType(checkInSuccess, checkOutSuccess),
         map(() => {
           this.store.dispatch(fetchAttendanceData());
-          this.store.select(selectAttendanceDataFetchStatus);
         }),
       ),
     { dispatch: false },
@@ -137,7 +135,7 @@ export class AttendanceEffects {
       switchMap(() => {
         const email = localStorage.getItem('Email');
         if (!email) {
-          return of(setAttendanceData({ attendanceByDate: {} }));
+          return of(fetchAttendanceDataSuccess({ attendanceByDate: {} }));
         }
         return this.attendanceService.getAttendanceData(email).pipe(
           map((attendanceData) => {
@@ -155,9 +153,11 @@ export class AttendanceEffects {
                 console.error('Invalid checkInTime:', entry.checkInTime);
               }
             });
-            return setAttendanceData({ attendanceByDate: attendanceByDate });
+            return fetchAttendanceDataSuccess({
+              attendanceByDate: attendanceByDate,
+            });
           }),
-          catchError(() => of({ type: 'error fetching attendance data' })),
+          catchError((error) => of(fetchAttendanceDataFail({ error }))),
         );
       }),
     ),

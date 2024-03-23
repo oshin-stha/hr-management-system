@@ -4,7 +4,7 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { hot, cold } from 'jasmine-marbles';
 import { Observable, of } from 'rxjs';
-import { LoginService } from '../../../services/login-services/login.service';
+import { LoginService } from '../../login-services/login.service';
 import { loginStart, loginSuccess, loginFailure } from '../login.actions';
 import { AuthEffects } from './login.effects';
 import { initialState } from '../login.state';

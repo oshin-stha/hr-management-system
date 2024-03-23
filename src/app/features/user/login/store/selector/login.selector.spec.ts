@@ -1,4 +1,4 @@
-import { AuthState } from '../../../models/login.model';
+import { AuthState } from '../../login.model';
 import { selectAuthState, isLoggedIn, selectError } from './login.selector';
 
 describe('LoginSelector', () => {

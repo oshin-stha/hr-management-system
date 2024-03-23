@@ -11,7 +11,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {
+  ATTENDANCE_REPORT_PATH,
+  SECURE_MODULE_PATH,
+} from 'src/app/shared/constants/routes.constants';
 import { AttendanceState } from 'src/app/shared/models/attendance.model';
 import {
   selectAttendanceList,
@@ -22,10 +25,6 @@ import {
   loadAttendanceDetailsReset,
   loademployeeName,
 } from './attendance-details-store/attendance-details.actions';
-import {
-  ATTENDANCE_REPORT_PATH,
-  SECURE_MODULE_PATH,
-} from 'src/app/shared/constants/routes.constants';
 
 @Component({
   selector: 'app-attendance-details',
@@ -36,7 +35,6 @@ export class AttendanceDetailsComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
   id: string | null = null;
-  attendanceList$: Observable<any> = new Observable();
   employeeName$: Observable<string | null> = new Observable();
   dataSource: MatTableDataSource<AttendanceState> = new MatTableDataSource();
   attendanceListSubscription: Subscription | undefined;
@@ -79,17 +77,12 @@ export class AttendanceDetailsComponent
 
   initializeData(id: string): void {
     this.employeeName$ = this.store.select(selectemployeeName);
-    console.log(id);
-    // this.attendanceList$ = this.store.select(selectAttendanceList).pipe(
-    //   map(data => {
+    this.attendanceListSubscription = this.store
+      .select(selectAttendanceList)
+      .subscribe((data) => {
+        this.dataSource.data = data;
+      });
 
-    //     return data;
-    //   })
-    // );
-    this.store.select(selectAttendanceList).subscribe((data) => {
-      this.dataSource.data = data;
-    });
-    // console.log(this.attendanceList$)
     this.store.dispatch(loademployeeName({ employeeId: id }));
     this.store.dispatch(loadAttendanceDetails({ employeeId: id }));
   }

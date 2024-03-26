@@ -17,10 +17,9 @@ export interface UserDetails {
 export interface leaveBalance {
   sickLeaveTotal: number;
   annualLeaveTotal: number;
-  specialLeaveTotal: number;
+  specialLeaveTaken: number;
   sickLeaveRemaining: number;
   annualLeaveRemaining: number;
-  specialLeaveRemaining: number;
 }
 export interface ErrorMessage {
   message: string;

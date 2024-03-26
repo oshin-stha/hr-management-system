@@ -40,18 +40,18 @@
 //     expect(component).toBeTruthy();
 //   });
 
-//   it('should dispatch loginstart action with form data on form submission', () => {
-//     const email = 'test@example.com';
-//     const password = 'password';
-//     component.loginForm.patchValue({
-//       emailField: email,
-//       passwordField: password,
-//     });
-//     component.logInUser(component.loginForm);
-//     expect(store.dispatch).toHaveBeenCalledOnceWith(
-//       loginStart({ email, password }),
-//     );
+// it('should dispatch loginstart action with form data on form submission', () => {
+//   const email = 'test@example.com';
+//   const password = 'password';
+//   component.loginForm.patchValue({
+//     emailField: email,
+//     passwordField: password,
 //   });
+//   // component.logInUser(component.loginForm);
+//   expect(store.dispatch).toHaveBeenCalledOnceWith(
+//     loginStart({ email, password }),
+//   );
+// });
 
 //   it('should invalidate the form if email is invalid', () => {
 //     component.loginForm.patchValue({

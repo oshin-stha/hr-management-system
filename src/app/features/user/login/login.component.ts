@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FORM_ERRORS } from 'src/app/shared/constants/errors.constants';
 import { FORM_CONTROL_NAMES } from 'src/app/shared/constants/form-field.constant';
-import { FormService } from '../services/form/form.service';
+import { LoginFormService } from './login-form/login-form.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -14,11 +14,12 @@ export class LoginComponent implements OnInit {
   FORM_CONTROL_NAMES = FORM_CONTROL_NAMES;
   loginForm = new FormGroup({});
 
-  constructor(private formService: FormService) {}
+  constructor(private formService: LoginFormService) {}
 
   ngOnInit(): void {
     this.loginForm = this.formService.loginForm;
     localStorage.removeItem('Email');
+    localStorage.removeItem('role');
   }
 
   logInUser(): void {

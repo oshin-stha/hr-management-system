@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 import { LeaveOverviewService } from '../../services/leave-overview.service';
 import {
   acceptLeaveRequest,
@@ -27,7 +27,7 @@ export class LeaveOverviewEffects {
   updateLeaveStatus$ = createEffect(() =>
     this.actions$.pipe(
       ofType(updateLeaveStatus),
-      mergeMap(({ id, newStatus }) =>
+      switchMap(({ id, newStatus }) =>
         this.leaveOverviewService.updateLeaveStatus(id, newStatus).pipe(
           map(() => updateLeaveStatusSuccess({ id, newStatus })),
           catchError((error) => of(updateLeaveStatusFail({ error }))),
@@ -39,9 +39,12 @@ export class LeaveOverviewEffects {
   acceptLeaveRequest$ = createEffect(() =>
     this.actions$.pipe(
       ofType(acceptLeaveRequest),
-      mergeMap(({ id }) =>
+      switchMap(({ id }) =>
         this.leaveOverviewService.acceptLeaveRequest(id).pipe(
-          map(() => acceptLeaveRequestSuccess({ id })),
+          map(() => {
+            alert('Leave Accepted');
+            return acceptLeaveRequestSuccess({ id });
+          }),
           catchError((error) => of(acceptLeaveRequestFail({ error }))),
         ),
       ),
@@ -51,9 +54,12 @@ export class LeaveOverviewEffects {
   rejectLeaveRequest$ = createEffect(() =>
     this.actions$.pipe(
       ofType(rejectLeaveRequest),
-      mergeMap(({ id }) =>
+      switchMap(({ id }) =>
         this.leaveOverviewService.rejectLeaveRequest(id).pipe(
-          map(() => rejectLeaveRequestSuccess({ id })),
+          map(() => {
+            alert('Leave Rejected');
+            return rejectLeaveRequestSuccess({ id });
+          }),
           catchError((error) => of(rejectLeaveRequestFail({ error }))),
         ),
       ),

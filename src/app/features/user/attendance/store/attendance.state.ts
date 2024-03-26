@@ -1,4 +1,7 @@
-import { AttendanceByDate, CheckInState } from '../../models/attendance.model';
+import {
+  AttendanceByDate,
+  CheckInState,
+} from '../../../../shared/models/attendance.model';
 
 export const initialStateCheckIn: CheckInState = {
   checkInStatus: false,

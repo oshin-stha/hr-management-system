@@ -1,7 +1,7 @@
 <div class="employee-details-container">
   <mat-card class="example-card">
     <mat-card-header>
-      <mat-card-title>Add Employee</mat-card-title>
+      <mat-card-title>Register Employee</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <form [formGroup]="signupForm" (ngSubmit)="addUserDetail()">
@@ -10,7 +10,7 @@
           <input
             matInput
             placeholder="AN1001"
-            formControlName="{{ FORM_CONTROL_NAMES.EMPLOYEE_ID }}"
+            [formControlName]="FORM_CONTROL_NAMES.EMPLOYEE_ID"
           />
           <mat-error
             *ngIf="signupForm.get(FORM_CONTROL_NAMES.EMPLOYEE_ID)?.touched"
@@ -23,7 +23,7 @@
           <input
             matInput
             placeholder="firstname"
-            formControlName="{{ FORM_CONTROL_NAMES.FIRST_NAME }}"
+            [formControlName]="FORM_CONTROL_NAMES.FIRST_NAME"
           />
           <mat-error
             *ngIf="signupForm.get(FORM_CONTROL_NAMES.FIRST_NAME)?.touched"
@@ -36,7 +36,7 @@
           <input
             matInput
             placeholder="middlename"
-            formControlName="{{ FORM_CONTROL_NAMES.MIDDLE_NAME }}"
+            [formControlName]="FORM_CONTROL_NAMES.MIDDLE_NAME"
           />
         </mat-form-field>
         <mat-form-field appearance="outline">
@@ -44,7 +44,7 @@
           <input
             matInput
             placeholder="lastname"
-            formControlName="{{ FORM_CONTROL_NAMES.LAST_NAME }}"
+            [formControlName]="FORM_CONTROL_NAMES.LAST_NAME"
           />
           <mat-error
             *ngIf="signupForm.get(FORM_CONTROL_NAMES.LAST_NAME)?.touched"
@@ -54,12 +54,14 @@
         </mat-form-field>
         <mat-radio-group
           aria-label="Select an option"
-          formControlName="{{ FORM_CONTROL_NAMES.GENDER }}"
+          [formControlName]="FORM_CONTROL_NAMES.GENDER"
         >
           <mat-label>Gender</mat-label>
-          <mat-radio-button value="male">Male</mat-radio-button>
-          <mat-radio-button value="female">Female</mat-radio-button>
-          <mat-radio-button value="other">Others</mat-radio-button>
+          <mat-radio-button value="male">{{ GENDER.MALE }}</mat-radio-button>
+          <mat-radio-button value="female">{{
+            GENDER.FEMALE
+          }}</mat-radio-button>
+          <mat-radio-button value="other">{{ GENDER.OTHERS }}</mat-radio-button>
         </mat-radio-group>
         <mat-error
           *ngIf="
@@ -74,7 +76,7 @@
           <input
             matInput
             placeholder="contactno"
-            formControlName="{{ FORM_CONTROL_NAMES.CONTACT_NUMBER }}"
+            [formControlName]="FORM_CONTROL_NAMES.CONTACT_NUMBER"
           />
           <mat-error
             *ngIf="
@@ -109,7 +111,7 @@
           <input
             matInput
             placeholder="address"
-            formControlName="{{ FORM_CONTROL_NAMES.ADDRESS }}"
+            [formControlName]="FORM_CONTROL_NAMES.ADDRESS"
           />
           <mat-error
             *ngIf="signupForm.get(FORM_CONTROL_NAMES.ADDRESS)?.touched"
@@ -122,7 +124,7 @@
           <input
             matInput
             [matDatepicker]="picker2"
-            formControlName="{{ FORM_CONTROL_NAMES.DATE_OF_BIRTH }}"
+            [formControlName]="FORM_CONTROL_NAMES.DATE_OF_BIRTH"
           />
           <mat-datepicker-toggle
             matIconSuffix
@@ -140,7 +142,7 @@
           <input
             matInput
             placeholder="citizenshipno"
-            formControlName="{{ FORM_CONTROL_NAMES.CITIZENSHIP_NUMBER }}"
+            [formControlName]="FORM_CONTROL_NAMES.CITIZENSHIP_NUMBER"
           />
           <mat-error
             *ngIf="
@@ -155,7 +157,7 @@
           <input
             matInput
             [matDatepicker]="picker"
-            formControlName="{{ FORM_CONTROL_NAMES.START_DATE }}"
+            [formControlName]="FORM_CONTROL_NAMES.START_DATE"
           />
           <mat-datepicker-toggle
             matIconSuffix
@@ -173,17 +175,28 @@
           <select
             matNativeControl
             required
-            formControlName="{{ FORM_CONTROL_NAMES.DEPARTMENT }}"
+            [formControlName]="FORM_CONTROL_NAMES.DEPARTMENT"
           >
-            <option value="administration">Administration</option>
-            <option value="angular">Angular</option>
-            <option value="businessanalyst">Business Analyst</option>
-            <option value="digitalmarketing">Digital Marketing</option>
-            <option value="dotnet">Dot Net</option>
-            <option value="flutter">Flutter</option>
-            <option value="graphicsdesigner">Graphics Designer</option>
-            <option value="qa">Quality Assurance</option>
-            <option value="ui/ux">UI/UX</option>
+            <option value="administration">
+              {{ DEPARTMENT_OPTION.ADMINISTRATION }}
+            </option>
+            <option value="angular">{{ DEPARTMENT_OPTION.ANGULAR }}</option>
+            <option value="businessanalyst">
+              {{ DEPARTMENT_OPTION.BUSINESS_ANALYST }}
+            </option>
+            <option value="digitalmarketing">
+              {{ DEPARTMENT_OPTION.DEVOPS }}
+            </option>
+            <option value="dotnet">
+              {{ DEPARTMENT_OPTION.DIGITAL_MARKETING }}
+            </option>
+            <option value="devops">{{ DEPARTMENT_OPTION.DOTNET }}</option>
+            <option value="flutter">{{ DEPARTMENT_OPTION.FLUTTER }}</option>
+            <option value="graphicsdesigner">
+              {{ DEPARTMENT_OPTION.GRAPHICS_DESIGNER }}
+            </option>
+            <option value="qa">{{ DEPARTMENT_OPTION.QA }}</option>
+            <option value="ui/ux">{{ DEPARTMENT_OPTION.UIUX }}</option>
           </select>
           <mat-error
             *ngIf="signupForm.get(FORM_CONTROL_NAMES.DEPARTMENT)?.touched"
@@ -196,10 +209,10 @@
           <select
             matNativeControl
             required
-            formControlName="{{ FORM_CONTROL_NAMES.ROLE }}"
+            [formControlName]="FORM_CONTROL_NAMES.ROLE"
           >
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
+            <option value="user">{{ ROLE.ADMIN }}</option>
+            <option value="admin">{{ ROLE.USER }}</option>
           </select>
           <mat-error *ngIf="signupForm.get(FORM_CONTROL_NAMES.ROLE)?.touched">
             {{ FORM_ERRORS.role.required }}
@@ -210,7 +223,7 @@
           <input
             matInput
             placeholder="designation"
-            formControlName="{{ FORM_CONTROL_NAMES.DESIGNATION }}"
+            [formControlName]="FORM_CONTROL_NAMES.DESIGNATION"
           />
           <mat-error
             *ngIf="signupForm.get(FORM_CONTROL_NAMES.DESIGNATION)?.touched"
@@ -224,7 +237,7 @@
             type="email"
             matInput
             placeholder="pat@example.com"
-            formControlName="{{ FORM_CONTROL_NAMES.EMAIL }}"
+            [formControlName]="FORM_CONTROL_NAMES.EMAIL"
           />
           <mat-error
             *ngIf="
@@ -248,7 +261,7 @@
           <input
             matInput
             [type]="password_hide ? 'password' : 'text'"
-            formControlName="{{ FORM_CONTROL_NAMES.PASSWORD }}"
+            [formControlName]="FORM_CONTROL_NAMES.PASSWORD"
           />
           <button
             mat-icon-button
@@ -261,9 +274,18 @@
             }}</mat-icon>
           </button>
           <mat-error
-            *ngIf="signupForm.get(FORM_CONTROL_NAMES.PASSWORD)?.touched"
+            *ngIf="
+              signupForm.get(FORM_CONTROL_NAMES.PASSWORD)?.hasError('required')
+            "
           >
             {{ FORM_ERRORS.password.required }}
+          </mat-error>
+          <mat-error
+            *ngIf="
+              signupForm.get(FORM_CONTROL_NAMES.PASSWORD)?.hasError('minlength')
+            "
+          >
+            {{ FORM_ERRORS.password.minlength }}
           </mat-error>
         </mat-form-field>
         <button
@@ -273,10 +295,9 @@
           type="submit"
           [disabled]="!signupForm.valid"
         >
-          Add Employee
+          Register Employee
         </button>
       </form>
     </mat-card-content>
   </mat-card>
 </div>
-<div class="spinner"></div>

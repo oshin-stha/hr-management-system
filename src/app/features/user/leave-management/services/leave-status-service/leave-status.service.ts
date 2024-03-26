@@ -29,8 +29,8 @@ export class LeaveStatusService {
 
   getLeaveApplicationData(email: string): Observable<LeaveDetails[]> {
     return new Observable<LeaveDetails[]>((observer) => {
-      getDocs(query(this.userRef, where(USER_EMAIL, IS_EQUAL_TO, email))).then(
-        (querySnapshot: QuerySnapshot<DocumentData>) => {
+      getDocs(query(this.userRef, where(USER_EMAIL, IS_EQUAL_TO, email)))
+        .then((querySnapshot: QuerySnapshot<DocumentData>) => {
           const leaveDetails = querySnapshot.docs.map((doc) => doc.data());
           const leaveDetailsData: LeaveDetails[] = leaveDetails.map((data) => {
             return {
@@ -46,8 +46,10 @@ export class LeaveStatusService {
             };
           });
           observer.next(leaveDetailsData);
-        },
-      );
+        })
+        .catch((error) => {
+          observer.error(error);
+        });
     });
   }
 }

@@ -46,11 +46,11 @@ export class LeaveBalanceComponent implements OnInit, OnDestroy {
     this.getLeavebalanceSubscriber = this.store
       .select(getLeaveBalance)
       .subscribe((res) => {
-        (this.annualLeaveTotal = res.annualLeaveTotal),
-          (this.annualLeaveRemaining = res.annualLeaveRemaining),
-          (this.sickLeaveTotal = res.sickLeaveTotal),
-          (this.sickLeaveRemaining = res.sickLeaveRemaining),
-          (this.specialLeaveTaken = res.specialLeaveTaken);
+        this.annualLeaveTotal = res.annualLeaveTotal;
+        this.annualLeaveRemaining = res.annualLeaveRemaining;
+        this.sickLeaveTotal = res.sickLeaveTotal;
+        this.sickLeaveRemaining = res.sickLeaveRemaining;
+        this.specialLeaveTaken = res.specialLeaveTaken;
       });
     this.startGetLeaveBalance();
   }

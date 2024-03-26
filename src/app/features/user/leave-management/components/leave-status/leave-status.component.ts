@@ -6,7 +6,10 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { getLeaveStatusStart } from '../../store/leaveStatusState/leaveStatus.action';
+import {
+  getLeaveStatusReset,
+  getLeaveStatusStart,
+} from '../../store/leaveStatusState/leaveStatus.action';
 import { selectStatus } from '../../store/leaveStatusState/leaveStatus.selector';
 import { Subscription } from 'rxjs';
 import { setLoadingSpinner } from 'src/app/shared/store/loader-store/loader-spinner.action';
@@ -38,8 +41,7 @@ export default class LeaveStatusComponent
   getStatusSubscriber: Subscription | undefined;
   getErrorSubscriber: Subscription | undefined;
   LEAVE_STATUS_CONSTANTS = LEAVE_STATUS_CONSTANTS;
-  dataSource: MatTableDataSource<LeaveDetails> =
-    new MatTableDataSource<LeaveDetails>([]);
+  dataSource = new MatTableDataSource<LeaveDetails>([]);
 
   constructor(
     private store: Store,
@@ -48,8 +50,13 @@ export default class LeaveStatusComponent
 
   ngOnInit(): void {
     this.userEmail = localStorage.getItem(EMAIL);
-    this.getLeaveDetails();
     this.showLeaveStatus();
+  }
+
+  ngOnDestroy(): void {
+    this.getStatusSubscriber?.unsubscribe();
+    this.getErrorSubscriber?.unsubscribe();
+    this.store.dispatch(getLeaveStatusReset());
   }
 
   addingDataToDatasource(): void {
@@ -74,7 +81,6 @@ export default class LeaveStatusComponent
   }
 
   getLeaveDetails(): void {
-    this.store.dispatch(setLoadingSpinner({ status: true }));
     if (this.userEmail != null) {
       this.store.dispatch(getLeaveStatusStart({ email: this.userEmail }));
     }
@@ -88,22 +94,16 @@ export default class LeaveStatusComponent
         this.status = res;
         this.addingDataToDatasource();
       });
+    this.getLeaveDetails();
   }
 
   formatDate(
     timestamp: { seconds: number; nanoseconds: number } | undefined,
   ): string {
-    if (!timestamp || timestamp.seconds === undefined) {
+    if (!timestamp) {
       return '';
     }
     const date = new Date(timestamp.seconds * 1000);
     return this.datePipe.transform(date, FORMAT_DATE) ?? '';
-  }
-
-  ngOnDestroy(): void {
-    if (this.getStatusSubscriber && this.getErrorSubscriber) {
-      this.getStatusSubscriber.unsubscribe();
-      this.getErrorSubscriber?.unsubscribe();
-    }
   }
 }

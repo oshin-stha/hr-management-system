@@ -63,6 +63,7 @@ export class ApplyLeaveService {
       this.firstOrSecondHalfOrFullDay = formData.value.firstOrSecondHalf;
     }
   }
+
   ifNotHalfDay(formData: FormGroup): void {
     if (formData.value.leaveTo && formData.value.leaveFrom) {
       const timeDifference =

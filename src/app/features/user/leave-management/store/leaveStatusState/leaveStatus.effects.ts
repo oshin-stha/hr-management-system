@@ -29,4 +29,16 @@ export class LeaveStausEffects {
       ),
     );
   });
+
+  showErrorMessage$ = createEffect(
+    () =>
+      this.action.pipe(
+        ofType(getLeaveStatusFailure),
+        map((error) => {
+          console.log(error);
+          alert(error);
+        }),
+      ),
+    { dispatch: false },
+  );
 }

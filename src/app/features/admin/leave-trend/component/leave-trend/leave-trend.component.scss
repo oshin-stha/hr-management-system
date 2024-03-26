@@ -3,17 +3,40 @@ mat-card-content {
   justify-content: space-around;
   padding: 16px;
 }
+
 .main {
   padding: 1rem;
 }
+
 mat-card {
   padding: 2.5rem;
 }
+
 .bar-graph-title {
   display: flex;
   justify-content: center;
 }
-.pie-chart {
+
+.pie-chart-title {
   display: flex;
   justify-content: center;
+}
+
+.pie-chart-div {
+  width: 400px;
+  height: 400px;
+}
+
+.pie-chart-canvas {
+  width: 400px;
+  height: 400px;
+}
+
+.bar-graph {
+  width: 500px;
+  height: 450px;
+}
+.bar-chart {
+  width: 400;
+  height: 400;
 }

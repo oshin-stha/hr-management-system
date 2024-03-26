@@ -51,7 +51,7 @@ export class LeaveApplyComponent implements OnInit, OnDestroy {
   LEAVE_TYPES = LEAVE_TYPE;
   userEmail: string | null = '';
   leaveBalance: LeaveBalanceDetails | undefined;
-  isHalfDay: boolean | undefined = false;
+  isHalfDay = false;
   minDateForLeaveFrom = new Date();
   minDateForLeaveTo: Date | undefined;
   leaveDetails: LeaveDetails[] = [];
@@ -59,9 +59,9 @@ export class LeaveApplyComponent implements OnInit, OnDestroy {
   leavesToTake: string[] = [];
   leavesTakenByEmployees: LeaveCount[] = [];
   date: string | undefined;
-  isAnnualLeaveDisabled: boolean | undefined = false;
-  isSpeciaalLeaveDisable: boolean | undefined = false;
-  isSickLeaveDisabled: boolean | undefined = false;
+  isAnnualLeaveDisabled = false;
+  isSpeciaalLeaveDisable = false;
+  isSickLeaveDisabled = false;
   FORM_ERRORS = FORM_ERRORS;
   LEAVE_APPLY_FORM_CONSTANTS = LEAVE_APPLY_FORM_CONSTANTS;
 
@@ -156,7 +156,7 @@ export class LeaveApplyComponent implements OnInit, OnDestroy {
   getDatesOfLeaveToTake(formData: FormGroup): void {
     const startDate = moment(formData.value.leaveFrom);
     const endDate = moment(formData.value.leaveTo);
-    while (startDate.isBefore(endDate)) {
+    while (startDate.isSameOrBefore(endDate)) {
       this.leavesToTake.push(startDate.format(DATE_FORMAT));
       startDate.add(1, DAY);
     }
@@ -219,9 +219,15 @@ export class LeaveApplyComponent implements OnInit, OnDestroy {
   }
 
   onInputChange(event: MatSelectChange): void {
-    if (event.value === FORM_CONTROL_NAMES.HALF_DAY_LEAVE)
+    if (event.value === FORM_CONTROL_NAMES.HALF_DAY_LEAVE) {
       this.isHalfDay = true;
-    else this.isHalfDay = false;
+      this.leaveApplicationForm.get(FORM_CONTROL_NAMES.LEAVE_TO)?.reset();
+    } else {
+      this.isHalfDay = false;
+      this.leaveApplicationForm
+        .get(FORM_CONTROL_NAMES.FIRST_OR_SECOND_HALF)
+        ?.reset();
+    }
   }
 
   disableLeaveTo(): boolean {
@@ -236,7 +242,6 @@ export class LeaveApplyComponent implements OnInit, OnDestroy {
       !this.checkIfMoreEmployeesHaveTakenLeaveOnTheLeaveDatesChosen() &&
       this.userEmail &&
       this.leaveBalance &&
-      this.isHalfDay !== undefined &&
       this.department
     ) {
       this.leaveApplyService.applyForLeave(

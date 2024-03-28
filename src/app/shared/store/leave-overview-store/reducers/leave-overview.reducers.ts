@@ -8,11 +8,8 @@ import {
   loadUserDetailsSuccess,
   resetLeaveDetails,
   resetUserDetails,
-} from '../shared-leave-overview.action';
-import {
-  LeaveDetailsState,
-  initialState,
-} from '../shared-leave-overview.state';
+} from '../leave-overview.action';
+import { LeaveDetailsState, initialState } from '../leave-overview.state';
 
 export const _leaveOverviewReducer = createReducer(
   initialState,

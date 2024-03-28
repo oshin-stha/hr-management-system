@@ -2,15 +2,15 @@ import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Observable, of, throwError } from 'rxjs';
 import { LeaveDetails } from 'src/app/shared/models/leave-overview.model';
-import { LeaveOverviewService } from 'src/app/shared/services/shared-leave-overview.service';
+import { LeaveOverviewService } from 'src/app/shared/services/leave-overview.service';
 import { UserDetails } from '../../../models/adduser.model';
 import {
   loadLeaveDetails,
   loadLeaveDetailsFail,
   loadLeaveDetailsSuccess,
   loadUserDetailsSuccess,
-} from '../shared-leave-overview.action';
-import { SharedLeaveOverviewEffects } from './shared-leave-overview.effects';
+} from '../leave-overview.action';
+import { SharedLeaveOverviewEffects } from './leave-overview.effects';
 
 describe('SharedLeaveOverviewEffects', () => {
   let actions$: Observable<unknown>;

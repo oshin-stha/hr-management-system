@@ -3,11 +3,8 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Timestamp } from 'firebase/firestore';
 import { LeaveDetails } from 'src/app/shared/models/leave-overview.model';
 import { UserDetails } from 'src/app/shared/models/user-details.model';
-import { LeaveDetailsState } from '../shared-leave-overview.state';
-import {
-  getLeaveDetails,
-  selectUserDetails,
-} from './shared-leave-overview.selector';
+import { LeaveDetailsState } from '../leave-overview.state';
+import { getLeaveDetails, selectUserDetails } from './leave-overview.selector';
 
 describe('Selectors', () => {
   let store: MockStore;

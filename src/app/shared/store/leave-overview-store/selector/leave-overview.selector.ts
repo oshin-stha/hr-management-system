@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { LeaveDetailsState } from '../shared-leave-overview.state';
+import { LeaveDetailsState } from '../leave-overview.state';
 
 export const SHARED_LEAVE_DETAILS = 'SharedleaveDetails';
 const getLeaveDetailsState =

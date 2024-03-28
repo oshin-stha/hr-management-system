@@ -19,8 +19,8 @@ import { LoaderSpinnerReducer } from 'src/app/shared/store/loader-store/reducer/
 import { LEAVE_BALANCE_SELECTOR } from './store/leaveBalanceState/leaveBalance.selector';
 import { LeaveBalanceReducer } from './store/leaveBalanceState/leaveBalance.reducer';
 import { LeaveBalanceEffects } from './store/leaveBalanceState/leaveBalance.effects';
-import { SharedLeaveOverviewReducer } from 'src/app/shared/store/leave-overview-store/reducers/shared-leave-overview.reducers';
-import { SharedLeaveOverviewEffects } from 'src/app/shared/store/leave-overview-store/effects/shared-leave-overview.effects';
+import { SharedLeaveOverviewReducer } from 'src/app/shared/store/leave-overview-store/reducers/leave-overview.reducers';
+import { SharedLeaveOverviewEffects } from 'src/app/shared/store/leave-overview-store/effects/leave-overview.effects';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   LOADER,

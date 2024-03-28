@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { LeaveOverviewService } from './shared-leave-overview.service';
+import { LeaveOverviewService } from './leave-overview.service';
 
 import { of } from 'rxjs';
 import { UserDetails } from '../models/adduser.model';

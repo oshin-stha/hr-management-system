@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
-import { initialState } from '../shared-leave-overview.state';
-import { SharedLeaveOverviewReducer } from './shared-leave-overview.reducers';
+import { initialState } from '../leave-overview.state';
+import { SharedLeaveOverviewReducer } from './leave-overview.reducers';
 
 import { Timestamp } from 'firebase/firestore';
 import { UserDetails } from 'src/app/shared/models/adduser.model';
@@ -12,7 +12,7 @@ import {
   loadUserDetailsFail,
   loadUserDetailsSuccess,
   resetLeaveDetails,
-} from '../shared-leave-overview.action';
+} from '../leave-overview.action';
 
 describe('SharedLeaveOverviewReducer', () => {
   const userDetails: UserDetails[] = [

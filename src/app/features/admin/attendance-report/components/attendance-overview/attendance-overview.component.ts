@@ -24,7 +24,7 @@ import {
   TableDataForTodaysAttendance,
   TodaysAttendanceState,
 } from './attendance-overview-store/attendance-overview.state';
-import { selectTodaysAttendance } from './attendance-overview-store/selector/attendance-report.selector';
+import { selectTodaysAttendance } from './attendance-overview-store/selector/attendance-overview.selector';
 
 @Component({
   selector: 'app-attendance-overview',
@@ -73,22 +73,31 @@ export class AttendanceOverviewComponent
           data.forEach((entry) => {
             const attendance = entry.attendance;
             const userNameEmployeeID = entry.userNameEmployeeID;
-            const transformedEntry: TableDataForTodaysAttendance = {
-              name: `${userNameEmployeeID.firstName} ${userNameEmployeeID.lastName}`,
-              checkInTime: attendance.checkInTime
-                ? this.formatDate(attendance.checkInTime)
-                : null,
-              checkInStatus: attendance.checkInStatus,
-              checkOutTime: attendance.checkOutTime
-                ? this.formatDate(attendance.checkOutTime)
-                : null,
-              checkOutStatus: attendance.checkOutStatus,
-              absent: attendance.absent ? attendance.absent : 'Present',
-              workingHours: attendance.workingHours,
-              employeeId: userNameEmployeeID.employeeId,
-            };
-
-            transformedData.push(transformedEntry);
+            if (
+              userNameEmployeeID &&
+              userNameEmployeeID.firstName &&
+              userNameEmployeeID.lastName
+            ) {
+              const transformedEntry: TableDataForTodaysAttendance = {
+                name:
+                  `${userNameEmployeeID.firstName} ${userNameEmployeeID.lastName}` +
+                  (userNameEmployeeID.middleName
+                    ? ` ${userNameEmployeeID.middleName}`
+                    : ''),
+                checkInTime: attendance.checkInTime
+                  ? this.formatDate(attendance.checkInTime)
+                  : null,
+                checkInStatus: attendance.checkInStatus,
+                checkOutTime: attendance.checkOutTime
+                  ? this.formatDate(attendance.checkOutTime)
+                  : null,
+                checkOutStatus: attendance.checkOutStatus,
+                absent: attendance.absent ? attendance.absent : 'Present',
+                workingHours: attendance.workingHours,
+                employeeId: userNameEmployeeID.employeeId,
+              };
+              transformedData.push(transformedEntry);
+            }
           });
           this.dataSource.data = transformedData;
         }

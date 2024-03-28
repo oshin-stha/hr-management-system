@@ -1,5 +1,5 @@
 import {
-  AttendanceByDate,
+  AttendanceState,
   CheckInState,
 } from '../../../../shared/models/attendance.model';
 
@@ -9,9 +9,21 @@ export const initialStateCheckIn: CheckInState = {
 };
 
 export interface AttendanceFetchState {
-  attendanceByDate: AttendanceByDate;
+  attendanceList: AttendanceState[];
 }
 
 export const initialAttendanceFetchState: AttendanceFetchState = {
-  attendanceByDate: {},
+  attendanceList: [
+    {
+      email: null,
+      checkInTime: null,
+      checkOutTime: null,
+      checkInStatus: null,
+      checkOutStatus: null,
+      checkInReason: null,
+      checkOutReason: null,
+      workingHours: null,
+      absent: null,
+    },
+  ],
 };

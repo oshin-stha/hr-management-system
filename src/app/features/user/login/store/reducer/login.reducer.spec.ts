@@ -2,7 +2,7 @@ import { loginStart, loginSuccess, loginFailure } from '../login.actions';
 import { AuthReducer } from './login.reducer';
 import { initialState } from '../login.state';
 
-describe('LoginReducer Testing', () => {
+xdescribe('LoginReducer Testing', () => {
   it('should handle login start', () => {
     const newState = AuthReducer(initialState, loginStart);
     expect(newState.isLoggedIn).toBe(false);

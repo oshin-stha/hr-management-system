@@ -8,14 +8,11 @@ import {
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import {
-  ATTENDANCE_REPORT_PATH,
-  SECURE_MODULE_PATH,
-} from 'src/app/shared/constants/routes.constants';
 import { AttendanceState } from 'src/app/shared/models/attendance.model';
+import { AttendanceDetailsService } from './attendance-details-service/attendance-details.service';
 import {
   selectAttendanceList,
   selectemployeeName,
@@ -54,9 +51,9 @@ export class AttendanceDetailsComponent
   ];
 
   constructor(
-    private router: Router,
     private route: ActivatedRoute,
     private store: Store,
+    private attendanceDetailsService: AttendanceDetailsService,
   ) {}
 
   ngOnInit(): void {
@@ -88,7 +85,7 @@ export class AttendanceDetailsComponent
   }
 
   attendanceOverview(): void {
-    this.router.navigate([`/${SECURE_MODULE_PATH}/${ATTENDANCE_REPORT_PATH}`]);
+    this.attendanceDetailsService.attendanceOverviewRoute();
   }
 
   formatDate(timestamp: { seconds: number; nanoseconds: number }): string {

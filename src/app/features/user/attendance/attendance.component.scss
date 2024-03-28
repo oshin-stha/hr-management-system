@@ -1,36 +1,47 @@
 .main-container {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+  padding: 10px;
+}
+
+.button-container {
+  display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
+  margin-bottom: 10px;
 }
 
-.calendar-info-container {
-  display: flex;
-}
-
-.small-calendar {
-  min-width: 600px;
-  min-height: 450px;
-  border: 1px solid rgb(101, 117, 121);
+.button {
+  min-width: 120px;
+  margin: 0 5px;
 }
 
 .calendar-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 20px;
   overflow: auto;
 }
 
+.calendar {
+  min-width: 36vw;
+  max-width: 420px;
+  min-height: 50vh;
+  border: 1px solid rgb(101, 117, 121);
+}
+
 .info-container {
-  position: relative;
-  margin-bottom: 500px;
+  display: flex;
+  align-items: center;
+  margin: 0 0 250px 20px;
 }
 
 .info-list {
   list-style: none;
   padding: 0;
+  text-align: center;
 }
 
 .info-list li {
@@ -57,6 +68,9 @@
 .weekends .color-box {
   background-color: rgb(106, 240, 231);
 }
+.absent .color-box {
+  background-color: beige;
+}
 
 .sufficient-hours,
 .less-hours,
@@ -64,12 +78,17 @@
   color: #333;
 }
 
-.button-container {
-  margin-bottom: 500px;
-  margin-right: 80px;
-  margin-left: 10px;
-}
+@media only screen and (max-width: 600px) {
+  .button-container {
+    flex-direction: column;
+  }
 
-.button {
-  min-width: 120px;
+  .button {
+    margin: 5px 0;
+  }
+
+  .small-calendar {
+    min-width: 40vw;
+    max-width: 70vw;
+  }
 }

@@ -14,6 +14,7 @@ export class LoginService {
   FIRESTORE = getFirestore(this.APP);
   AUTH = getAuth(this.APP);
   USER_DETAILS_REF = collection(this.FIRESTORE, 'UserDetails');
+
   logInUser(email: string, password: string): Observable<UserCredential> {
     return from(signInWithEmailAndPassword(this.AUTH, email, password)).pipe(
       catchError((error) => {

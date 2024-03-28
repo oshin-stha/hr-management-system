@@ -19,6 +19,7 @@ import { LeaveOverviewService } from '../../services/leave-overview.service';
 describe('LeaveOverviewEffects', () => {
   let actions$: Observable<Action>;
   let effects: LeaveOverviewEffects;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let leaveOverviewService: jasmine.SpyObj<any>;
 
   beforeEach(() => {

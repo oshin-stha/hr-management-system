@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Timestamp } from 'firebase/firestore';
 import { of } from 'rxjs';
+import { MaterialModule } from 'src/app/shared/material/material.module';
 import { LeaveOverviewComponent } from './leave-overview.component';
 import {
   acceptLeaveRequest,
   rejectLeaveRequest,
 } from './store/leave-overview.action';
-import { MaterialModule } from 'src/app/shared/material/material.module';
-import { FormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 xdescribe('LeaveOverviewComponent', () => {
   let component: LeaveOverviewComponent;

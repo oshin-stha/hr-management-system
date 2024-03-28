@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChangeDetectorRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
@@ -38,6 +39,7 @@ describe('AttendanceOverviewComponent', () => {
     .and.returnValue(of('test_employee'));
 
   beforeEach(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     todaysAttendanceDataSubject = new Subject<any>();
 
     changeDetectorRef = {

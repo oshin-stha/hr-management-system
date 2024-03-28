@@ -1,4 +1,3 @@
-import { Action } from '@ngrx/store';
 import { initialState } from '../leave-overview.state';
 import { SharedLeaveOverviewReducer } from './leave-overview.reducers';
 

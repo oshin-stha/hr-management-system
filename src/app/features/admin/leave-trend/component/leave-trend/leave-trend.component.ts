@@ -12,7 +12,10 @@ import {
   UI_UX,
 } from 'src/app/shared/constants/departName.constants';
 import { LeaveDetails } from 'src/app/shared/models/leave-overview.model';
-import { loadLeaveDetails } from 'src/app/shared/store/leave-overview-store/leave-overview.action';
+import {
+  loadLeaveDetails,
+  resetLeaveDetails,
+} from 'src/app/shared/store/leave-overview-store/leave-overview.action';
 import { getLeaveDetails } from 'src/app/shared/store/leave-overview-store/selector/leave-overview.selector';
 import Chart from 'chart.js/auto';
 import { ACCEPTED_STATUS } from 'src/app/shared/constants/status.constant';
@@ -36,7 +39,7 @@ import {
   PIE,
   PIE_CHART,
   TOTAL_LEAVES,
-} from 'src/app/shared/constants/leaveDetails.constants';
+} from 'src/app/shared/constants/leaveTrends.constants';
 
 @Component({
   selector: 'app-leave-trend',
@@ -55,12 +58,11 @@ export class LeaveTrendComponent implements OnInit, OnDestroy {
   totalLeaveTakenByUiUx = 0;
   totalLeaveTakenByDigitalMarketting = 0;
   leaveDetailsSubscriber: Subscription = new Subscription();
-  data: number[] = [];
-  dateData: string[] = [];
+  barChartData: number[] = [];
+  barChartDateData: string[] = [];
   LEAVE_TREND_CONSTANTS = LEAVE_TREND_CONSTANTS;
-
-  private pieChart: Chart<'pie', number[], string> | undefined;
-  private myBarChart: Chart<'bar', number[], string> | undefined;
+  pieChart: Chart<'pie', number[], string> | undefined;
+  myBarChart: Chart<'bar', number[], string> | undefined;
 
   constructor(private store: Store) {}
 
@@ -69,17 +71,13 @@ export class LeaveTrendComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.leaveDetailsSubscriber?.unsubscribe();
-    if (this.pieChart) {
-      this.pieChart.destroy();
-    }
-    if (this.myBarChart) {
-      this.myBarChart.destroy();
-    }
+    this.leaveDetailsSubscriber.unsubscribe();
+    this.destroyPieChart();
+    this.destroyBarChart();
+    this.store.dispatch(resetLeaveDetails());
   }
 
   getLeaveDetails(): void {
-    this.store.dispatch(loadLeaveDetails());
     this.leaveDetailsSubscriber = this.store
       .select(getLeaveDetails)
       .subscribe((res) => {
@@ -88,18 +86,20 @@ export class LeaveTrendComponent implements OnInit, OnDestroy {
         this.createPieChart();
         this.findAcceptedLeavesOfAllEmployees();
       });
+
+    this.store.dispatch(loadLeaveDetails());
   }
 
   findAcceptedLeavesOfAllEmployees(): void {
-    this.data = [];
-    this.dateData = [];
+    this.barChartData = [];
+    this.barChartDateData = [];
     const leaveCountsMap = new Map<string, number>();
-    this.leaveDetails.forEach((data) => {
-      if (data.status === ACCEPTED_STATUS) {
-        const leaveFromDate = moment(data.leaveFrom);
-        const leaveToDate = moment(data.leaveTo);
+    this.leaveDetails.forEach((item) => {
+      if (item.status === ACCEPTED_STATUS) {
+        const leaveFromDate = moment(item.leaveFrom.toDate());
+        const leaveToDate = moment(item.leaveTo.toDate());
         this.getTotalLeaveCount(
-          data,
+          item,
           leaveFromDate,
           leaveToDate,
           leaveCountsMap,
@@ -121,13 +121,13 @@ export class LeaveTrendComponent implements OnInit, OnDestroy {
     ) {
       const dateKey = date.format(DATE_FORMAT);
       const count = leaveCountsMap.get(dateKey) ?? 0;
-      this.data.push(count);
-      this.dateData.push(dateKey);
+      this.barChartData.push(count);
+      this.barChartDateData.push(dateKey);
     }
   }
 
   getTotalLeaveCount(
-    data: LeaveDetails,
+    item: LeaveDetails,
     leaveFromDate: moment.Moment,
     leaveToDate: moment.Moment,
     leaveCountsMap: Map<string, number>,
@@ -136,8 +136,8 @@ export class LeaveTrendComponent implements OnInit, OnDestroy {
       const dateKey = leaveFromDate.format(DATE_FORMAT);
       const currentCount = leaveCountsMap.get(dateKey);
       if (
-        data.firstOrSecondHalf === LEAVE_TYPE.FIRST_HALF_LEAVE ||
-        data.firstOrSecondHalf === LEAVE_TYPE.SECOND_HALF_LEAVE
+        item.firstOrSecondHalf === LEAVE_TYPE.FIRST_HALF_LEAVE ||
+        item.firstOrSecondHalf === LEAVE_TYPE.SECOND_HALF_LEAVE
       )
         leaveCountsMap.set(dateKey, (currentCount ?? 0) + 0.5);
       else leaveCountsMap.set(dateKey, (currentCount ?? 0) + 1);
@@ -145,20 +145,29 @@ export class LeaveTrendComponent implements OnInit, OnDestroy {
     }
   }
 
-  createBarChart(): void {
-    const ctx = document.getElementById(BAR_CHART) as HTMLCanvasElement;
+  destroyBarChart(): void {
     if (this.myBarChart) {
       this.myBarChart.destroy();
     }
+  }
 
+  destroyPieChart(): void {
+    if (this.pieChart) {
+      this.pieChart.destroy();
+    }
+  }
+
+  createBarChart(): void {
+    const ctx = document.getElementById(BAR_CHART) as HTMLCanvasElement;
+    this.destroyBarChart();
     this.myBarChart = new Chart(ctx, {
       type: BAR,
       data: {
-        labels: this.dateData,
+        labels: this.barChartDateData,
         datasets: [
           {
             label: TOTAL_LEAVES,
-            data: this.data,
+            data: this.barChartData,
             backgroundColor: BACKGROUND_COLORS,
             borderColor: BORDER_COLORS,
             borderWidth: 1,
@@ -179,9 +188,7 @@ export class LeaveTrendComponent implements OnInit, OnDestroy {
 
   createPieChart(): void {
     const ctx = document.getElementById(PIE_CHART) as HTMLCanvasElement;
-    if (this.pieChart) {
-      this.pieChart.destroy();
-    }
+    this.destroyPieChart();
     this.pieChart = new Chart(ctx, {
       type: PIE,
       data: {

@@ -6,13 +6,7 @@ import { FORM_CONTROL_NAMES } from 'src/app/shared/constants/form-field.constant
   providedIn: 'root',
 })
 export class LeaveFormService {
-  leaveApplicationForm = new FormGroup({});
-
-  constructor() {
-    this.leaveApplicationForm = this.createLeaveApplicationForm();
-  }
-
-  private createLeaveApplicationForm(): FormGroup {
+  createLeaveApplicationForm(): FormGroup {
     return new FormGroup({
       [FORM_CONTROL_NAMES.HALF_OR_FULL_LEAVE]: new FormControl('', [
         Validators.required,

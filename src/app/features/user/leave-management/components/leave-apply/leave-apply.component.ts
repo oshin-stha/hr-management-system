@@ -7,7 +7,7 @@ import {
   getLeavebalanceReset,
   getLeavebalanceStart,
 } from '../../store/leaveBalanceState/leaveBalance.action';
-import { getLeaveBalance } from '../../store/leaveBalanceState/leaveBalance.selector';
+import { getLeaveBalance } from '../../store/leaveBalanceState/selector/leaveBalance.selector';
 import { LeaveBalanceDetails } from '../../models/leaveBalanceDetails.interface';
 import {
   loadLeaveDetails,
@@ -24,18 +24,13 @@ import { LEAVE_TYPE } from 'src/app/shared/constants/leaveType.constants';
 import { Subscription } from 'rxjs';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { LeaveDetails } from 'src/app/shared/models/leave-overview.model';
-import { ACCEPTED_STATUS } from 'src/app/shared/constants/status.constant';
-import * as moment from 'moment';
 import { LeaveCount } from 'src/app/features/admin/leave-trend/models/leave-count.interface';
 import { FORM_ERRORS } from 'src/app/shared/constants/errors.constants';
 import { ApplyLeaveService } from '../../services/apply-for-leave-service/apply-leave.service';
 import { LEAVE_APPLY_FORM_CONSTANTS } from 'src/app/shared/constants/leaveDetails.constants';
-import { ALERT_MESSAGE } from 'src/app/shared/constants/alert-and-ci=onfirmation.constants';
-import {
-  DATE_FORMAT,
-  DAY,
-  EMAIL,
-} from 'src/app/shared/constants/email.constant';
+import { EMAIL } from 'src/app/shared/constants/email.constant';
+import { setLoadingSpinner } from 'src/app/shared/store/loader-store/loader-spinner.action';
+import { CheckValidationsService } from '../../services/check-validations-leave-apply-service/check-validations.service';
 
 @Component({
   selector: 'app-leave-apply',
@@ -51,30 +46,29 @@ export class LeaveApplyComponent implements OnInit, OnDestroy {
   LEAVE_TYPES = LEAVE_TYPE;
   userEmail: string | null = '';
   leaveBalance: LeaveBalanceDetails | undefined;
-  isHalfDay: boolean | undefined = false;
+  isHalfDay = false;
   minDateForLeaveFrom = new Date();
   minDateForLeaveTo: Date | undefined;
   leaveDetails: LeaveDetails[] = [];
   department: string | undefined;
   leavesToTake: string[] = [];
   leavesTakenByEmployees: LeaveCount[] = [];
-  date: string | undefined;
-  isAnnualLeaveDisabled: boolean | undefined = false;
-  isSpeciaalLeaveDisable: boolean | undefined = false;
-  isSickLeaveDisabled: boolean | undefined = false;
+  isAnnualLeaveDisabled = false;
+  isSpeciaalLeaveDisable = false;
+  isSickLeaveDisabled = false;
   FORM_ERRORS = FORM_ERRORS;
   LEAVE_APPLY_FORM_CONSTANTS = LEAVE_APPLY_FORM_CONSTANTS;
+  leavesTakenBySelf: LeaveCount[] = [];
 
   constructor(
     private formService: LeaveFormService,
     private leaveApplyService: ApplyLeaveService,
     private store: Store,
+    private checkValidationService: CheckValidationsService,
   ) {}
 
   ngOnInit(): void {
-    this.leaveApplicationForm = this.formService.leaveApplicationForm;
-    this.leaveApplicationForm.reset();
-    this.userEmail = localStorage.getItem(EMAIL);
+    this.createFormAndGetuserEmail();
     this.getUserDetails();
     this.getLeaveDetails();
     this.getLeaveBalance();
@@ -82,11 +76,17 @@ export class LeaveApplyComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.getLeaveBalanceSubscriber.unsubscribe();
-    this.getUserDetailsSubscriber.unsubscribe;
+    this.getUserDetailsSubscriber.unsubscribe();
     this.getLeaveDetailsSubscriber.unsubscribe();
     this.store.dispatch(getLeavebalanceReset());
     this.store.dispatch(resetUserDetails());
     this.store.dispatch(resetLeaveDetails());
+  }
+
+  createFormAndGetuserEmail(): void {
+    this.leaveApplicationForm = this.formService.createLeaveApplicationForm();
+    this.leaveApplicationForm.reset();
+    this.userEmail = localStorage.getItem(EMAIL);
   }
 
   updateMinDateForLeaveTo(event: MatDatepickerInputEvent<Date>): void {
@@ -108,11 +108,16 @@ export class LeaveApplyComponent implements OnInit, OnDestroy {
       .select(getLeaveBalance)
       .subscribe((res) => {
         this.leaveBalance = res;
-        this.checkingIfUserCanTakeAnnualLeave(res);
-        this.checkingIfUserCanTakeSickLeave(res);
-        this.checkingIfUserCanTakeSpecialLeave(res);
+        this.checkLeaveAvailability(res);
       });
     this.startGetLeaveBalance();
+  }
+
+  checkLeaveAvailability(res: LeaveBalanceDetails): void {
+    this.isAnnualLeaveDisabled = res.annualLeaveRemaining <= 0;
+    this.isSickLeaveDisabled = res.sickLeaveRemaining <= 0;
+    this.isSpeciaalLeaveDisable =
+      res.annualLeaveRemaining >= 1 || res.sickLeaveRemaining >= 1;
   }
 
   getUserDetails(): void {
@@ -137,106 +142,66 @@ export class LeaveApplyComponent implements OnInit, OnDestroy {
     this.store.dispatch(loadLeaveDetails());
   }
 
-  checkingIfUserCanTakeSpecialLeave(res: LeaveBalanceDetails): void {
-    if (res.annualLeaveRemaining < 1 && res.sickLeaveRemaining < 1)
-      this.isSpeciaalLeaveDisable = false;
-    else this.isSpeciaalLeaveDisable = true;
-  }
-
-  checkingIfUserCanTakeSickLeave(res: LeaveBalanceDetails): void {
-    if (res.sickLeaveRemaining > 0) this.isSickLeaveDisabled = false;
-    else this.isSickLeaveDisabled = true;
-  }
-
-  checkingIfUserCanTakeAnnualLeave(res: LeaveBalanceDetails): void {
-    if (res.annualLeaveRemaining > 0) this.isAnnualLeaveDisabled = false;
-    else this.isAnnualLeaveDisabled = true;
-  }
-
   getDatesOfLeaveToTake(formData: FormGroup): void {
-    const startDate = moment(formData.value.leaveFrom);
-    const endDate = moment(formData.value.leaveTo);
-    while (startDate.isBefore(endDate)) {
-      this.leavesToTake.push(startDate.format(DATE_FORMAT));
-      startDate.add(1, DAY);
-    }
+    this.leavesToTake =
+      this.checkValidationService.getDatesOfLeaveToTake(formData);
+  }
+
+  getLeaveDatesOfLeaveTakenBySelf(): void {
+    let leaveCountsMap = new Map<string, number>();
+    if (this.userEmail)
+      leaveCountsMap =
+        this.checkValidationService.getLeaveDatesOfLeaveTakenBySelf(
+          this.leaveDetails,
+          this.userEmail,
+        );
+    this.leavesTakenBySelf = Array.from(leaveCountsMap, ([date, count]) => ({
+      date,
+      count,
+    }));
   }
 
   getDatesOfLeavesAccepted(): void {
-    const leaveCountsMap = new Map<string, number>();
-    for (const item of this.leaveDetails) {
-      if (
-        this.department &&
-        item.status === ACCEPTED_STATUS &&
-        item.fromDepartment === this.department
-      ) {
-        const leaveStartDate = moment(item.leaveFrom);
-        const leaveEndDate = moment(item.leaveTo);
-        this.getCountForTotalLEavesTaken(
-          leaveStartDate,
-          leaveEndDate,
-          leaveCountsMap,
-        );
-      }
-    }
+    let leaveCountsMap = new Map<string, number>();
+    if (this.department)
+      leaveCountsMap = this.checkValidationService.getDatesOfLeavesAccepted(
+        this.leaveDetails,
+        this.department,
+      );
     this.leavesTakenByEmployees = Array.from(
       leaveCountsMap,
       ([date, count]) => ({ date, count }),
     );
   }
 
-  getCountForTotalLEavesTaken(
-    leaveStartDate: moment.Moment,
-    leaveEndDate: moment.Moment,
-    leaveCountsMap: Map<string, number>,
-  ): void {
-    while (leaveStartDate.isBefore(leaveEndDate)) {
-      const dateKey = leaveStartDate.format(DATE_FORMAT);
-      const currentCount = leaveCountsMap.get(dateKey) || 0;
-      leaveCountsMap.set(dateKey, currentCount + 1);
-      leaveStartDate.add(1, DAY);
-    }
-  }
-
   checkIfMoreEmployeesHaveTakenLeaveOnTheLeaveDatesChosen(): boolean {
-    let confirmationShown = false;
-    for (const item of this.leavesToTake) {
-      for (const element of this.leavesTakenByEmployees) {
-        if (item === element.date && element.count > 5) {
-          if (!confirmationShown) {
-            const confirmation = confirm(
-              `${ALERT_MESSAGE.LARGE_NUMBER_OF_LEAVES} ${element.date} ${ALERT_MESSAGE.STILL_PROCEED}`,
-            );
-            if (!confirmation) {
-              return true;
-            }
-            confirmationShown = true;
-          }
-        }
-      }
-    }
-    return false;
+    return this.checkValidationService.checkIfMoreEmployeesHaveTakenLeaveOnTheLeaveDatesChosen(
+      this.leavesToTake,
+      this.leavesTakenByEmployees,
+    );
   }
 
   onInputChange(event: MatSelectChange): void {
-    if (event.value === FORM_CONTROL_NAMES.HALF_DAY_LEAVE)
+    if (event.value === FORM_CONTROL_NAMES.HALF_DAY_LEAVE) {
       this.isHalfDay = true;
-    else this.isHalfDay = false;
-  }
-
-  disableLeaveTo(): boolean {
-    if (this.isHalfDay) return true;
-    return false;
+      this.leaveApplicationForm.get(FORM_CONTROL_NAMES.LEAVE_TO)?.reset();
+    } else {
+      this.isHalfDay = false;
+      this.leaveApplicationForm
+        .get(FORM_CONTROL_NAMES.FIRST_OR_SECOND_HALF)
+        ?.reset();
+    }
   }
 
   applyForLeave(formData: FormGroup): void {
+    this.store.dispatch(setLoadingSpinner({ status: true }));
     this.getDatesOfLeaveToTake(formData);
     this.getDatesOfLeavesAccepted();
+    this.getLeaveDatesOfLeaveTakenBySelf();
     if (
       !this.checkIfMoreEmployeesHaveTakenLeaveOnTheLeaveDatesChosen() &&
       this.userEmail &&
       this.leaveBalance &&
-      this.isHalfDay !== undefined &&
       this.department
     ) {
       this.leaveApplyService.applyForLeave(
@@ -245,6 +210,7 @@ export class LeaveApplyComponent implements OnInit, OnDestroy {
         this.leaveBalance,
         this.isHalfDay,
         this.department,
+        this.leavesTakenBySelf,
       );
     }
   }

@@ -1,12 +1,12 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { initialLeaveBalanceState } from './leaveBalance.state';
+import { initialLeaveBalanceState } from '../leaveBalance.state';
 import {
   getLeavebalanceFailure,
   getLeavebalanceReset,
   getLeavebalanceStart,
   getLeavebalanceSuccess,
-} from './leaveBalance.action';
-import { LeaveBalanceState } from '../../models/leaveBalanceState.model';
+} from '../leaveBalance.action';
+import { LeaveBalanceState } from '../../../models/leaveBalanceState.model';
 
 const _leaveBalanceReducer = createReducer(
   initialLeaveBalanceState,

@@ -16,16 +16,14 @@ import { LeaveStausEffects } from './store/leaveStatusState/leaveStatus.effects'
 import { LEAVE_STATUS_SELECTOR } from './store/leaveStatusState/leaveStatus.selector';
 import { LeaveStatusReducer } from './store/leaveStatusState/leaveStatus.reducer';
 import { LoaderSpinnerReducer } from 'src/app/shared/store/loader-store/reducer/loader-spinner.reducer';
-import { LEAVE_BALANCE_SELECTOR } from './store/leaveBalanceState/leaveBalance.selector';
-import { LeaveBalanceReducer } from './store/leaveBalanceState/leaveBalance.reducer';
-import { LeaveBalanceEffects } from './store/leaveBalanceState/leaveBalance.effects';
+import { LEAVE_BALANCE_SELECTOR } from './store/leaveBalanceState/selector/leaveBalance.selector';
+import { LeaveBalanceReducer } from './store/leaveBalanceState/reducer/leaveBalance.reducer';
+import { LeaveBalanceEffects } from './store/leaveBalanceState/effects/leaveBalance.effects';
 import { SharedLeaveOverviewReducer } from 'src/app/shared/store/leave-overview-store/reducers/leave-overview.reducers';
 import { SharedLeaveOverviewEffects } from 'src/app/shared/store/leave-overview-store/effects/leave-overview.effects';
 import { TranslateModule } from '@ngx-translate/core';
-import {
-  LOADER,
-  SHARED_LEAVE_DETAILS,
-} from 'src/app/shared/constants/leaveDetails.constants';
+import { LOADER } from 'src/app/shared/constants/leaveDetails.constants';
+import { SHARED_LEAVE_DETAILS } from 'src/app/shared/store/leave-overview-store/selector/leave-overview.selector';
 
 @NgModule({
   declarations: [

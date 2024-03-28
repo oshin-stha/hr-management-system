@@ -21,7 +21,12 @@
           class="leave-status-table"
         >
           <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              mat-sort-header
+            >
               {{ LEAVE_STATUS_CONSTANTS.SN }}
             </th>
             <td mat-cell *matCellDef="let row; let i = index">
@@ -32,7 +37,7 @@
           </ng-container>
 
           <ng-container matColumnDef="leaveFrom">
-            <th mat-header-cell *matHeaderCellDef>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
               {{ LEAVE_STATUS_CONSTANTS.LEAVE_FROM }}
             </th>
             <td mat-cell *matCellDef="let element">
@@ -41,7 +46,7 @@
           </ng-container>
 
           <ng-container matColumnDef="leaveTo">
-            <th mat-header-cell *matHeaderCellDef>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
               {{ LEAVE_STATUS_CONSTANTS.LEAVE_TO }}
             </th>
             <td mat-cell *matCellDef="let element">
@@ -50,16 +55,16 @@
           </ng-container>
 
           <ng-container matColumnDef="firstOrSecondHalf">
-            <th mat-header-cell *matHeaderCellDef>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
               {{ LEAVE_STATUS_CONSTANTS.FULL_OR_HALF_DAY }}
             </th>
             <td mat-cell *matCellDef="let element">
-              {{ element.firstOrSecondHalf | uppercase }}
+              {{ element.firstOrSecondHalf }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="totalLeaveDays">
-            <th mat-header-cell *matHeaderCellDef>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
               {{ LEAVE_STATUS_CONSTANTS.TOTAL_LEAVE_DAYS }}
             </th>
             <td mat-cell *matCellDef="let element">
@@ -68,7 +73,7 @@
           </ng-container>
 
           <ng-container matColumnDef="reasonForLeave">
-            <th mat-header-cell *matHeaderCellDef>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
               {{ LEAVE_STATUS_CONSTANTS.REASON }}
             </th>
             <td mat-cell *matCellDef="let element">
@@ -77,16 +82,16 @@
           </ng-container>
 
           <ng-container matColumnDef="leaveType">
-            <th mat-header-cell *matHeaderCellDef>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
               {{ LEAVE_STATUS_CONSTANTS.LEAVE_TYPE }}
             </th>
             <td mat-cell *matCellDef="let element">
-              {{ element.leaveType | uppercase }}
+              {{ element.leaveType }}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
               {{ LEAVE_STATUS_CONSTANTS.STATUS }}
             </th>
             <td

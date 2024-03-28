@@ -6,7 +6,10 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { getLeaveStatusStart } from '../../store/leaveStatusState/leaveStatus.action';
+import {
+  getLeaveStatusReset,
+  getLeaveStatusStart,
+} from '../../store/leaveStatusState/leaveStatus.action';
 import { selectStatus } from '../../store/leaveStatusState/leaveStatus.selector';
 import { Subscription } from 'rxjs';
 import { setLoadingSpinner } from 'src/app/shared/store/loader-store/loader-spinner.action';
@@ -17,7 +20,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import {
   LEAVE_STATUS_CONSTANTS,
-  TABLE_COLUMNS,
+  LEAVE_STATUS_TABLE_COLUMNS,
 } from 'src/app/shared/constants/leaveDetails.constants';
 import { EMAIL, FORMAT_DATE } from 'src/app/shared/constants/email.constant';
 
@@ -33,13 +36,11 @@ export default class LeaveStatusComponent
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   userEmail: string | null = '';
   status: LeaveDetails[] = [];
-  displayedColumns: string[] = TABLE_COLUMNS;
-  errorMessage: string | undefined;
-  getStatusSubscriber: Subscription | undefined;
-  getErrorSubscriber: Subscription | undefined;
+  displayedColumns: string[] = LEAVE_STATUS_TABLE_COLUMNS;
+  getStatusSubscriber: Subscription = new Subscription();
+  getErrorSubscriber: Subscription = new Subscription();
   LEAVE_STATUS_CONSTANTS = LEAVE_STATUS_CONSTANTS;
-  dataSource: MatTableDataSource<LeaveDetails> =
-    new MatTableDataSource<LeaveDetails>([]);
+  dataSource = new MatTableDataSource<LeaveDetails>([]);
 
   constructor(
     private store: Store,
@@ -47,9 +48,15 @@ export default class LeaveStatusComponent
   ) {}
 
   ngOnInit(): void {
+    this.store.dispatch(setLoadingSpinner({ status: true }));
     this.userEmail = localStorage.getItem(EMAIL);
-    this.getLeaveDetails();
     this.showLeaveStatus();
+  }
+
+  ngOnDestroy(): void {
+    this.getStatusSubscriber.unsubscribe();
+    this.getErrorSubscriber.unsubscribe();
+    this.store.dispatch(getLeaveStatusReset());
   }
 
   addingDataToDatasource(): void {
@@ -68,13 +75,9 @@ export default class LeaveStatusComponent
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
   }
 
   getLeaveDetails(): void {
-    this.store.dispatch(setLoadingSpinner({ status: true }));
     if (this.userEmail != null) {
       this.store.dispatch(getLeaveStatusStart({ email: this.userEmail }));
     }
@@ -84,26 +87,19 @@ export default class LeaveStatusComponent
     this.getStatusSubscriber = this.store
       .select(selectStatus)
       .subscribe((res) => {
-        this.store.dispatch(setLoadingSpinner({ status: false }));
         this.status = res;
         this.addingDataToDatasource();
       });
+    this.getLeaveDetails();
   }
 
   formatDate(
     timestamp: { seconds: number; nanoseconds: number } | undefined,
   ): string {
-    if (!timestamp || timestamp.seconds === undefined) {
-      return '';
+    if (!timestamp) {
+      return '-';
     }
     const date = new Date(timestamp.seconds * 1000);
-    return this.datePipe.transform(date, FORMAT_DATE) ?? '';
-  }
-
-  ngOnDestroy(): void {
-    if (this.getStatusSubscriber && this.getErrorSubscriber) {
-      this.getStatusSubscriber.unsubscribe();
-      this.getErrorSubscriber?.unsubscribe();
-    }
+    return this.datePipe.transform(date, FORMAT_DATE) ?? '-';
   }
 }

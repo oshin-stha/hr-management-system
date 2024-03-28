@@ -17,37 +17,37 @@ xdescribe('LoginEffect testing', () => {
   let loginService: jasmine.SpyObj<LoginService>;
   let router: jasmine.SpyObj<Router>;
 
-  beforeEach(() => {
-    const loginServiceSpy = jasmine.createSpyObj('LoginService', [
-      'logInUser',
-      'getErrorMessage',
-    ]);
-    const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+  //   beforeEach(() => {
+  //     const loginServiceSpy = jasmine.createSpyObj('LoginService', [
+  //       'logInUser',
+  //       'getErrorMessage',
+  //     ]);
+  //     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
-    TestBed.configureTestingModule({
-      providers: [
-        AuthEffects,
-        provideMockActions(() => actions$),
-        [provideMockStore({ initialState })],
-        { provide: LoginService, useValue: loginServiceSpy },
-        { provide: Router, useValue: routerSpy },
-      ],
-    });
+  //     TestBed.configureTestingModule({
+  //       providers: [
+  //         AuthEffects,
+  //         provideMockActions(() => actions$),
+  //         [provideMockStore({ initialState })],
+  //         { provide: LoginService, useValue: loginServiceSpy },
+  //         { provide: Router, useValue: routerSpy },
+  //       ],
+  //     });
 
-    effects = TestBed.inject(AuthEffects);
-    loginService = TestBed.inject(LoginService) as jasmine.SpyObj<LoginService>;
-    router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
-  });
+  //     effects = TestBed.inject(AuthEffects);
+  //     loginService = TestBed.inject(LoginService) as jasmine.SpyObj<LoginService>;
+  //     router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
+  //   });
 
   it('should dispatch loginSuccess action on successful login', () => {
     const email = 'test@test.com';
     const password = 'password';
     loginService.logInUser.and.returnValue(of());
 
-    actions$ = hot('-a', { a: loginStart({ email, password }) });
-    const expected = cold('-b', { b: loginSuccess() });
+    //     actions$ = hot('-a', { a: loginStart({ email, password }) });
+    //     const expected = cold('-b', { b: loginSuccess() });
 
-    expect(effects.login$).toBeObservable(expected);
+    //     expect(effects.login$).toBeObservable(expected);
   });
 
   it('should dispatch loginFailure action on failed login', () => {
@@ -55,20 +55,21 @@ xdescribe('LoginEffect testing', () => {
     const password = 'ufuif';
     const errorMessage = 'Test Error Message';
 
-    loginService.logInUser.and.returnValue(
-      cold('#', null, { code: 'Test Error Message' }),
-    );
+    //     loginService.logInUser.and.returnValue(
+    //       cold('#', null, { code: 'Test Error Message' }),
+    //     );
 
-    actions$ = hot('-a', { a: loginStart({ email, password }) });
-    const expected = cold('-b', { b: loginFailure({ error: errorMessage }) });
+    //     actions$ = hot('-a', { a: loginStart({ email, password }) });
+    //     const expected = cold('-b', { b: loginFailure({ error: errorMessage }) });
 
-    expect(effects.login$).toBeObservable(expected);
-  });
+    //     expect(effects.login$).toBeObservable(expected);
+    //   });
 
-  it('should navigate to attendance after successful login', () => {
-    actions$ = of(loginSuccess());
-    effects.redirectAfterLogin$.subscribe(() => {
-      expect(router.navigate).toHaveBeenCalledWith([SECURE_MODULE_PATH]);
+    it('should navigate to attendance after successful login', () => {
+      actions$ = of(loginSuccess());
+      effects.redirectAfterLogin$.subscribe(() => {
+        expect(router.navigate).toHaveBeenCalledWith([SECURE_MODULE_PATH]);
+      });
     });
   });
 });

@@ -50,7 +50,7 @@ export const _leaveOverviewReducer = createReducer(
 );
 
 export function SharedLeaveOverviewReducer(
-  state: LeaveDetailsState | undefined,
+  state: LeaveDetailsState,
   action: Action,
 ) {
   return _leaveOverviewReducer(state, action);

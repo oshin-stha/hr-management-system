@@ -29,25 +29,31 @@ export class LeaveStatusService {
 
   getLeaveApplicationData(email: string): Observable<LeaveDetails[]> {
     return new Observable<LeaveDetails[]>((observer) => {
-      getDocs(query(this.userRef, where(USER_EMAIL, IS_EQUAL_TO, email))).then(
-        (querySnapshot: QuerySnapshot<DocumentData>) => {
+      getDocs(query(this.userRef, where(USER_EMAIL, IS_EQUAL_TO, email)))
+        .then((querySnapshot: QuerySnapshot<DocumentData>) => {
           const leaveDetails = querySnapshot.docs.map((doc) => doc.data());
-          const leaveDetailsData: LeaveDetails[] = leaveDetails.map((data) => {
-            return {
-              email: data?.[USER_EMAIL],
-              leaveFrom: data?.[LEAVE_DETAILS.LEAVE_FROM],
-              leaveTo: data?.[LEAVE_DETAILS.LEAVE_TO],
-              firstOrSecondHalf: data?.[LEAVE_DETAILS.FIRST_OR_SECOND],
-              totalLeaveDays: data?.[LEAVE_DETAILS.TOTAL_LEAVE],
-              leaveType: data?.[LEAVE_DETAILS.LEAVE_TYPE],
-              reasonForLeave: data?.[LEAVE_DETAILS.REASON],
-              status: data?.[LEAVE_DETAILS.STATUS],
-              fromDepartment: data?.[LEAVE_DETAILS.DEPARTMENT],
-            };
-          });
-          observer.next(leaveDetailsData);
-        },
-      );
+          observer.next(this.getLeaveDetailsData(leaveDetails));
+        })
+        .catch((error) => {
+          observer.error(error);
+        });
     });
+  }
+
+  getLeaveDetailsData(leaveDetails: DocumentData[]): LeaveDetails[] {
+    const leaveDetailsData: LeaveDetails[] = leaveDetails.map((data) => {
+      return {
+        email: data?.[USER_EMAIL],
+        leaveFrom: data?.[LEAVE_DETAILS.LEAVE_FROM],
+        leaveTo: data?.[LEAVE_DETAILS.LEAVE_TO],
+        firstOrSecondHalf: data?.[LEAVE_DETAILS.FIRST_OR_SECOND],
+        totalLeaveDays: data?.[LEAVE_DETAILS.TOTAL_LEAVE],
+        leaveType: data?.[LEAVE_DETAILS.LEAVE_TYPE],
+        reasonForLeave: data?.[LEAVE_DETAILS.REASON],
+        status: data?.[LEAVE_DETAILS.STATUS],
+        fromDepartment: data?.[LEAVE_DETAILS.DEPARTMENT],
+      };
+    });
+    return leaveDetailsData;
   }
 }

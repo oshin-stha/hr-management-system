@@ -21,7 +21,10 @@ export class CheckValidationsService {
   getDatesOfLeaveToTake(formData: FormGroup): string[] {
     const startDate = moment(formData.value.leaveFrom);
     const leavesToTake: string[] = [];
-    const endDate = moment(formData.value.leaveTo);
+    const endDate = formData.value.leaveTo
+      ? moment(formData.value.leaveTo)
+      : moment(formData.value.leaveFrom);
+    console.log(endDate);
     while (startDate.isSameOrBefore(endDate)) {
       leavesToTake.push(startDate.format(DATE_FORMAT));
       startDate.add(1, DAY);

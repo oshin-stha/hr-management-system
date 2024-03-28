@@ -175,6 +175,7 @@ export class LeaveApplyComponent implements OnInit, OnDestroy {
   }
 
   checkIfMoreEmployeesHaveTakenLeaveOnTheLeaveDatesChosen(): boolean {
+    console.log(this.leavesToTake, this.leavesTakenByEmployees);
     return this.checkValidationService.checkIfMoreEmployeesHaveTakenLeaveOnTheLeaveDatesChosen(
       this.leavesToTake,
       this.leavesTakenByEmployees,

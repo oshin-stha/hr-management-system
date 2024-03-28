@@ -9,8 +9,9 @@ import { EffectsModule } from '@ngrx/effects';
 import { LeaveOverviewEffects } from './store/effects/leave-overview.effect';
 import { LeaveOverviewReducer } from './store/reducer/leave-overview.reducer';
 import { FormsModule } from '@angular/forms';
-import { SharedLeaveOverviewReducer } from 'src/app/shared/store/leave-overview-store/reducers/leave-overview.reducers';
-import { SharedLeaveOverviewEffects } from 'src/app/shared/store/leave-overview-store/effects/leave-overview.effects';
+import { SharedLeaveOverviewReducer } from 'src/app/shared/store/leave-overview-store/reducers/shared-leave-overview.reducers';
+import { SharedLeaveOverviewEffects } from 'src/app/shared/store/leave-overview-store/effects/shared-leave-overview.effects';
+import { SHARED_LEAVE_DETAILS } from 'src/app/shared/store/leave-overview-store/selector/shared-leave-overview.selector';
 @NgModule({
   declarations: [LeaveOverviewComponent],
   imports: [
@@ -19,7 +20,7 @@ import { SharedLeaveOverviewEffects } from 'src/app/shared/store/leave-overview-
     MaterialModule,
     FormsModule,
     StoreModule.forFeature('leaveDetails', LeaveOverviewReducer),
-    StoreModule.forFeature('SHARED_LEAVE_DETAILS', SharedLeaveOverviewReducer),
+    StoreModule.forFeature(SHARED_LEAVE_DETAILS, SharedLeaveOverviewReducer),
     EffectsModule.forFeature([SharedLeaveOverviewEffects]),
     EffectsModule.forFeature([LeaveOverviewEffects]),
   ],

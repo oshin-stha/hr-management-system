@@ -17,11 +17,11 @@ import {
   resetLeaveOverview,
   updateLeaveBalance,
 } from './store/leave-overview.action';
-import { loadLeaveDetails } from 'src/app/shared/store/leave-overview-store/leave-overview.action';
+import { loadLeaveDetails } from 'src/app/shared/store/leave-overview-store/shared-leave-overview.action';
 import {
   getLeaveDetails,
   selectUserDetails,
-} from 'src/app/shared/store/leave-overview-store/selector/leave-overview.selector';
+} from 'src/app/shared/store/leave-overview-store/selector/shared-leave-overview.selector';
 import { Subscription } from 'rxjs';
 import { DEPARTMENT_OPTION } from 'src/app/shared/constants/departmentoption.constants';
 import { LEAVE_DATES } from 'src/app/shared/constants/leave-dates.constants';
@@ -48,6 +48,7 @@ export class LeaveOverviewComponent
     'contactInformation',
     'leaveFrom',
     'leaveTo',
+    'firstOrSecondHalf',
     'reasonForLeave',
     'status',
     'totalLeaveDays',

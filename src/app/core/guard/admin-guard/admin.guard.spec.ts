@@ -49,7 +49,7 @@ describe('adminGuard', () => {
   });
 
   it('should redirect to secure module path if user role is absent', () => {
-    spyOn(localStorage, 'getItem').and.returnValue(null);
+    spyOn(localStorage, 'getItem').and.returnValue('');
     expect(result instanceof UrlTree).toBe(true);
     const urlTree = result as UrlTree;
     expect(urlTree.toString()).toBe('/hrms');

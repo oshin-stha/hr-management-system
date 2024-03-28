@@ -63,11 +63,12 @@ export class AddUserEffect {
         ).pipe(
           map(() => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
+            alert('User Added');
             return addUserSuccess({ redirect: true });
           }),
           catchError((error) => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
-            return of(addUserFail({ error }));
+            return of(addUserFail({ error: error }));
           }),
         ),
       ),
@@ -82,6 +83,7 @@ export class AddUserEffect {
           if (action.redirect) {
             this.router.navigate([SECURE_MODULE_PATH]);
           }
+          return of();
         }),
       ),
     { dispatch: false },

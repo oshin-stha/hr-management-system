@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
-import { LeaveOverviewService } from 'src/app/shared/services/leave-overview.service';
+import { LeaveOverviewService } from 'src/app/shared/services/shared-leave-overview.service';
 import { UserDetails } from '../../../models/adduser.model';
 
 import { LeaveDetails } from 'src/app/shared/models/leave-overview.model';
@@ -11,7 +11,7 @@ import {
   loadLeaveDetailsFail,
   loadLeaveDetailsSuccess,
   loadUserDetailsSuccess,
-} from '../leave-overview.action';
+} from '../shared-leave-overview.action';
 @Injectable()
 export class SharedLeaveOverviewEffects {
   constructor(

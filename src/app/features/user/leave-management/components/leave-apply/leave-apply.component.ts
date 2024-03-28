@@ -14,11 +14,11 @@ import {
   loadUserDetails,
   resetLeaveDetails,
   resetUserDetails,
-} from 'src/app/shared/store/leave-overview-store/leave-overview.action';
+} from 'src/app/shared/store/leave-overview-store/shared-leave-overview.action';
 import {
   getLeaveDetails,
   selectUserDetails,
-} from 'src/app/shared/store/leave-overview-store/selector/leave-overview.selector';
+} from 'src/app/shared/store/leave-overview-store/selector/shared-leave-overview.selector';
 import { MatSelectChange } from '@angular/material/select';
 import { LEAVE_TYPE } from 'src/app/shared/constants/leaveType.constants';
 import { Subscription } from 'rxjs';

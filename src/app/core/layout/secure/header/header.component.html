@@ -9,12 +9,12 @@
       >
         <mat-icon>menu</mat-icon>
       </button>
-      <app-loading-spinner *ngIf="isLoading$ | async"></app-loading-spinner>
       <img
         src="../../../../../assets/images/hrms1.png"
         alt="hrms"
         class="header__logo"
       />
+      <app-loading-spinner *ngIf="isLoading$ | async"></app-loading-spinner>
     </div>
     <!-- <span class="example-spacer"></span> -->
     <div class="header__right">

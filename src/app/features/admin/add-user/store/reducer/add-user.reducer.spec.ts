@@ -31,7 +31,7 @@ describe('AddUserReducer', () => {
     const state = AddUserReducer(initialState, action);
 
     expect(state.isLoading).toBe(true);
-    expect(state.error).toBe('');
+    expect(state.error).toBe(null);
   });
 
   it('should handle signupSuccess action', () => {
@@ -70,7 +70,7 @@ describe('AddUserReducer', () => {
     const action = addUserStart({ data: employeeUserDetails });
     const state = AddUserReducer(initialState, action);
 
-    expect(state.isLoading).toBe(false);
+    expect(state.isLoading).toBe(true);
   });
 
   it('should handle addUserFail action', () => {

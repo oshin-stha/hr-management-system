@@ -10,7 +10,7 @@ export const fetchTodaysAttendnaceDataSuccess = createAction(
 );
 export const fetchTodaysAttendnaceDataFail = createAction(
   '[Attendance Report] Fetch-attendance Fail',
-  props<{ error: string }>(),
+  props<{ error: string | null | undefined }>(),
 );
 export const resetTodaysAttendance = createAction(
   '[Attendance Report] Fetch-attendance Reset',

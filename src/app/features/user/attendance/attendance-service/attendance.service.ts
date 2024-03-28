@@ -31,7 +31,6 @@ export class AttendanceService {
         this.hasDuplicateCheckIn(email, checkInTime).subscribe(
           (hasDuplicate) => {
             if (hasDuplicate) {
-              alert('You cannot checkin multiple times in a day.');
               observer.error('You cannot checkin multiple times in a day.');
             } else {
               addDoc(this.attendanceRef, data)
@@ -96,28 +95,26 @@ export class AttendanceService {
       getDocs(emailQuery)
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
-            const docCheckInTime = doc.data()['checkInTime']?.toDate(); // Convert Timestamp to Date
+            const docCheckInTime = doc.data()['checkInTime']?.toDate();
             const dataCheckInTime = data.checkInTime;
             if (
               docCheckInTime &&
               dataCheckInTime &&
-              docCheckInTime.toDateString() ===
-                new Date(dataCheckInTime).toDateString()
+              docCheckInTime.toDateString() === dataCheckInTime.toDateString()
             ) {
               if (data.checkOutTime) {
                 const duration =
                   data.checkOutTime.getTime() - docCheckInTime.getTime();
                 const durationInHours = parseInt(
                   Math.abs(duration / (1000 * 60 * 60)).toFixed(2),
-                ); //convert string to number
-                const docRef = doc.ref;
-
+                );
                 const updateData: Partial<AttendanceState> = {
                   checkOutTime: data.checkOutTime,
                   checkOutStatus: data.checkOutStatus,
                   checkOutReason: data.checkOutReason,
                   workingHours: durationInHours,
                 };
+                const docRef = doc.ref;
                 updateDoc(docRef, updateData)
                   .then(() => {
                     observer.next(data);
@@ -139,8 +136,11 @@ export class AttendanceService {
   }
 
   getAttendanceData(email: string): Observable<AttendanceState[]> {
-    const q = query(this.attendanceRef, where('email', '==', email));
-    return from(getDocs(q)).pipe(
+    const queryForAttendanceByEmail = query(
+      this.attendanceRef,
+      where('email', '==', email),
+    );
+    return from(getDocs(queryForAttendanceByEmail)).pipe(
       map((querySnapshot) => {
         const attendanceData: AttendanceState[] = [];
         querySnapshot.forEach((doc) => {

@@ -21,6 +21,6 @@ export const FORM_CONTROL_NAMES = {
   REASON_FOR_LEAVE: 'reasonForLeave',
   HALF_OR_FULL_LEAVE: 'halfOrFullLeave',
   FIRST_OR_SECOND_HALF: 'firstOrSecondHalf',
-  FULL_LEAVE: 'fullDay',
-  HALF_DAY_LEAVE: 'halfDay',
+  FULL_LEAVE: 'Full Day',
+  HALF_DAY_LEAVE: 'Half Day',
 };

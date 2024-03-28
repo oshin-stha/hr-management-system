@@ -1,6 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { AttendanceByDate } from '../../../../shared/models/attendance.model';
-
+import { AttendanceState } from '../../../../shared/models/attendance.model';
 export const checkInStart = createAction('[Attendance] Check-in Start');
 export const checkInSuccess = createAction('[Attendance] Check-in Success');
 export const checkInFailure = createAction(
@@ -18,12 +17,12 @@ export const checkOutFailure = createAction(
   props<{ error: string }>(),
 );
 
-export const fetchAttendanceData = createAction(
+export const fetchAttendanceDataStart = createAction(
   '[Attendance] Fetch-attendance',
 );
 export const fetchAttendanceDataSuccess = createAction(
   '[Attendance] Fetch-attendance Success',
-  props<{ attendanceByDate: AttendanceByDate }>(),
+  props<{ attendanceList: AttendanceState[] }>(),
 );
 export const fetchAttendanceDataFail = createAction(
   '[Attendance] Fetch-attendance Fail',

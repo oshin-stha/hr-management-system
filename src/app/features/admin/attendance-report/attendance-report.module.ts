@@ -17,9 +17,10 @@ import {
 } from './components/attendance-details/attendance-details-store/attendance-details-selector/attendance-details.selector';
 import { AttendanceDetailsComponent } from './components/attendance-details/attendance-details.component';
 import { AttendanceReport } from './components/attendance-overview/attendance-overview-store/effects/attendance-overview.effects';
-import { TodaysAttendanceReducer } from './components/attendance-overview/attendance-overview-store/reducer/attendance-report.reducer';
-import { TODAYS_ATTENDANCE_DATA } from './components/attendance-overview/attendance-overview-store/selector/attendance-report.selector';
+import { TodaysAttendanceReducer } from './components/attendance-overview/attendance-overview-store/reducer/attendance-overview.reducer';
+import { TODAYS_ATTENDANCE_DATA } from './components/attendance-overview/attendance-overview-store/selector/attendance-overview.selector';
 import { AttendanceOverviewComponent } from './components/attendance-overview/attendance-overview.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { AttendanceOverviewComponent } from './components/attendance-overview/at
     CommonModule,
     AttendanceReportRoutingModule,
     MaterialModule,
+    RouterModule,
     StoreModule.forFeature(TODAYS_ATTENDANCE_DATA, TodaysAttendanceReducer),
     StoreModule.forFeature(ATTENDANCE_LIST, AttendanceListReducer),
     StoreModule.forFeature(USER_NAME, EmployeeNameReducer),

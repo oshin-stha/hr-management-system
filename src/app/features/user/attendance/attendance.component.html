@@ -22,21 +22,19 @@
     </button>
   </div>
   <div class="calendar-container">
-    <mat-calendar
-      calender
-      *ngIf="attendanceData"
-      class="small-calendar"
-      [dateClass]="dateClassFunction"
-    ></mat-calendar>
-  </div>
+    <div class="calendar">
+      <mat-calendar calender [dateClass]="dateClassFunction"></mat-calendar>
+    </div>
 
-  <div class="info-container">
-    <ul class="info-list">
-      <li class="sufficient-hours">
-        <span class="color-box"></span> Sufficient Hours
-      </li>
-      <li class="less-hours"><span class="color-box"></span> Less Hours</li>
-      <li class="weekends"><span class="color-box"></span> Weekends</li>
-    </ul>
+    <div class="info-container">
+      <ul class="info-list">
+        <li class="sufficient-hours">
+          <span class="color-box"></span> Sufficient Hours
+        </li>
+        <li class="less-hours"><span class="color-box"></span> Less Hours</li>
+        <li class="weekends"><span class="color-box"></span> Weekends</li>
+        <li class="absent"><span class="color-box"></span> Absent</li>
+      </ul>
+    </div>
   </div>
 </div>

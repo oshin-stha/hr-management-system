@@ -1,4 +1,7 @@
 <div class="fixed-header">
+  <div class="loading-bar" *ngIf="isLoading$ | async">
+    <div class="loading-progress"></div>
+  </div>
   <mat-toolbar class="header">
     <div class="header__left">
       <button
@@ -14,9 +17,8 @@
         alt="hrms"
         class="header__logo"
       />
-      <app-loading-spinner *ngIf="isLoading$ | async"></app-loading-spinner>
     </div>
-    <!-- <span class="example-spacer"></span> -->
+
     <div class="header__right">
       <button
         mat-raised-button

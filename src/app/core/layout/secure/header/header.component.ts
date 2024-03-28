@@ -68,6 +68,7 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(['']);
     }
   }
+
   toggleSideMenu(): void {
     this.toggleSideMenuEvent.emit();
   }

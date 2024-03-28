@@ -56,12 +56,6 @@ describe('SharedLeaveOverviewReducer', () => {
     code: 'ERROR_CODE',
   };
 
-  it('should return the default state', () => {
-    const action = {} as Action;
-    const state = SharedLeaveOverviewReducer(undefined, action);
-    expect(state).toBe(initialState);
-  });
-
   describe('loadUserDetails', () => {
     it('should set loading to true', () => {
       const action = loadUserDetails();

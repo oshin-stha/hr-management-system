@@ -48,6 +48,7 @@ export class LeaveOverviewComponent
     'contactInformation',
     'leaveFrom',
     'leaveTo',
+    'firstOrSecondHalf',
     'reasonForLeave',
     'status',
     'totalLeaveDays',

@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.formService.loginForm;
     localStorage.removeItem('Email');
     localStorage.removeItem('role');
+    localStorage.removeItem('isUserMode');
   }
 
   logInUser(): void {

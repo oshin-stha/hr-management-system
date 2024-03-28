@@ -74,17 +74,17 @@ export class LeaveOverviewService {
       switchMap((snapshot: DocumentSnapshot) => {
         if (snapshot.exists()) {
           this.leaveBalanceData = snapshot.data();
-          if (leaveType === 'Sick Leave') {
+          if (leaveType === 'Sick') {
             this.leaveRemainingField = 'sickLeaveRemaining';
             const newLeaveRemaining =
               this.leaveBalanceData[this.leaveRemainingField] - totalLeaveDays;
             this.updateData = { [this.leaveRemainingField]: newLeaveRemaining };
-          } else if (leaveType === 'Annual Leave') {
+          } else if (leaveType === 'Annual') {
             this.leaveRemainingField = 'annualLeaveRemaining';
             const newLeaveRemaining =
               this.leaveBalanceData[this.leaveRemainingField] - totalLeaveDays;
             this.updateData = { [this.leaveRemainingField]: newLeaveRemaining };
-          } else if (leaveType === 'Special Leave') {
+          } else if (leaveType === 'Special') {
             const leaveTakenField = 'specialLeaveTaken';
             const newLeaveTaken =
               this.leaveBalanceData[leaveTakenField] + totalLeaveDays;

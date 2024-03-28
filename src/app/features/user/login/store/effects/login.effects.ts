@@ -62,6 +62,7 @@ export class AuthEffects {
         this.loginService.getUserByEmail(action.email).pipe(
           map((userDetails: UserDetails[]) => {
             localStorage.setItem('role', userDetails[0].role);
+            localStorage.setItem('isUserMode', 'true');
             return getUserDetailsSuccess({ userDetails });
           }),
           catchError((error) => of(getUserDetailsFailure({ error }))),

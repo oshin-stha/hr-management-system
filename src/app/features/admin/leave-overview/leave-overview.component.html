@@ -47,9 +47,9 @@
     (change)="applyLeaveTypeFilter()"
   >
     <option value="">{{ LEAVE_TYPE.ALL_LEAVE_TYPE }}</option>
-    <option value="sickLeave">{{ LEAVE_TYPE.ANNUAL_LEAVE }}</option>
-    <option value="annualLeave">{{ LEAVE_TYPE.SICK_LEAVE }}</option>
-    <option value="specialLeave">{{ LEAVE_TYPE.SPECIAL_LEAVE }}</option>
+    <option value="Annual">{{ LEAVE_TYPE.ANNUAL_LEAVE }}</option>
+    <option value="Sick">{{ LEAVE_TYPE.SICK_LEAVE }}</option>
+    <option value="Special">{{ LEAVE_TYPE.SPECIAL_LEAVE }}</option>
   </select>
 </mat-form-field>
 <mat-form-field appearance="outline" class="filter-leave-details">
@@ -113,6 +113,13 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Leave To</th>
       <td mat-cell *matCellDef="let row">
         {{ formatDate(row.leaveTo) }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="firstOrSecondHalf">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Full/Half Day</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.firstOrSecondHalf }}
       </td>
     </ng-container>
 

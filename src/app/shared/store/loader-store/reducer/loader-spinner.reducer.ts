@@ -4,7 +4,7 @@ import { LoaderState, initialState } from '../loader-spinner.state';
 
 const _loaderSpinnerReducer = createReducer(
   initialState,
-  on(setLoadingSpinner, (state = initialState, { status }) => ({
+  on(setLoadingSpinner, (state, { status }) => ({
     ...state,
     isLoading: status,
   })),

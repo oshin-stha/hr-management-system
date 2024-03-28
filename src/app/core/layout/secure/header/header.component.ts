@@ -16,8 +16,10 @@ export class HeaderComponent implements OnInit {
   isLoading$ = new Observable<boolean>();
   role: string | null | undefined;
   isUser = true;
+  switchToAdmin = false;
   @Output() toggleSideMenuEvent = new EventEmitter<void>();
   @Output() isUserChange = new EventEmitter<boolean>();
+  isUserMode: string | null = '';
 
   constructor(
     private store: Store<Store>,
@@ -27,17 +29,34 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading$ = this.store.select(getLoading);
     this.role = localStorage.getItem('role');
-    this.isUser = this.role === 'admin';
+    this.role === 'admin';
+    this.isUserMode = localStorage.getItem('isUserMode');
+    this.changeModeOnReload();
   }
 
-  toggleAdminMode() {
-    this.isUser = !this.isUser;
-    this.isUserChange.emit(this.isUser);
-    if (this.isUser) {
+  changeModeOnReload(): void {
+    if (this.isUserMode === 'true') {
+      this.isUser = true;
+      this.isUserChange.emit(true);
       this.router.navigate(['/', SECURE_MODULE_PATH]);
-    }
-    if (!this.isUser) {
+    } else {
+      this.isUserChange.emit(false);
+      this.isUser = false;
       this.router.navigate(['/', SECURE_MODULE_PATH, ATTENDANCE_REPORT_PATH]);
+    }
+  }
+
+  toggleAdminMode(): void {
+    if (this.isUser) {
+      this.isUserChange.emit(false);
+      this.isUser = false;
+      localStorage.setItem('isUserMode', 'false');
+      this.router.navigate(['/', SECURE_MODULE_PATH, ATTENDANCE_REPORT_PATH]);
+    } else {
+      this.isUserChange.emit(true);
+      this.isUser = true;
+      localStorage.setItem('isUserMode', 'true');
+      this.router.navigate(['/', SECURE_MODULE_PATH]);
     }
   }
 

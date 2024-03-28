@@ -60,6 +60,7 @@ export class AddUserComponent implements OnDestroy {
             const userDetails = this.formService.getUserDetailsFromForm(
               this.signupForm,
             );
+
             if (userDetails) {
               this.store.dispatch(addUserStart({ data: userDetails }));
               const leaveBalance = this.formService.getLeaveBalance();

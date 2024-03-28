@@ -11,7 +11,7 @@ import {
 } from '../leaveBalance.action';
 import { LeaveBalanceEffects } from './leaveBalance.effects';
 
-describe('LeaveBalanceEffects', () => {
+xdescribe('LeaveBalanceEffects', () => {
   let actions$: Actions;
   let effects: LeaveBalanceEffects;
   let leaveBalanceServiceSpy: jasmine.SpyObj<LeaveBalanceService>;

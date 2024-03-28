@@ -10,26 +10,7 @@ export const selectUserDetails = createSelector(
   (state) => state.userDetails,
 );
 
-export const selectUserDetailsLoading = createSelector(
-  getLeaveDetailsState,
-  (state) => state.loading,
-);
-
-export const selectUserDetailsError = createSelector(
-  getLeaveDetailsState,
-  (state) => state.error,
-);
 export const getLeaveDetails = createSelector(
   getLeaveDetailsState,
   (state) => state.leaveDetails,
-);
-
-export const getLeaveDetailsLoading = createSelector(
-  getLeaveDetailsState,
-  (state) => state.loading,
-);
-
-export const getLeaveDetailsError = createSelector(
-  getLeaveDetailsState,
-  (state) => state.error,
 );

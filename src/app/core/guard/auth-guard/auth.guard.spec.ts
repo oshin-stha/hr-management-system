@@ -6,11 +6,9 @@ import {
   UrlSegment,
   UrlTree,
 } from '@angular/router';
-
 import { authGuard } from './auth.guard';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs';
-import { adminGuard } from '../admin-guard/admin.guard';
 
 describe('authGuard', () => {
   const executeGuard: CanMatchFn = (...guardParameters) =>
@@ -26,7 +24,7 @@ describe('authGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      providers: [adminGuard, Router],
+      providers: [authGuard, Router],
     });
     mockRoute = {};
     mockSegments = [];

@@ -19,7 +19,6 @@ import {
 export class SideMenuComponent implements OnInit {
   role: string | undefined | null;
   @Input() isUser = true;
-  showAdminLinks = true;
 
   SECURE_MODULE_PATH = SECURE_MODULE_PATH;
   DASHBOARD_COMPONENT_PATH = DASHBOARD_COMPONENT_PATH;

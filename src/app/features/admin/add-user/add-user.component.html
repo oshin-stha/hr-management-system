@@ -172,32 +172,38 @@
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Department</mat-label>
-          <select
+          <mat-select
             matNativeControl
             required
             [formControlName]="FORM_CONTROL_NAMES.DEPARTMENT"
           >
-            <option value="administration">
+            <mat-option value="administration">
               {{ DEPARTMENT_OPTION.ADMINISTRATION }}
-            </option>
-            <option value="angular">{{ DEPARTMENT_OPTION.ANGULAR }}</option>
-            <option value="businessanalyst">
+            </mat-option>
+            <mat-option value="angular">{{
+              DEPARTMENT_OPTION.ANGULAR
+            }}</mat-option>
+            <mat-option value="businessanalyst">
               {{ DEPARTMENT_OPTION.BUSINESS_ANALYST }}
-            </option>
-            <option value="digitalmarketing">
+            </mat-option>
+            <mat-option value="digitalmarketing">
               {{ DEPARTMENT_OPTION.DEVOPS }}
-            </option>
-            <option value="dotnet">
+            </mat-option>
+            <mat-option value="dotnet">
               {{ DEPARTMENT_OPTION.DIGITAL_MARKETING }}
-            </option>
-            <option value="devops">{{ DEPARTMENT_OPTION.DOTNET }}</option>
-            <option value="flutter">{{ DEPARTMENT_OPTION.FLUTTER }}</option>
-            <option value="graphicsdesigner">
+            </mat-option>
+            <mat-option value="devops">{{
+              DEPARTMENT_OPTION.DOTNET
+            }}</mat-option>
+            <mat-option value="flutter">{{
+              DEPARTMENT_OPTION.FLUTTER
+            }}</mat-option>
+            <mat-option value="graphicsdesigner">
               {{ DEPARTMENT_OPTION.GRAPHICS_DESIGNER }}
-            </option>
-            <option value="qa">{{ DEPARTMENT_OPTION.QA }}</option>
-            <option value="ui/ux">{{ DEPARTMENT_OPTION.UIUX }}</option>
-          </select>
+            </mat-option>
+            <mat-option value="qa">{{ DEPARTMENT_OPTION.QA }}</mat-option>
+            <mat-option value="ui/ux">{{ DEPARTMENT_OPTION.UIUX }}</mat-option>
+          </mat-select>
           <mat-error
             *ngIf="signupForm.get(FORM_CONTROL_NAMES.DEPARTMENT)?.touched"
           >
@@ -206,14 +212,14 @@
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Role</mat-label>
-          <select
+          <mat-select
             matNativeControl
             required
             [formControlName]="FORM_CONTROL_NAMES.ROLE"
           >
-            <option value="user">{{ ROLE.ADMIN }}</option>
-            <option value="admin">{{ ROLE.USER }}</option>
-          </select>
+            <mat-option value="user">{{ ROLE.ADMIN }}</mat-option>
+            <mat-option value="admin">{{ ROLE.USER }}</mat-option>
+          </mat-select>
           <mat-error *ngIf="signupForm.get(FORM_CONTROL_NAMES.ROLE)?.touched">
             {{ FORM_ERRORS.role.required }}
           </mat-error>

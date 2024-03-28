@@ -1,17 +1,17 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { AfterViewChecked, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   MatCalendarCellClassFunction,
   MatCalendarCellCssClasses,
 } from '@angular/material/datepicker';
 import { Store } from '@ngrx/store';
+import { Timestamp } from 'firebase/firestore';
 import { Observable, Subscription } from 'rxjs';
-import { AttendanceByDate } from '../../../shared/models/attendance.model';
+import { AttendanceState } from '../../../shared/models/attendance.model';
 import {
   checkInStart,
   checkOutStart,
-  fetchAttendanceData,
   fetchAttendanceDataReset,
+  fetchAttendanceDataStart,
 } from './store/attendance.actions';
 import {
   selectAttendanceDataFetchStatus,
@@ -27,19 +27,19 @@ export class AttendanceComponent implements OnInit, OnDestroy {
   checkInStatusSubscription: Subscription | undefined;
   dataForCalendarSubscription: Subscription | undefined;
   checkInStatus: boolean | undefined;
-  attendanceByDate$: Observable<AttendanceByDate> = new Observable();
-  attendanceData: AttendanceByDate | null = null;
+  attendanceByDate$: Observable<AttendanceState[]> = new Observable();
+  attendanceData: AttendanceState[] | null = null;
   calendarDate: string | undefined;
   constructor(private store: Store) {}
 
   ngOnInit(): void {
-    this.store.dispatch(fetchAttendanceData());
+    this.store.dispatch(fetchAttendanceDataStart());
     this.attendanceByDate$ = this.store.select(selectAttendanceDataFetchStatus);
     this.getDataForCalendar();
-    this.checkInStatusGet();
+    this.getCheckInStatus();
   }
 
-  checkInStatusGet(): void {
+  getCheckInStatus(): void {
     this.checkInStatusSubscription = this.store
       .select(selectCheckInStatus)
       .subscribe((status) => {
@@ -49,11 +49,11 @@ export class AttendanceComponent implements OnInit, OnDestroy {
 
   getDataForCalendar(): void {
     this.dataForCalendarSubscription = this.attendanceByDate$.subscribe(
-      (data: AttendanceByDate) => {
-        if (Object.keys(data).length < 1) {
+      (data: AttendanceState[]) => {
+        if (data.length < 1 || data[0].workingHours == null) {
           return;
         }
-        this.attendanceData = data ?? null; //ensure data is not null
+        this.attendanceData = data;
       },
     );
   }
@@ -62,48 +62,31 @@ export class AttendanceComponent implements OnInit, OnDestroy {
     const classes: MatCalendarCellCssClasses = {};
 
     if (date.getDay() === 0 || date.getDay() === 6) {
-      classes['highlighted'] = true;
+      classes['weekends'] = true;
     }
 
     if (this.attendanceData) {
-      for (const [dateKey, entry] of Object.entries(this.attendanceData)) {
-        // Convert the dateKey string to a Date object
-        const entryDate = new Date(dateKey);
-
-        // Check if the date matches the current date being processed
-        if (
-          date.getDate() === entryDate.getDate() &&
-          date.getMonth() === entryDate.getMonth() &&
-          date.getFullYear() === entryDate.getFullYear()
-        ) {
-          if (entry[0].workingHours) {
-            if (entry[0].workingHours < 8.5) {
-              classes['lessHour'] = true;
-            } else {
-              classes['sufficentHour'] = true;
+      this.attendanceData.forEach((attendanceEntry) => {
+        if (attendanceEntry.checkInTime instanceof Timestamp) {
+          const attendanceDate = attendanceEntry.checkInTime.toDate();
+          if (
+            date.getDate() === attendanceDate.getDate() &&
+            date.getMonth() === attendanceDate.getMonth() &&
+            date.getFullYear() === attendanceDate.getFullYear()
+          ) {
+            if (attendanceEntry.workingHours) {
+              if (attendanceEntry.workingHours < 8.5) {
+                classes['lessHour'] = true;
+              } else {
+                classes['sufficientHour'] = true;
+              }
             }
           }
         }
-      }
+      });
     }
     return classes;
   };
-
-  getCheckInStatus(date: Date): string | null {
-    if (this.attendanceData) {
-      for (const [dateKey, entry] of Object.entries(this.attendanceData)) {
-        const entryDate = new Date(dateKey);
-        if (
-          date.getDate() === entryDate.getDate() &&
-          date.getMonth() === entryDate.getMonth() &&
-          date.getFullYear() === entryDate.getFullYear()
-        ) {
-          return entry[0].checkInStatus;
-        }
-      }
-    }
-    return null; // Indicate no check-in data for this date
-  }
 
   checkIn(): void {
     this.store.dispatch(checkInStart());

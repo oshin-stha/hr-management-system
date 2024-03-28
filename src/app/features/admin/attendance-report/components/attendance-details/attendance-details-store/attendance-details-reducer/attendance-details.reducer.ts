@@ -16,7 +16,6 @@ import {
 const _AttendanceListReducer = createReducer(
   initialStateAttendanceList,
   on(loadAttendanceDetailsSuccess, (state, { attendanceList }) => {
-    console.log(attendanceList);
     return {
       ...state,
       attendanceList,

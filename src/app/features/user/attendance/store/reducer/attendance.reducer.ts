@@ -12,6 +12,8 @@ import {
   checkOutFailure,
   checkOutStart,
   checkOutSuccess,
+  fetchAttendanceDataFail,
+  fetchAttendanceDataReset,
   fetchAttendanceDataSuccess,
 } from '../attendance.actions';
 
@@ -40,7 +42,6 @@ const _AttendanceReducer = createReducer(
   on(checkOutSuccess, (state) => ({
     ...state,
     checkInStatus: false,
-    error: null,
   })),
   on(checkOutFailure, (state, { error }) => ({
     ...state,
@@ -58,10 +59,15 @@ export function AttendanceReducer(
 
 const _AttendanceDataFetchReducer = createReducer(
   initialAttendanceFetchState,
-  on(fetchAttendanceDataSuccess, (state, { attendanceByDate }) => ({
+  on(fetchAttendanceDataSuccess, (state, { attendanceList }) => ({
     ...state,
-    attendanceByDate,
+    attendanceList,
   })),
+  on(fetchAttendanceDataFail, (state, { error }) => ({
+    ...state,
+    error,
+  })),
+  on(fetchAttendanceDataReset, () => initialAttendanceFetchState),
 );
 
 export function AttendanceDataFetchReducer(

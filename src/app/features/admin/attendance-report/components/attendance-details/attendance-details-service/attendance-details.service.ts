@@ -11,6 +11,11 @@ import {
 import { Observable, from, map, switchMap } from 'rxjs';
 import { firebaseConfig } from 'src/app/environments/environment';
 import { AttendanceState } from '../../../../../../shared/models/attendance.model';
+import { Router } from '@angular/router';
+import {
+  ATTENDANCE_REPORT_PATH,
+  SECURE_MODULE_PATH,
+} from 'src/app/shared/constants/routes.constants';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +25,8 @@ export class AttendanceDetailsService {
   private FIRESTORE = getFirestore(this.APP);
   private userDetailsRef = collection(this.FIRESTORE, 'UserDetails');
   private attendanceRef = collection(this.FIRESTORE, 'attendance');
+
+  constructor(private router: Router) {}
 
   getAttendanceDetailsByEmployeeId(id: string): Observable<AttendanceState[]> {
     return this.getEmailByEmployeeId(id).pipe(
@@ -76,7 +83,7 @@ export class AttendanceDetailsService {
     );
   }
 
-  getemployeeNameByEmployeeId(id: string): Observable<string> {
+  getEmployeeNameByEmployeeId(id: string): Observable<string> {
     return from(getDocs(this.userDetailsRef)).pipe(
       map((querySnapshot) => {
         let employeeName = '';
@@ -92,5 +99,9 @@ export class AttendanceDetailsService {
 
   private constructEmployeeName(data: DocumentData): string {
     return `${data['firstName']} ${data['middleName']} ${data['lastName']}`;
+  }
+
+  attendanceOverviewRoute(): void {
+    this.router.navigate([`/${SECURE_MODULE_PATH}/${ATTENDANCE_REPORT_PATH}`]);
   }
 }

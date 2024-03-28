@@ -26,7 +26,7 @@
                 matInput
                 placeholder="pat@example.com"
                 required
-                formControlName="{{ FORM_CONTROL_NAMES.EMAIL }}"
+                [formControlName]="FORM_CONTROL_NAMES.EMAIL"
               />
               <mat-error
                 *ngIf="
@@ -49,7 +49,7 @@
               <input
                 matInput
                 [type]="hide ? 'password' : 'text'"
-                formControlName="{{ FORM_CONTROL_NAMES.PASSWORD }}"
+                [formControlName]="FORM_CONTROL_NAMES.PASSWORD"
               />
               <button
                 mat-icon-button

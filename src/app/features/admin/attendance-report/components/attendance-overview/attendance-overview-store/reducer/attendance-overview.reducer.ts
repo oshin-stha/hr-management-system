@@ -15,10 +15,9 @@ const _TodaysAttendanceDataReducer = createReducer(
     ...state,
     ...todaysAttendance,
   ]),
-  on(fetchTodaysAttendnaceDataFail, (state, { error }) => ({
-    ...state,
-    error,
-  })),
+  on(fetchTodaysAttendnaceDataFail, (state, { error }) => {
+    return state.map((item) => ({ ...item, error }));
+  }),
   on(resetTodaysAttendance, () => initialStateTodaysAttendance),
 );
 

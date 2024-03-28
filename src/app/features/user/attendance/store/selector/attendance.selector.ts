@@ -18,5 +18,5 @@ export const selectAttendanceDataFetchState =
 
 export const selectAttendanceDataFetchStatus = createSelector(
   selectAttendanceDataFetchState,
-  (state: AttendanceFetchState) => state.attendanceByDate,
+  (state: AttendanceFetchState) => state.attendanceList,
 );

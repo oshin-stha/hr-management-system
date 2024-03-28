@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, of, switchMap } from 'rxjs';
+import { catchError, map, of, switchMap, tap } from 'rxjs';
 import { AttendanceState } from 'src/app/shared/models/attendance.model';
 import { AttendanceDetailsService } from '../../attendance-details-service/attendance-details.service';
 import {
   loadAttendanceDetails,
+  loadAttendanceDetailsFail,
+  loadAttendanceDetailsSuccess,
   loadEmployeeNameFail,
   loademployeeName,
   loademployeeNameSuccess,
-  loadAttendanceDetailsSuccess,
-  loadAttendanceDetailsFail,
 } from '../attendance-details.actions';
 
 @Injectable()
@@ -40,13 +40,13 @@ export class AttendanceDetails {
       ofType(loademployeeName),
       switchMap((action) =>
         this.attendanceDetailsService
-          .getemployeeNameByEmployeeId(action.employeeId)
+          .getEmployeeNameByEmployeeId(action.employeeId)
           .pipe(
             map((employeeName: string) => {
               if (employeeName) {
                 return loademployeeNameSuccess({ employeeName });
               } else {
-                const error = 'Empty EMployee Name';
+                const error = 'Empty Employee Name';
                 return loadEmployeeNameFail({ error });
               }
             }),
@@ -54,5 +54,16 @@ export class AttendanceDetails {
           ),
       ),
     ),
+  );
+
+  navigateToAttendanceOverview$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(loadEmployeeNameFail),
+        tap(() => {
+          this.attendanceDetailsService.attendanceOverviewRoute();
+        }),
+      ),
+    { dispatch: false },
   );
 }

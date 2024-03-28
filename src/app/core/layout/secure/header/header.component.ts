@@ -40,6 +40,7 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(['/', SECURE_MODULE_PATH, ATTENDANCE_REPORT_PATH]);
     }
   }
+
   logout(): void {
     const logout_confirmation_message = confirm(
       'Are you sure you want to logout',
@@ -48,6 +49,7 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(['']);
     }
   }
+
   toggleSideMenu(): void {
     this.toggleSideMenuEvent.emit();
   }

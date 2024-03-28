@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { LeaveBalanceState } from '../../models/leaveBalanceState.model';
+import { LeaveBalanceState } from '../../../models/leaveBalanceState.model';
 
 export const LEAVE_BALANCE_SELECTOR = 'leave balance';
 export const selectLeaveBalance = createFeatureSelector<LeaveBalanceState>(

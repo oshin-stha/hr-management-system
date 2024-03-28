@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, from, map, of, switchMap } from 'rxjs';
+import { catchError, map, of, switchMap } from 'rxjs';
 import { LeaveApplicationService } from '../../services/leave-application-service/leave-application.service';
 import {
   leaveApplicationFailure,
@@ -29,36 +29,42 @@ export class LeaveDetailsEffects {
     return this.action$.pipe(
       ofType(leaveApplicationStart),
       switchMap((action) => {
-        return from(
-          this.leaveApplicationService.addLeaveApplicationDetails(
-            action.leaveDetails,
-          ),
-        ).pipe(
-          map(() => {
-            return leaveApplicationSuccess();
-          }),
-          catchError((error) => {
-            const errorMessage = error.code;
-            alert(errorMessage);
-            this.store.dispatch(setLoadingSpinner({ status: false }));
-            return of(leaveApplicationFailure({ error: errorMessage }));
-          }),
-        );
+        return this.leaveApplicationService
+          .addLeaveApplicationDetails(action.leaveDetails)
+          .pipe(
+            map(() => {
+              return leaveApplicationSuccess();
+            }),
+            catchError((error) => {
+              const errorMessage = error.code;
+              alert(errorMessage);
+              this.store.dispatch(setLoadingSpinner({ status: false }));
+              return of(leaveApplicationFailure({ error: errorMessage }));
+            }),
+          );
       }),
     );
   });
 
-  navigateToLeaveStatus$ = createEffect(
-    () =>
-      this.action$.pipe(
-        ofType(leaveApplicationSuccess),
-        map(() => {
-          this.store.dispatch(setLoadingSpinner({ status: false }));
-          this.route.navigate([
-            `${SECURE_MODULE_PATH}/${LEAVE_COMPONENT_PATH}/${LEAVE_STATUS_PATH}`,
-          ]);
-        }),
-      ),
-    { dispatch: false },
+  navigateToLeaveStatus$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(leaveApplicationSuccess),
+      switchMap(() => {
+        this.route.navigate([
+          `${SECURE_MODULE_PATH}/${LEAVE_COMPONENT_PATH}/${LEAVE_STATUS_PATH}`,
+        ]);
+        return of(setLoadingSpinner({ status: false }));
+      }),
+    ),
+  );
+
+  showError$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(leaveApplicationFailure),
+      switchMap((data) => {
+        alert(data.error);
+        return of(setLoadingSpinner({ status: false }));
+      }),
+    ),
   );
 }

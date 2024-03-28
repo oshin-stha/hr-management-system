@@ -28,10 +28,6 @@ export const LEAVE_BALANCE_CONSTANTS = Object.freeze({
   SPECIAL_LEAVE: 'Special Leave',
   LEAVE_TAKEN: 'Leave Taken:',
 });
-export const LEAVE_TREND_CONSTANTS = {
-  FOR_FIFTEEN_DAYS: 'Leaves for coming 15 days',
-  PICTORIAL_VIEW: 'Pictorial view of total leaves from each department',
-};
 
 export const LEAVE_MANAGEMENT_CONSTANTS = {
   LEAVE_BALANCE: 'Leave Balance',
@@ -53,7 +49,8 @@ export const LEAVE_STATUS_CONSTANTS = Object.freeze({
   STATUS: 'Status',
   NO_DATA: ' No data matching',
 });
-export const TABLE_COLUMNS = [
+
+export const LEAVE_STATUS_TABLE_COLUMNS = [
   'id',
   'leaveFrom',
   'leaveTo',
@@ -63,6 +60,7 @@ export const TABLE_COLUMNS = [
   'leaveType',
   'status',
 ];
+
 export const LEAVE_APPLICATION_DETAILS = 'leaveApplicationDetails';
 export const LEAVE_BALANCE = 'leaveBalance';
 
@@ -73,6 +71,7 @@ export const LEAVE_BALANCE_DETAILS = {
   ANNUAL_LEAVE_TOTAL: 'annualLeaveTotal',
   SPECIAL_LEAVE_TAKEN: 'specialLeaveTaken',
 };
+
 export const IS_EQUAL_TO = '==';
 export const USER_EMAIL = 'email';
 
@@ -87,10 +86,4 @@ export const LEAVE_DETAILS = {
   DEPARTMENT: 'fromDepartment',
 };
 
-export const SHARED_LEAVE_DETAILS = 'SharedleaveDetails';
 export const LOADER = 'loader';
-export const TOTAL_LEAVES = 'Total Leaves';
-export const BAR = 'bar';
-export const BAR_CHART = 'barChart';
-export const PIE = 'pie';
-export const PIE_CHART = 'pieChart';

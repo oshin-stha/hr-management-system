@@ -20,7 +20,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import {
   LEAVE_STATUS_CONSTANTS,
-  TABLE_COLUMNS,
+  LEAVE_STATUS_TABLE_COLUMNS,
 } from 'src/app/shared/constants/leaveDetails.constants';
 import { EMAIL, FORMAT_DATE } from 'src/app/shared/constants/email.constant';
 
@@ -36,10 +36,9 @@ export default class LeaveStatusComponent
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   userEmail: string | null = '';
   status: LeaveDetails[] = [];
-  displayedColumns: string[] = TABLE_COLUMNS;
-  errorMessage: string | undefined;
-  getStatusSubscriber: Subscription | undefined;
-  getErrorSubscriber: Subscription | undefined;
+  displayedColumns: string[] = LEAVE_STATUS_TABLE_COLUMNS;
+  getStatusSubscriber: Subscription = new Subscription();
+  getErrorSubscriber: Subscription = new Subscription();
   LEAVE_STATUS_CONSTANTS = LEAVE_STATUS_CONSTANTS;
   dataSource = new MatTableDataSource<LeaveDetails>([]);
 
@@ -49,13 +48,14 @@ export default class LeaveStatusComponent
   ) {}
 
   ngOnInit(): void {
+    this.store.dispatch(setLoadingSpinner({ status: true }));
     this.userEmail = localStorage.getItem(EMAIL);
     this.showLeaveStatus();
   }
 
   ngOnDestroy(): void {
-    this.getStatusSubscriber?.unsubscribe();
-    this.getErrorSubscriber?.unsubscribe();
+    this.getStatusSubscriber.unsubscribe();
+    this.getErrorSubscriber.unsubscribe();
     this.store.dispatch(getLeaveStatusReset());
   }
 
@@ -75,9 +75,6 @@ export default class LeaveStatusComponent
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
   }
 
   getLeaveDetails(): void {
@@ -90,7 +87,6 @@ export default class LeaveStatusComponent
     this.getStatusSubscriber = this.store
       .select(selectStatus)
       .subscribe((res) => {
-        this.store.dispatch(setLoadingSpinner({ status: false }));
         this.status = res;
         this.addingDataToDatasource();
       });
@@ -101,9 +97,9 @@ export default class LeaveStatusComponent
     timestamp: { seconds: number; nanoseconds: number } | undefined,
   ): string {
     if (!timestamp) {
-      return '';
+      return '-';
     }
     const date = new Date(timestamp.seconds * 1000);
-    return this.datePipe.transform(date, FORMAT_DATE) ?? '';
+    return this.datePipe.transform(date, FORMAT_DATE) ?? '-';
   }
 }

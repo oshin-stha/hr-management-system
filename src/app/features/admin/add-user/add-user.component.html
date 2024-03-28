@@ -217,8 +217,12 @@
             required
             [formControlName]="FORM_CONTROL_NAMES.ROLE"
           >
-            <mat-option value="user">{{ ROLE.ADMIN }}</mat-option>
-            <mat-option value="admin">{{ ROLE.USER }}</mat-option>
+            <mat-option [value]="ROLE.ADMIN">{{
+              ROLE.ADMIN | titlecase
+            }}</mat-option>
+            <mat-option [value]="ROLE.USER">{{
+              ROLE.USER | titlecase
+            }}</mat-option>
           </mat-select>
           <mat-error *ngIf="signupForm.get(FORM_CONTROL_NAMES.ROLE)?.touched">
             {{ FORM_ERRORS.role.required }}

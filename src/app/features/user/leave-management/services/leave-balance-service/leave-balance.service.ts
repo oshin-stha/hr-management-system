@@ -29,6 +29,7 @@ export class LeaveBalanceService {
         .then((docSnapshot) => {
           const leaveAvailable = docSnapshot.data();
           if (leaveAvailable != undefined)
+            //!= why !== (deep equality)
             observer.next(this.getLeaveBalanceDetails(leaveAvailable));
         })
         .catch((error) => {

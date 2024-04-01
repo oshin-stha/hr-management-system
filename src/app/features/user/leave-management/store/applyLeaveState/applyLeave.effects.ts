@@ -38,7 +38,7 @@ export class LeaveDetailsEffects {
             catchError((error) => {
               const errorMessage = error.code;
               alert(errorMessage);
-              this.store.dispatch(setLoadingSpinner({ status: false }));
+              this.store.dispatch(setLoadingSpinner({ status: false })); //again
               return of(leaveApplicationFailure({ error: errorMessage }));
             }),
           );

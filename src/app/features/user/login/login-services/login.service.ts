@@ -41,7 +41,7 @@ export class LoginService {
               citizenshipNumber: doc.data()['citizenshipNumber'],
               startDate: doc.data()['startDate'],
               department: doc.data()['department'],
-              role: doc.data()['role'],
+              role: doc.data()['role'], // function break down
               designation: doc.data()['designation'],
               email: doc.data()['email'],
             };

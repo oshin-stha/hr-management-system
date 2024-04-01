@@ -49,7 +49,7 @@ export const Material = [
   declarations: [],
   imports: [
     CommonModule,
-    StoreModule.forFeature('loader', { LoaderState: LoaderSpinnerReducer }),
+    StoreModule.forFeature('loader', { LoaderState: LoaderSpinnerReducer }), //constant // if not  udaideu
     Material,
   ],
   exports: [Material],

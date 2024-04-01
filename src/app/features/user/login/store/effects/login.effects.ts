@@ -32,7 +32,7 @@ export class AuthEffects {
           this.loginService.logInUser(action.email, action.password),
         ).pipe(
           map(() => {
-            localStorage.setItem('Email', action.email);
+            localStorage.setItem('Email', action.email); //email capital huadina
             this.loginFormService.resetLoginForm();
             return loginSuccess();
           }),

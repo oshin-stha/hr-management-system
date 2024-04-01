@@ -15,6 +15,7 @@ const _leaveStatusreducer = createReducer(
     status: [],
   })),
   on(getLeaveStatusSuccess, (state, action) => ({
+    // destructture
     ...state,
     status: action.leaveDetails,
   })),
@@ -22,7 +23,7 @@ const _leaveStatusreducer = createReducer(
     ...state,
     error: action.error,
   })),
-  on(getLeavebalanceReset, () => initialStatusState),
+  on(getLeavebalanceReset, () => initialStatusState), // naming conveion
 );
 export function LeaveStatusReducer(
   state: LeaveStatusState | undefined,

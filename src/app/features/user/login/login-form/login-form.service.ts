@@ -17,6 +17,7 @@ export class LoginFormService {
   private createLoginForm(): FormGroup {
     return new FormGroup({
       [FORM_CONTROL_NAMES.EMAIL]: new FormControl('', [
+        // use short hand
         Validators.required,
         Validators.email,
       ]),
@@ -28,7 +29,7 @@ export class LoginFormService {
     const email = this.loginForm.get(FORM_CONTROL_NAMES.EMAIL)?.value;
     const password = this.loginForm.get(FORM_CONTROL_NAMES.PASSWORD)?.value;
     if (email && password) {
-      this.store.dispatch(loginStart({ email, password }));
+      this.store.dispatch(loginStart({ email, password })); //chaing
       this.store.dispatch(getUserDetails({ email }));
     }
   }

@@ -24,10 +24,10 @@ export class CheckValidationsService {
     const endDate = formData.value.leaveTo
       ? moment(formData.value.leaveTo)
       : moment(formData.value.leaveFrom);
-    console.log(endDate);
+    console.log(endDate); // removing console
     while (startDate.isSameOrBefore(endDate)) {
       leavesToTake.push(startDate.format(DATE_FORMAT));
-      startDate.add(1, DAY);
+      startDate.add(1, DAY); // donot use magical number  'hard coded number'
     }
     return leavesToTake;
   }
@@ -39,6 +39,7 @@ export class CheckValidationsService {
     const leaveCountsMap = new Map<string, number>();
     for (const item of leaveDetails) {
       if (item.email === userEmail && item.status != REJECTED_STATUS) {
+        // deep equality
         const leaveStartDate = moment(item.leaveFrom.toDate());
         const leaveEndDate = moment(item.leaveTo.toDate());
         this.getCountForTotalLeavesTakenBySelf(
@@ -54,9 +55,10 @@ export class CheckValidationsService {
   getCountForTotalLeavesTakenBySelf(
     leaveStartDate: moment.Moment,
     leaveEndDate: moment.Moment,
-    leaveCountsMap: Map<string, number>,
+    leaveCountsMap: Map<string, number>, // Map<string, number> what does it mean
   ): void {
     while (leaveStartDate.isSameOrBefore(leaveEndDate)) {
+      // while why
       const dateKey = leaveStartDate.format(DATE_FORMAT);
       const currentCount = leaveCountsMap.get(dateKey) || 0;
       leaveCountsMap.set(dateKey, (currentCount ?? 0) + 1);
@@ -108,6 +110,7 @@ export class CheckValidationsService {
     for (const item of leavesToTake) {
       for (const element of leavesTakenByEmployees) {
         if (item === element.date && element.count > 5) {
+          // donot use magical number
           if (!confirmationShown) {
             const confirmation = confirm(
               `${ALERT_MESSAGE.LARGE_NUMBER_OF_LEAVES} ${element.date} ${ALERT_MESSAGE.STILL_PROCEED}`,

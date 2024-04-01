@@ -1,7 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { LeaveDetailsState } from '../leave-overview.state';
 
-export const SHARED_LEAVE_DETAILS = 'SharedleaveDetails';
+export const SHARED_LEAVE_DETAILS = 'SharedleaveDetails'; //casing
 const getLeaveDetailsState =
   createFeatureSelector<LeaveDetailsState>(SHARED_LEAVE_DETAILS);
 

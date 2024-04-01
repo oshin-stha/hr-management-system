@@ -17,7 +17,7 @@ export const _leaveOverviewReducer = createReducer(
   on(loadUserDetails, (state) => ({
     ...state,
     loading: true,
-  })),
+  })), // naming convention
 
   on(loadUserDetailsSuccess, (state, { userDetails }) => ({
     ...state,

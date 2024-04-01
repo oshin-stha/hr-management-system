@@ -20,6 +20,7 @@ export class LeaveOverviewService {
         .then((snapshot) => {
           const leave: LeaveDetails[] = [];
           snapshot.docs.forEach((doc) => {
+            // why forEach
             const leaveDetail: LeaveDetails = {
               id: doc.id,
               employeeName: doc.data()['employeeName'],

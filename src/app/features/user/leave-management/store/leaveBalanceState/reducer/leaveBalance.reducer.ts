@@ -31,7 +31,8 @@ const _leaveBalanceReducer = createReducer(
     ...state,
     error: action.error,
   })),
-  on(getLeavebalanceReset, () => initialLeaveBalanceState),
+  // memory leakage = ?
+  on(getLeavebalanceReset, () => initialLeaveBalanceState), //n
 );
 
 export function LeaveBalanceReducer(

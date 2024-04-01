@@ -2,6 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { UserDetails } from 'src/app/shared/models/adduser.model';
 
 export const loginStart = createAction(
+  // naming
   '[Auth/API] login start',
   props<{ email: string; password: string }>(),
 );

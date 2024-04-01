@@ -7,6 +7,7 @@ export const loadUserDetails = createAction(
 );
 
 export const loadUserDetailsSuccess = createAction(
+  // naming convention in all
   '[User Details] Fetch User Details Success',
   props<{ userDetails: UserDetails[] }>(),
 );

@@ -18,7 +18,7 @@ export class SharedLeaveOverviewEffects {
     private actions$: Actions,
     private leaveOverviewService: LeaveOverviewService,
   ) {}
-
+  //naming convention
   loadLeaveDetails$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadLeaveDetails),

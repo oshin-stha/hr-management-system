@@ -9,6 +9,10 @@ import { WORK_HOURS_SELECTOR } from './store/working-hours/selector/working-hour
 import { workHourReducer } from './store/working-hours/reducer/working-hours.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { WorkingHoursEffect } from './store/working-hours/effects/working-hours.effect';
+import { Material } from 'src/app/shared/material/material.module';
+import { LeaveStatusEffect } from './store/leave-status/effects/leave-status.effects';
+import { LEAVE_STATUS_SELECTOR } from './store/leave-status/selector/leave-status.selector';
+import { LeaveStatusReducer } from './store/leave-status/reducer/leave-status.reducer';
 
 @NgModule({
   declarations: [
@@ -20,7 +24,9 @@ import { WorkingHoursEffect } from './store/working-hours/effects/working-hours.
     CommonModule,
     DashboardRoutingModule,
     StoreModule.forFeature(WORK_HOURS_SELECTOR, workHourReducer),
-    EffectsModule.forFeature(WorkingHoursEffect),
+    StoreModule.forFeature(LEAVE_STATUS_SELECTOR, LeaveStatusReducer),
+    EffectsModule.forFeature(WorkingHoursEffect, LeaveStatusEffect),
+    Material,
   ],
 })
 export class DashboardModule {}

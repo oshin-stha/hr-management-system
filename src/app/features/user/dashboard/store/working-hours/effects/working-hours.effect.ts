@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap, of } from 'rxjs';
-import { AttendenceDetailsService } from '../../../services/attendence-details.service';
+import { AttendenceDetailsService } from '../../../services/attendence-details/attendence-details.service';
 import { AttendanceStateForGettingDataWithTimestamp } from 'src/app/shared/models/attendance.model';
 import {
   loadAttendenceDetails,

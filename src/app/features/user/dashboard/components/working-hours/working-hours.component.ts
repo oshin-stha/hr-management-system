@@ -47,7 +47,6 @@ export class WorkingHoursComponent implements OnInit, OnDestroy {
         }
       }
     });
-    console.log(this.noOfWorkingHours);
   }
 
   formatDate(timestamp: { seconds: number; nanoseconds: number }): string {

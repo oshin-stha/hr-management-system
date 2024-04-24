@@ -1,0 +1,67 @@
+<div class="main">
+  <mat-card class="example-card">
+    <mat-card-title> UPDATE POLICY </mat-card-title>
+
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="submitPolicy()">
+        <mat-form-field>
+          <mat-label>Select Policy Type</mat-label>
+          <mat-select
+            [(value)]="selected"
+            formControlName="policyType"
+            (selectionChange)="patchFormValue()"
+          >
+            <mat-option value="HR Policy">HR Policy</mat-option>
+            <mat-option value="Company Policy">Company Policy</mat-option>
+            <mat-option value="Leave Policy">Leave Policy</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div formArrayName="policyList">
+          <ng-container
+            *ngFor="let content of policyListArrayControl; index as i"
+          >
+            <div class="policyContent">
+              {{ i + 1 }}
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Policy {{ i + 1 }}</mat-label>
+                <textarea
+                  matInput
+                  placeholder="Policy {{ i + 1 }}"
+                  [formControlName]="i"
+                ></textarea>
+              </mat-form-field>
+              <button
+                type="button"
+                mat-icon-button
+                (click)="removePolicy(i)"
+                color="warn"
+              >
+                <mat-icon>remove_circle</mat-icon></button
+              ><br />
+            </div>
+          </ng-container>
+          <button
+            *ngIf="selectPolicyTypeFlag"
+            type="button"
+            mat-flat-button
+            (click)="addPolicy()"
+            color="accent"
+          >
+            Add Policy
+            <mat-icon>add_circle</mat-icon>
+          </button>
+        </div>
+        <br />
+        <button
+          mat-raised-button
+          type="submit"
+          color="primary"
+          [disabled]="form.invalid"
+        >
+          SUBMIT
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

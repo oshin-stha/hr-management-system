@@ -1,0 +1,40 @@
+mat-form-field {
+  width: 100%;
+  align-items: center;
+  display: flex;
+  padding: 4px;
+  border-radius: 20px;
+}
+
+mat-card {
+  width: 80%;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 10px;
+  margin: auto;
+  margin-top: 8px;
+  display: flex;
+}
+
+mat-card-title {
+  font-family: "Times New Roman", Times, serif;
+  font-weight: bold;
+  padding: 16px;
+}
+
+mat-card-content {
+  font-family: "Times New Roman", Times, serif;
+  font-size: larger;
+}
+
+.header {
+  width: 100%;
+  display: inline-flex;
+  padding: 16px;
+  justify-content: space-around;
+  background-color: rgb(255, 255, 255);
+}
+
+button {
+  width: 200x;
+}

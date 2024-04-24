@@ -24,10 +24,8 @@ export class UpdatePolicyService {
   addPolicyDetails(data: Policy): Observable<Policy> {
     // return from(setDoc(doc(this.policyRef, policyType), data));
     return new Observable<Policy>((observer) => {
-      console.log('uyguy');
       setDoc(doc(this.policyRef, data.policyType), data)
         .then(() => {
-          console.log('service running', data);
           observer.next(data);
         })
         .catch((error) => {

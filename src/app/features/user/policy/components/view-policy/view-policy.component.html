@@ -1,0 +1,35 @@
+<div class="main">
+  <div class="header">
+    <button
+      (click)="getPolicyValue('HR Policy')"
+      color="primary"
+      mat-flat-button
+    >
+      HR Policy
+    </button>
+    <button
+      (click)="getPolicyValue('Company Policy')"
+      color="primary"
+      mat-flat-button
+    >
+      COMPANY POLICY
+    </button>
+    <button
+      (click)="getPolicyValue('Leave Policy')"
+      color="primary"
+      mat-flat-button
+    >
+      LEAVE POLICY
+    </button>
+  </div>
+
+  <mat-card class="example-card">
+    <mat-card-title>{{ policyTitle }}</mat-card-title>
+
+    <mat-card-content>
+      <div *ngFor="let policy of policyContent; let i = index">
+        {{ i + 1 }}. {{ policy }}
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

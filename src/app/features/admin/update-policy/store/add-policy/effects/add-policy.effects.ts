@@ -16,8 +16,6 @@ export class AddPolicyEffect {
     this.action$.pipe(
       ofType(addPolicyStart),
       switchMap(({ policy }) => {
-        console.log(policy, 'ee');
-
         return this.updatePolicyService.updatePolicyDetails(policy).pipe(
           map(() => {
             this.store.dispatch(setLoadingSpinner({ status: false }));

@@ -3,6 +3,7 @@ import {
   AbstractControl,
   FormArray,
   FormBuilder,
+  FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
@@ -11,6 +12,7 @@ import { UpdatePolicyService } from '../../../services/update-policy/update-poli
 import { Store } from '@ngrx/store';
 import { addPolicyStart } from '../../../store/add-policy/add-policy.action';
 import { setLoadingSpinner } from 'src/app/shared/store/loader-store/loader-spinner.action';
+import { TOTAL_LEAVES } from 'src/app/shared/constants/total-leaves.constants';
 
 @Component({
   selector: 'app-add-policy',
@@ -18,10 +20,13 @@ import { setLoadingSpinner } from 'src/app/shared/store/loader-store/loader-spin
   styleUrls: ['./add-policy.component.scss'],
 })
 export class AddPolicyComponent implements OnInit {
-  // addPolicyForm = new FormGroup({});
   selected = '';
   selectPolicyTypeFlag = false;
-  policyContents: string[] = [];
+
+  numberFormControl = new FormControl('', [
+    Validators.min(1),
+    Validators.max(50),
+  ]);
 
   constructor(
     private fb: FormBuilder,
@@ -30,12 +35,15 @@ export class AddPolicyComponent implements OnInit {
     private store: Store,
   ) {}
 
+  get form(): FormGroup {
+    return this.addPolicyFormService.form;
+  }
   get policyListArrayControl(): AbstractControl[] {
     return (this.form.get('policyList') as FormArray).controls;
   }
 
-  get form(): FormGroup {
-    return this.addPolicyFormService.form;
+  get sickLeaveFormControl(): AbstractControl | null {
+    return this.form.get('sickLeave');
   }
 
   ngOnInit(): void {
@@ -54,7 +62,9 @@ export class AddPolicyComponent implements OnInit {
 
   submitPolicy(): void {
     this.selectPolicyTypeFlag = false;
+    // const policyPayload = this.addPolicyFormService.createPolicyPayload();
     this.store.dispatch(setLoadingSpinner({ status: true }));
+    // this.store.dispatch(addPolicyStart({ policy: policyPayload }));
     this.store.dispatch(addPolicyStart({ policy: this.form.value }));
 
     this.form.reset();
@@ -66,10 +76,15 @@ export class AddPolicyComponent implements OnInit {
     this.updatePolicyService
       .patchValuetoForm(this.selected)
       .subscribe((data) => {
-        this.policyContents = data;
+        this.form.patchValue({
+          sickLeave: data.sickLeave,
+          annualLeave: data.annualLeave,
+          specialLeave: data.specialLeave,
+        });
+
         //patching value to formArray
         (<FormArray>this.form.get('policyList')).clear();
-        for (const content of this.policyContents) {
+        for (const content of data.policyList) {
           (<FormArray>this.form.get('policyList')).push(
             this.fb.control(content, Validators.required),
           );

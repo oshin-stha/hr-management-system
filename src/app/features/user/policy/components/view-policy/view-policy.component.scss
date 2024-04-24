@@ -20,11 +20,19 @@ mat-card-title {
   font-family: "Times New Roman", Times, serif;
   font-weight: bold;
   padding: 16px;
+  font-size: large;
 }
 
 mat-card-content {
   font-family: "Times New Roman", Times, serif;
   font-size: larger;
+}
+mat-card-content.leave {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+  padding-bottom: 30px;
+  font-style: italic;
 }
 
 .header {

@@ -16,7 +16,12 @@ import { Observable, from } from 'rxjs';
   providedIn: 'root',
 })
 export class UpdatePolicyService {
-  selectedPolicyContent: string[] = [];
+  selectedpolicyContent: string[] = [];
+  selectedPolicyType = '';
+  sickLeave = 0;
+  annualLeave = 0;
+  specialLeave = 0;
+
   app = initializeApp(firebaseConfig);
   firestore = getFirestore(this.app);
   policyRef = collection(this.firestore, 'PolicyDetails');
@@ -38,14 +43,21 @@ export class UpdatePolicyService {
     return from(updateDoc(doc(this.policyRef, data.policyType), { ...data }));
   }
 
-  patchValuetoForm(selectedPolicyType: string): Observable<string[]> {
-    return new Observable<string[]>((observer) => {
+  patchValuetoForm(selectedPolicyType: string): Observable<Policy> {
+    return new Observable<Policy>((observer) => {
       getDocs(this.policyRef).then((snapshot) => {
+        let selectedPolicyContents: Policy = {} as Policy;
         snapshot.docs.forEach((doc) => {
           if (doc.data()['policyType'] === selectedPolicyType)
-            this.selectedPolicyContent = doc.data()['policyList'];
+            selectedPolicyContents = {
+              policyType: doc.data()['policyType'],
+              policyList: doc.data()['policyList'],
+              sickLeave: doc.data()['sickLeave'],
+              annualLeave: doc.data()['annualLeave'],
+              specialLeave: doc.data()['specialLeave'],
+            };
         });
-        observer.next(this.selectedPolicyContent);
+        observer.next(selectedPolicyContents);
         observer.complete();
       });
     });

@@ -26,8 +26,17 @@
   <mat-card class="example-card">
     <mat-card-title>{{ policyTitle }}</mat-card-title>
 
+    <mat-card-content
+      class="leave"
+      *ngIf="selectedButtonValue === 'Leave Policy'"
+    >
+      <div>Sick Leave: {{ sickLeave }}</div>
+      <div>Annual Leave: {{ annualLeave }}</div>
+      <div>Special Leave: {{ specialLeave }}</div>
+    </mat-card-content>
+
     <mat-card-content>
-      <div *ngFor="let policy of policyContent; let i = index">
+      <div *ngFor="let policy of policyList; let i = index">
         {{ i + 1 }}. {{ policy }}
       </div>
     </mat-card-content>

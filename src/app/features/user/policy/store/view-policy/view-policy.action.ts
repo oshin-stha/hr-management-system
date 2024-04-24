@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Policy } from '../models/policy.interface';
+import { Policy } from '../../models/policy.interface';
 
 export const getPolicyStart = createAction(
   '[Get Policy] Get Policy Start ',

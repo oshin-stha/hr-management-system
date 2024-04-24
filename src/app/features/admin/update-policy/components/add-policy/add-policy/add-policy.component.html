@@ -17,6 +17,39 @@
           </mat-select>
         </mat-form-field>
 
+        <div class="leaveDays" *ngIf="selected === 'Leave Policy'">
+          <mat-form-field>
+            <mat-label>Sick Leaves</mat-label>
+            <input matInput type="number" formControlName="sickLeave" />
+            <mat-error *ngIf="sickLeaveFormControl?.hasError('min')">
+              Value must be greater than 1
+            </mat-error>
+            <mat-error *ngIf="sickLeaveFormControl?.hasError('max')">
+              Value must be lower than 50
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Annual Leaves</mat-label>
+            <input matInput type="number" formControlName="annualLeave" />
+            <mat-error *ngIf="sickLeaveFormControl?.hasError('min')">
+              Value must be greater than 1
+            </mat-error>
+            <mat-error *ngIf="sickLeaveFormControl?.hasError('max')">
+              Value must be lower than 50
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Special Leaves</mat-label>
+            <input matInput type="number" formControlName="specialLeave" />
+            <mat-error *ngIf="sickLeaveFormControl?.hasError('min')">
+              Value must be greater than 1
+            </mat-error>
+            <mat-error *ngIf="sickLeaveFormControl?.hasError('max')">
+              Value must be lower than 50
+            </mat-error>
+          </mat-form-field>
+        </div>
+
         <div formArrayName="policyList">
           <ng-container
             *ngFor="let content of policyListArrayControl; index as i"

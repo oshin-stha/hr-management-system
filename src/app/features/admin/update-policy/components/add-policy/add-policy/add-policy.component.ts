@@ -12,7 +12,6 @@ import { UpdatePolicyService } from '../../../services/update-policy/update-poli
 import { Store } from '@ngrx/store';
 import { addPolicyStart } from '../../../store/add-policy/add-policy.action';
 import { setLoadingSpinner } from 'src/app/shared/store/loader-store/loader-spinner.action';
-import { TOTAL_LEAVES } from 'src/app/shared/constants/total-leaves.constants';
 
 @Component({
   selector: 'app-add-policy',

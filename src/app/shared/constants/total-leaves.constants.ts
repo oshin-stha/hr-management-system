@@ -1,5 +1,0 @@
-export const TOTAL_LEAVES = {
-  SICK_LEAVE: 0,
-  ANNUAL_LEAVE: 0,
-  SPECIAL_LEAVE: 0,
-};

@@ -78,7 +78,6 @@ export class AddPolicyComponent implements OnInit {
         this.form.patchValue({
           sickLeave: data.sickLeave,
           annualLeave: data.annualLeave,
-          specialLeave: data.specialLeave,
         });
 
         //patching value to formArray

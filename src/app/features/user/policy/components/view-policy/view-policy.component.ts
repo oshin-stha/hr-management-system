@@ -15,7 +15,6 @@ export class ViewPolicyComponent implements OnInit, OnDestroy {
   policyList: string[] = [];
   sickLeave? = 0;
   annualLeave? = 0;
-  specialLeave? = 0;
   selectPolicySubscriber: Subscription = new Subscription();
 
   constructor(private store: Store) {}
@@ -33,7 +32,6 @@ export class ViewPolicyComponent implements OnInit, OnDestroy {
       this.policyList = res.policyList;
       this.annualLeave = res.annualLeave;
       this.sickLeave = res.sickLeave;
-      this.specialLeave = res.sickLeave;
     });
     this.store.dispatch(
       getPolicyStart({ selectedPolicy: this.selectedButtonValue }),

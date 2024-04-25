@@ -3,5 +3,4 @@ export interface Policy {
   policyList: string[];
   sickLeave?: number;
   annualLeave?: number;
-  specialLeave?: number;
 }

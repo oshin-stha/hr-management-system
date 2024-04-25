@@ -9,6 +9,7 @@ import {
   QuerySnapshot,
   collection,
   doc,
+  getDoc,
   getDocs,
   getFirestore,
   query,
@@ -19,6 +20,7 @@ import { UserDetails, leaveBalance } from 'src/app/shared/models/adduser.model';
 
 import { firebaseConfig } from 'src/app/environments/environment';
 import { Observable, catchError, from, map, switchMap, throwError } from 'rxjs';
+import { TotalLeaves } from '../../models/totalLeaves.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +33,7 @@ export class AddUserService {
   AUTH = getAuth(this.APP);
   USER_DETAILS_REF = collection(this.FIRESTORE, 'UserDetails');
   LOAD_BALANCE_REF = collection(this.FIRESTORE, 'leaveBalance');
+  POLICY_REF = collection(this.FIRESTORE, 'PolicyDetails');
   get emailAlreadyExistsStatus(): boolean {
     return this.emailAlreadyExists;
   }
@@ -63,6 +66,22 @@ export class AddUserService {
 
   addUserDetails(data: UserDetails, email: string): Observable<void> {
     return from(setDoc(doc(this.USER_DETAILS_REF, email), data));
+  }
+
+  getLeaveBalance(): Observable<TotalLeaves> {
+    return new Observable<TotalLeaves>((observer) => {
+      getDocs(this.POLICY_REF).then((snapshot) => {
+        let totalLeaves: TotalLeaves = {} as TotalLeaves;
+        snapshot.docs.forEach((doc) => {
+          totalLeaves = {
+            sickLeave: doc.data()['sickLeave'],
+            annualLeave: doc.data()['annualLeave'],
+          };
+        });
+        observer.next({ ...totalLeaves });
+        observer.complete();
+      });
+    });
   }
 
   addLoadLeaveBalance(email: string, leave: leaveBalance): Observable<void> {

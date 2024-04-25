@@ -32,13 +32,14 @@
     >
       <div>Sick Leave: {{ sickLeave }}</div>
       <div>Annual Leave: {{ annualLeave }}</div>
-      <div>Special Leave: {{ specialLeave }}</div>
     </mat-card-content>
 
     <mat-card-content>
-      <div *ngFor="let policy of policyList; let i = index">
-        {{ i + 1 }}. {{ policy }}
-      </div>
+      <ol>
+        <div *ngFor="let policy of policyList; let i = index">
+          <li>{{ policy }}</li>
+        </div>
+      </ol>
     </mat-card-content>
   </mat-card>
 </div>

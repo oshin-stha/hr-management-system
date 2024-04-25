@@ -27,15 +27,6 @@ export class AddPolicyFormService {
       policyList: this.fb.array([]),
       sickLeave: ['', [Validators.min(1), Validators.max(50)]],
       annualLeave: ['', [Validators.min(1), Validators.max(50)]],
-      specialLeave: ['', [Validators.min(1), Validators.max(50)]],
     });
   }
-
-  // createLeaveForm(): void{
-  //   this.#leaveForm = this.fb.group({
-  //     sickLeave: ['', Validators.min(1), Validators.max(50)],
-  //     annualLeave: ['', Validators.min(1), Validators.max(50)],
-  //     specialLeave: ['', Validators.min(1), Validators.max(50)],
-  //   })
-  // }
 }

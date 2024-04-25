@@ -7,13 +7,14 @@ mat-form-field {
 }
 
 mat-card {
-  width: 80%;
+  width: 60%;
   justify-content: center;
   padding: 8px;
   border-radius: 10px;
   margin: auto;
   margin-top: 8px;
   display: flex;
+  padding: 20px;
 }
 
 mat-card-title {
@@ -39,7 +40,7 @@ mat-card-content.leave {
   width: 100%;
   display: inline-flex;
   padding: 16px;
-  justify-content: space-around;
+  justify-content: space-evenly;
   background-color: rgb(255, 255, 255);
 }
 

@@ -20,7 +20,6 @@ export class UpdatePolicyService {
   selectedPolicyType = '';
   sickLeave = 0;
   annualLeave = 0;
-  specialLeave = 0;
 
   app = initializeApp(firebaseConfig);
   firestore = getFirestore(this.app);
@@ -54,7 +53,6 @@ export class UpdatePolicyService {
               policyList: doc.data()['policyList'],
               sickLeave: doc.data()['sickLeave'],
               annualLeave: doc.data()['annualLeave'],
-              specialLeave: doc.data()['specialLeave'],
             };
         });
         observer.next(selectedPolicyContents);

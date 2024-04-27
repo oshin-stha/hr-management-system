@@ -42,4 +42,10 @@ export class LeaveStatusComponent implements OnInit, OnDestroy {
   formatTimestamp(timestamp: Timestamp): string {
     return timestamp.toDate().toLocaleDateString();
   }
+
+  getStatusColor(status: string) {
+    if (status === 'accepted') return 'green';
+    else if (status === 'pending') return 'grey';
+    else return 'red';
+  }
 }

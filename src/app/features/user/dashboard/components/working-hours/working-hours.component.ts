@@ -14,9 +14,11 @@ import { loadAttendenceDetails } from '../../store/working-hours/working-hours.a
 export class WorkingHoursComponent implements OnInit, OnDestroy {
   myChart: Chart<'bar', number[], string> | undefined;
   leaveDetails: AttendanceStateForGettingDataWithTimestamp[] = [];
-  leaveDetailsSubscriber: Subscription = new Subscription();
+  leaveDetailsSubscriber$: Subscription = new Subscription();
   noOfWorkingHours: number[] = [];
   dateOfWorkingHours: string[] = [];
+  colorOfWorkingHours: string[] = [];
+  labelOfWorkingHours: string[] = [];
   constructor(private store: Store) {}
 
   ngOnInit(): void {
@@ -24,11 +26,11 @@ export class WorkingHoursComponent implements OnInit, OnDestroy {
     this.createChart();
   }
   ngOnDestroy(): void {
-    this.leaveDetailsSubscriber.unsubscribe();
+    this.leaveDetailsSubscriber$.unsubscribe();
   }
 
   getAttendenceDetails() {
-    this.leaveDetailsSubscriber = this.store
+    this.leaveDetailsSubscriber$ = this.store
       .select(selectAttendenceDetails)
       .subscribe((res) => {
         this.leaveDetails = res;
@@ -38,12 +40,25 @@ export class WorkingHoursComponent implements OnInit, OnDestroy {
   }
 
   getWorkingHours() {
+    this.noOfWorkingHours = [];
+    this.colorOfWorkingHours = [];
+    this.dateOfWorkingHours = [];
     this.leaveDetails.forEach((item) => {
       if (localStorage.getItem('Email') === item.email) {
         if (item.workingHours && item.checkInTime) {
           const date = item.checkInTime.toDate().toLocaleDateString();
           this.dateOfWorkingHours.push(date);
           this.noOfWorkingHours.push(item.workingHours);
+          if (item.workingHours >= 8) {
+            this.colorOfWorkingHours.push('#45B8AC');
+            this.labelOfWorkingHours.push('>=8 Hours');
+          } else if (item.workingHours < 5) {
+            this.colorOfWorkingHours.push('#DD4124');
+            this.labelOfWorkingHours.push('<5 Hours');
+          } else {
+            this.colorOfWorkingHours.push('#FFD662');
+            this.labelOfWorkingHours.push('>5 & <8 Hours');
+          }
         }
       }
     });
@@ -57,16 +72,26 @@ export class WorkingHoursComponent implements OnInit, OnDestroy {
     return date.toLocaleString();
   }
 
+  destroyBarChart(): void {
+    if (this.myChart) {
+      this.myChart.destroy();
+    }
+  }
+
   createChart() {
-    // const ctx = document.getElementById('myChart').getContext('2d');
-    this.myChart = new Chart('myChart', {
+    const ctx = document.getElementById('myChart') as HTMLCanvasElement;
+    this.destroyBarChart();
+    this.myChart = new Chart(ctx, {
       type: 'bar',
       data: {
         labels: this.dateOfWorkingHours.splice(-30),
         datasets: [
           {
             label: 'Number of Working Hours',
+            // label: this.labelOfWorkingHours,
             data: this.noOfWorkingHours.splice(-30),
+            backgroundColor: this.colorOfWorkingHours,
+
             // backgroundColor: [
             //   'rgba(255, 99, 132, 0.2)',
             //   'rgba(54, 162, 235, 0.2)',

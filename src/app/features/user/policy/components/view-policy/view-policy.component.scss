@@ -9,24 +9,22 @@ mat-form-field {
 mat-card {
   width: 60%;
   justify-content: center;
-  padding: 8px;
-  border-radius: 10px;
   margin: auto;
-  margin-top: 8px;
   display: flex;
   padding: 20px;
+  text-align: justify;
 }
 
 mat-card-title {
-  font-family: "Times New Roman", Times, serif;
   font-weight: bold;
   padding: 16px;
   font-size: large;
 }
 
 mat-card-content {
-  font-family: "Times New Roman", Times, serif;
+  font-family: "Roboto";
   font-size: larger;
+  padding-left: 20px;
 }
 mat-card-content.leave {
   display: flex;
@@ -45,5 +43,20 @@ mat-card-content.leave {
 }
 
 button {
-  width: 200x;
+  width: 15em;
+  // border-bottom-left-radius: 5em;
+  // border-bottom-right-radius: 5em;
+}
+
+.initial-policy-select-btn {
+  background: #3f51b5 !important;
+}
+
+.final-policy-select-btn {
+  background: #4278d2 !important;
+}
+
+.mat-success {
+  background-color: #4278d2;
+  color: #fff;
 }

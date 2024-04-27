@@ -78,9 +78,9 @@ export class LeaveApplyComponent implements OnInit, OnDestroy {
     this.getLeaveBalanceSubscriber.unsubscribe();
     this.getUserDetailsSubscriber.unsubscribe();
     this.getLeaveDetailsSubscriber.unsubscribe();
-    this.store.dispatch(getLeavebalanceReset());
+    // this.store.dispatch(getLeavebalanceReset());
     this.store.dispatch(resetUserDetails());
-    this.store.dispatch(resetLeaveDetails());
+    // this.store.dispatch(resetLeaveDetails());
   }
 
   createFormAndGetuserEmail(): void {
@@ -175,7 +175,6 @@ export class LeaveApplyComponent implements OnInit, OnDestroy {
   }
 
   checkIfMoreEmployeesHaveTakenLeaveOnTheLeaveDatesChosen(): boolean {
-    console.log(this.leavesToTake, this.leavesTakenByEmployees);
     return this.checkValidationService.checkIfMoreEmployeesHaveTakenLeaveOnTheLeaveDatesChosen(
       this.leavesToTake,
       this.leavesTakenByEmployees,

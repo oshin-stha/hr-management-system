@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { AddPolicyState, initialPolicyState } from '../../add-policy.state';
+import { AddPolicyState, initialPolicyState } from '../add-policy.state';
 import { addPolicyStart, addPolicySuccess } from '../add-policy.action';
 
 const _addPolicyReducer = createReducer(

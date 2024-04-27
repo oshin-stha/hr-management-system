@@ -36,6 +36,12 @@ export class LeaveApplicationDetailsService {
             leaveApplicationDetails.push(leaveAppDetails);
           }
         });
+
+        leaveApplicationDetails.sort(
+          (a, b) => b.leaveFrom.seconds - a.leaveFrom.seconds,
+        );
+        leaveApplicationDetails.splice(2);
+
         observer.next(leaveApplicationDetails);
         observer.complete();
       });

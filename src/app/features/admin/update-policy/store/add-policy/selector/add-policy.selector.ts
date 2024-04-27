@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { AddPolicyState } from '../../add-policy.state';
+import { AddPolicyState } from '../add-policy.state';
 
 export const ADD_POLICY_SELECTOR = 'add policy';
 

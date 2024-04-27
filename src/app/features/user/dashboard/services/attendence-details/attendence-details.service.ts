@@ -38,6 +38,12 @@ export class AttendenceDetailsService {
                 };
               attendence.push(attendenceDetail);
             });
+
+            attendence.sort((a, b) => {
+              if (b.checkInTime && a.checkInTime)
+                return b.checkInTime?.seconds - a.checkInTime?.seconds;
+              else return -1;
+            });
             observer.next(attendence);
             observer.complete();
           })

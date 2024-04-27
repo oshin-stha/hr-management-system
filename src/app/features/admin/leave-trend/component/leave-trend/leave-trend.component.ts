@@ -74,7 +74,7 @@ export class LeaveTrendComponent implements OnInit, OnDestroy {
     this.leaveDetailsSubscriber.unsubscribe();
     this.destroyPieChart();
     this.destroyBarChart();
-    this.store.dispatch(resetLeaveDetails());
+    // this.store.dispatch(resetLeaveDetails());
   }
 
   getLeaveDetails(): void {

@@ -9,7 +9,7 @@ export const selectLeaveStatus = createFeatureSelector<LeaveStatusState>(
 
 export const selectStatus = createSelector(
   selectLeaveStatus,
-  (state) => state.leaveStatus,
+  (state) => state?.leaveStatus,
 );
 export const selectError = createSelector(
   selectLeaveStatus,

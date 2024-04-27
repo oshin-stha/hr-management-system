@@ -22,6 +22,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 export const Material = [
   MatButtonModule,
@@ -44,6 +45,7 @@ export const Material = [
   MatDialogModule,
   MatPaginatorModule,
   MatSortModule,
+  MatGridListModule,
 ];
 @NgModule({
   declarations: [],

@@ -10,13 +10,14 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./view-policy.component.scss'],
 })
 export class ViewPolicyComponent implements OnInit, OnDestroy {
+  isHrDisabled = 'true';
   selectedButtonValue = 'HR Policy';
   policyTitle = 'HR Policy';
   policyList: string[] = [];
   sickLeave? = 0;
   annualLeave? = 0;
   selectPolicySubscriber: Subscription = new Subscription();
-
+  activePolicy = 'HR Policy';
   constructor(private store: Store) {}
 
   ngOnInit(): void {
@@ -41,5 +42,17 @@ export class ViewPolicyComponent implements OnInit, OnDestroy {
   getPolicyValue(value: string) {
     this.selectedButtonValue = value;
     this.loadPolicyDetails();
+    this.setActive(this.selectedButtonValue);
+  }
+
+  checkActive(value: string): boolean {
+    if (this.activePolicy === value) {
+      return true;
+    }
+    return false;
+  }
+
+  setActive(currentValue: string): void {
+    this.activePolicy = currentValue;
   }
 }

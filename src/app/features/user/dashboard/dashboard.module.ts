@@ -13,19 +13,29 @@ import { Material } from 'src/app/shared/material/material.module';
 import { LeaveStatusEffect } from './store/leave-status/effects/leave-status.effects';
 import { LEAVE_STATUS_SELECTOR } from './store/leave-status/selector/leave-status.selector';
 import { LeaveStatusReducer } from './store/leave-status/reducer/leave-status.reducer';
+import { RemainingLeaveComponent } from './components/remaining-leave/remaining-leave.component';
+import { GET_LEAVES_SELECTOR } from './store/remaining-leave/selectors/remaining-leace.selector';
+import { getRemainingLeaveReducer } from './store/remaining-leave/reducers/remaining-leave.reducer';
+import { RemainingLeaveEffect } from './store/remaining-leave/effects/remaining-leave.effect';
 
 @NgModule({
   declarations: [
     DashboardComponent,
     LeaveStatusComponent,
     WorkingHoursComponent,
+    RemainingLeaveComponent,
   ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
     StoreModule.forFeature(WORK_HOURS_SELECTOR, workHourReducer),
     StoreModule.forFeature(LEAVE_STATUS_SELECTOR, LeaveStatusReducer),
-    EffectsModule.forFeature(WorkingHoursEffect, LeaveStatusEffect),
+    StoreModule.forFeature(GET_LEAVES_SELECTOR, getRemainingLeaveReducer),
+    EffectsModule.forFeature(
+      WorkingHoursEffect,
+      LeaveStatusEffect,
+      RemainingLeaveEffect,
+    ),
     Material,
   ],
 })

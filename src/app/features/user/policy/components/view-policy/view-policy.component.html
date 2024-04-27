@@ -1,23 +1,36 @@
 <div class="main">
   <div class="header">
     <button
+      class="color-button"
       (click)="getPolicyValue('HR Policy')"
-      color="primary"
-      mat-flat-button
+      [ngClass]="
+        checkActive('HR Policy')
+          ? 'initial-policy-select-btn'
+          : 'final-policy-select-btn'
+      "
+      mat-raised-button
     >
-      HR Policy
+      HR POLICY
     </button>
     <button
       (click)="getPolicyValue('Company Policy')"
-      color="primary"
-      mat-flat-button
+      [ngClass]="
+        checkActive('Company Policy')
+          ? 'initial-policy-select-btn'
+          : 'final-policy-select-btn'
+      "
+      mat-raised-button
     >
       COMPANY POLICY
     </button>
     <button
       (click)="getPolicyValue('Leave Policy')"
-      color="primary"
-      mat-flat-button
+      [ngClass]="
+        checkActive('Leave Policy')
+          ? 'initial-policy-select-btn'
+          : 'final-policy-select-btn'
+      "
+      mat-raised-button
     >
       LEAVE POLICY
     </button>

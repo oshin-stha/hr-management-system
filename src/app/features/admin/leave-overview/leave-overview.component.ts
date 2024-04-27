@@ -228,6 +228,6 @@ export class LeaveOverviewComponent
   ngOnDestroy(): void {
     this.getLeaveDetailSubscription?.unsubscribe();
     this.getUserDetailsSubscription?.unsubscribe();
-    this.store.dispatch(resetLeaveOverview());
+    // this.store.dispatch(resetLeaveOverview());
   }
 }

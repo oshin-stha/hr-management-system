@@ -1,4 +1,4 @@
-import { Policy } from '../models/policy.interface';
+import { Policy } from '../../models/policy.interface';
 
 export interface AddPolicyState {
   policy: Policy;

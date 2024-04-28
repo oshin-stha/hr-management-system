@@ -1,12 +1,6 @@
 import { Injectable } from '@angular/core';
 import { initializeApp } from 'firebase/app';
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  getFirestore,
-} from 'firebase/firestore';
+import { collection, getDocs, getFirestore } from 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { firebaseConfig } from 'src/app/environments/environment';
 import { RemainingLeaves } from '../../models/remaining-leave.interface';

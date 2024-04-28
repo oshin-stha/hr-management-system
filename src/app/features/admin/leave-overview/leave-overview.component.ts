@@ -14,7 +14,6 @@ import { LeaveDetails } from 'src/app/shared/models/leave-overview.model';
 import {
   acceptLeaveRequest,
   rejectLeaveRequest,
-  resetLeaveOverview,
   updateLeaveBalance,
 } from './store/leave-overview.action';
 import { loadLeaveDetails } from 'src/app/shared/store/leave-overview-store/leave-overview.action';

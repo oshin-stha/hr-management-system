@@ -3,16 +3,12 @@ import { FormGroup } from '@angular/forms';
 import { FORM_CONTROL_NAMES } from 'src/app/shared/constants/form-field.constant';
 import { LeaveFormService } from '../../services/leave-form-service/leave-form.service';
 import { Store } from '@ngrx/store';
-import {
-  getLeavebalanceReset,
-  getLeavebalanceStart,
-} from '../../store/leaveBalanceState/leaveBalance.action';
+import { getLeavebalanceStart } from '../../store/leaveBalanceState/leaveBalance.action';
 import { getLeaveBalance } from '../../store/leaveBalanceState/selector/leaveBalance.selector';
 import { LeaveBalanceDetails } from '../../models/leaveBalanceDetails.interface';
 import {
   loadLeaveDetails,
   loadUserDetails,
-  resetLeaveDetails,
   resetUserDetails,
 } from 'src/app/shared/store/leave-overview-store/leave-overview.action';
 import {

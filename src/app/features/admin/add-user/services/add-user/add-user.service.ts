@@ -9,7 +9,6 @@ import {
   QuerySnapshot,
   collection,
   doc,
-  getDoc,
   getDocs,
   getFirestore,
   query,

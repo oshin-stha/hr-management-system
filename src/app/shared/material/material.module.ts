@@ -46,6 +46,7 @@ export const Material = [
   MatPaginatorModule,
   MatSortModule,
   MatGridListModule,
+  MatSnackBarModule,
 ];
 @NgModule({
   declarations: [],

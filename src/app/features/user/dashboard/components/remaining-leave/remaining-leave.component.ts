@@ -34,7 +34,6 @@ export class RemainingLeaveComponent implements OnInit, OnDestroy {
     this.selectRemainingLeaveSubscription$ = this.store
       .select(selectRemainingLeave)
       .subscribe((res) => {
-        console.log(res);
         this.remainingLeaves = res;
         this.initializeTiles();
       });

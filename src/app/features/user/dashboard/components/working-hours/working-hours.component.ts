@@ -23,10 +23,10 @@ export class WorkingHoursComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getAttendenceDetails();
-    this.createChart();
   }
   ngOnDestroy(): void {
     this.leaveDetailsSubscriber$.unsubscribe();
+    this.destroyBarChart();
   }
 
   getAttendenceDetails() {
@@ -35,6 +35,7 @@ export class WorkingHoursComponent implements OnInit, OnDestroy {
       .subscribe((res) => {
         this.leaveDetails = res;
         this.getWorkingHours();
+        this.createChart();
       });
     this.store.dispatch(loadAttendenceDetails());
   }
@@ -91,23 +92,6 @@ export class WorkingHoursComponent implements OnInit, OnDestroy {
             // label: this.labelOfWorkingHours,
             data: this.noOfWorkingHours.splice(-30),
             backgroundColor: this.colorOfWorkingHours,
-
-            // backgroundColor: [
-            //   'rgba(255, 99, 132, 0.2)',
-            //   'rgba(54, 162, 235, 0.2)',
-            //   'rgba(255, 206, 86, 0.2)',
-            //   'rgba(75, 192, 192, 0.2)',
-            //   'rgba(153, 102, 255, 0.2)',
-            //   'rgba(255, 159, 64, 0.2)'
-            // ],
-            // borderColor: [
-            //   'rgba(255, 99, 132, 1)',
-            //   'rgba(54, 162, 235, 1)',
-            //   'rgba(255, 206, 86, 1)',
-            //   'rgba(75, 192, 192, 1)',
-            //   'rgba(153, 102, 255, 1)',
-            //   'rgba(255, 159, 64, 1)'
-            // ],
             borderWidth: 1,
           },
         ],

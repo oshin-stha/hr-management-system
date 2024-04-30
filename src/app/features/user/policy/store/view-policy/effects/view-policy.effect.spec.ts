@@ -7,9 +7,10 @@ import { getPolicyStart, getPolicySuccess } from '../view-policy.action';
 import { GetPolicyService } from '../../../services/get-policy/get-policy.service';
 import { cold, hot } from 'jasmine-marbles';
 import { Policy } from '../../../models/policy.interface';
+import { Action } from '@ngrx/store';
 
 describe('ViewPolicyEffect', () => {
-  let actions$: Observable<any>;
+  let actions$: Observable<Action>;
   let effects: ViewPolicyEffect;
   let getPolicyService: jasmine.SpyObj<GetPolicyService>;
 

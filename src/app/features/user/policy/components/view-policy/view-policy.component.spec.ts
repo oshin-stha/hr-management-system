@@ -4,11 +4,12 @@ import { ViewPolicyComponent } from './view-policy.component';
 import { getPolicyStart } from '../../store/view-policy/view-policy.action';
 import { of } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
+import { Store } from '@ngrx/store';
 
 describe('ViewPolicyComponent', () => {
   let component: ViewPolicyComponent;
   let fixture: ComponentFixture<ViewPolicyComponent>;
-  let store: MockStore<any>;
+  let store: MockStore<Store>;
 
   const initialState = {
     viewPolicy: {

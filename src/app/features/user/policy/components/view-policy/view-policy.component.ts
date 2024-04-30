@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { getPolicyStart } from '../../store/view-policy/view-policy.action';
 import { selectPolicy } from '../../store/view-policy/selectors/view-policy.selector';
 import { Subscription } from 'rxjs';
+import { POLICY_CONSTANTS } from 'src/app/shared/constants/policy.constants';
 
 @Component({
   selector: 'app-view-policy',
@@ -18,6 +19,8 @@ export class ViewPolicyComponent implements OnInit, OnDestroy {
   annualLeave? = 0;
   selectPolicySubscriber: Subscription = new Subscription();
   activePolicy = 'HR Policy';
+  POLICY_CONSTANTS = POLICY_CONSTANTS;
+
   constructor(private store: Store) {}
 
   ngOnInit(): void {

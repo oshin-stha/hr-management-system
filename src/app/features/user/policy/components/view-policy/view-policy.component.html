@@ -10,7 +10,7 @@
       "
       mat-raised-button
     >
-      HR POLICY
+      {{ POLICY_CONSTANTS.HR_POLICY }}
     </button>
     <button
       (click)="getPolicyValue('Company Policy')"
@@ -21,7 +21,7 @@
       "
       mat-raised-button
     >
-      COMPANY POLICY
+      {{ POLICY_CONSTANTS.COMPANY_POLICY }}
     </button>
     <button
       (click)="getPolicyValue('Leave Policy')"
@@ -32,7 +32,7 @@
       "
       mat-raised-button
     >
-      LEAVE POLICY
+      {{ POLICY_CONSTANTS.LEAVE_POLICY }}
     </button>
   </div>
 
@@ -43,14 +43,15 @@
       class="leave"
       *ngIf="selectedButtonValue === 'Leave Policy'"
     >
-      <div>Sick Leave: {{ sickLeave }}</div>
-      <div>Annual Leave: {{ annualLeave }}</div>
+      <div>{{ POLICY_CONSTANTS.SICK_LEAVES }}: {{ sickLeave }}</div>
+      <div>{{ POLICY_CONSTANTS.ANNUAL_LEAVES }}: {{ annualLeave }}</div>
     </mat-card-content>
 
     <mat-card-content>
       <ol>
         <div *ngFor="let policy of policyList; let i = index">
           <li>{{ policy }}</li>
+          <br />
         </div>
       </ol>
     </mat-card-content>

@@ -1,6 +1,6 @@
 <div class="main">
   <mat-card class="example-card">
-    <mat-card-title> UPDATE POLICY </mat-card-title>
+    <mat-card-title> {{ POLICY_CONSTANTS.UPDATE }} </mat-card-title>
 
     <mat-card-content>
       <form [formGroup]="form" (ngSubmit)="submitPolicy()">
@@ -8,19 +8,29 @@
           <mat-label>Select Policy Type</mat-label>
           <mat-select
             [(value)]="selected"
-            formControlName="policyType"
+            [formControlName]="FORM_CONTROL_NAMES.POLICY_TYPE"
             (selectionChange)="patchFormValue()"
           >
-            <mat-option value="HR Policy">HR Policy</mat-option>
-            <mat-option value="Company Policy">Company Policy</mat-option>
-            <mat-option value="Leave Policy">Leave Policy</mat-option>
+            <mat-option value="HR Policy">{{
+              POLICY_CONSTANTS.HR_POLICY
+            }}</mat-option>
+            <mat-option value="Company Policy">{{
+              POLICY_CONSTANTS.COMPANY_POLICY
+            }}</mat-option>
+            <mat-option value="Leave Policy">{{
+              POLICY_CONSTANTS.LEAVE_POLICY
+            }}</mat-option>
           </mat-select>
         </mat-form-field>
 
         <div class="leaveDays" *ngIf="selected === 'Leave Policy'">
           <mat-form-field>
-            <mat-label>Sick Leaves</mat-label>
-            <input matInput type="number" formControlName="sickLeave" />
+            <mat-label>{{ POLICY_CONSTANTS.SICK_LEAVES }}</mat-label>
+            <input
+              matInput
+              type="number"
+              [formControlName]="FORM_CONTROL_NAMES.SICK_LEAVE"
+            />
             <mat-error *ngIf="sickLeaveFormControl?.hasError('min')">
               Value must be greater than 1
             </mat-error>
@@ -29,8 +39,12 @@
             </mat-error>
           </mat-form-field>
           <mat-form-field>
-            <mat-label>Annual Leaves</mat-label>
-            <input matInput type="number" formControlName="annualLeave" />
+            <mat-label>{{ POLICY_CONSTANTS.ANNUAL_LEAVES }}</mat-label>
+            <input
+              matInput
+              type="number"
+              [formControlName]="FORM_CONTROL_NAMES.ANNUAL_LEAVE"
+            />
             <mat-error *ngIf="sickLeaveFormControl?.hasError('min')">
               Value must be greater than 1
             </mat-error>

@@ -1,6 +1,10 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { AddPolicyState, initialPolicyState } from '../add-policy.state';
-import { addPolicyStart, addPolicySuccess } from '../add-policy.action';
+import {
+  addPolicyFailure,
+  addPolicyStart,
+  addPolicySuccess,
+} from '../add-policy.action';
 
 const _addPolicyReducer = createReducer(
   initialPolicyState,
@@ -10,6 +14,10 @@ const _addPolicyReducer = createReducer(
     isLoading: true,
   })),
   on(addPolicySuccess, (state) => ({
+    ...state,
+    isLoading: false,
+  })),
+  on(addPolicyFailure, (state) => ({
     ...state,
     isLoading: false,
   })),

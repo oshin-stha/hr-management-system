@@ -22,7 +22,9 @@ export class LeaveStatusEffect {
         return this.leaveApplicationDetailsService
           .getCurrentUserLeaveApplicationDetails()
           .pipe(
-            map((data) => getLeaveStatusSuccess({ leaveDetails: data })),
+            map((data) => {
+              return getLeaveStatusSuccess({ leaveDetails: data });
+            }),
             catchError((error) => of(getLeaveStatusFail({ error }))),
           );
       }),

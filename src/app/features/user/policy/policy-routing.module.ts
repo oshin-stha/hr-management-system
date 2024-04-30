@@ -6,7 +6,7 @@ import { ViewPolicyComponent } from './components/view-policy/view-policy.compon
 
 const routes: Routes = [
   {
-    path: '',
+    path: EMPTY_PATH,
     component: PolicyComponent,
     children: [{ path: EMPTY_PATH, component: ViewPolicyComponent }],
   },

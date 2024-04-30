@@ -3,24 +3,30 @@
     <table mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="leaveFrom">
         <th mat-header-cell *matHeaderCellDef [ngClass]="'firstrow'">
-          Leave From
+          {{ DASHBOARD_LEAVE_COLUMN_TITLES.LEAVE_FROM }}
         </th>
         <td mat-cell *matCellDef="let element">
           {{ formatTimestamp(element.leaveFrom) }}
         </td>
       </ng-container>
       <ng-container matColumnDef="leaveTo">
-        <th mat-header-cell *matHeaderCellDef>Leave To</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ DASHBOARD_LEAVE_COLUMN_TITLES.LEAVE_TO }}
+        </th>
         <td mat-cell *matCellDef="let element">
           {{ formatTimestamp(element.leaveTo) }}
         </td>
       </ng-container>
       <ng-container matColumnDef="leaveType">
-        <th mat-header-cell *matHeaderCellDef>Leave Type</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ DASHBOARD_LEAVE_COLUMN_TITLES.LEAVE_TYPE }}
+        </th>
         <td mat-cell *matCellDef="let element">{{ element.leaveType }}</td>
       </ng-container>
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ DASHBOARD_LEAVE_COLUMN_TITLES.STATUS }}
+        </th>
         <td
           mat-cell
           *matCellDef="let element"

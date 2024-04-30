@@ -3,7 +3,6 @@ import {
   AbstractControl,
   FormArray,
   FormBuilder,
-  FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
@@ -12,6 +11,8 @@ import { UpdatePolicyService } from '../../../services/update-policy/update-poli
 import { Store } from '@ngrx/store';
 import { addPolicyStart } from '../../../store/add-policy/add-policy.action';
 import { setLoadingSpinner } from 'src/app/shared/store/loader-store/loader-spinner.action';
+import { POLICY_CONSTANTS } from 'src/app/shared/constants/policy.constants';
+import { FORM_CONTROL_NAMES } from 'src/app/shared/constants/form-field.constant';
 
 @Component({
   selector: 'app-add-policy',
@@ -21,11 +22,8 @@ import { setLoadingSpinner } from 'src/app/shared/store/loader-store/loader-spin
 export class AddPolicyComponent implements OnInit {
   selected = '';
   selectPolicyTypeFlag = false;
-
-  numberFormControl = new FormControl('', [
-    Validators.min(1),
-    Validators.max(50),
-  ]);
+  POLICY_CONSTANTS = POLICY_CONSTANTS;
+  FORM_CONTROL_NAMES = FORM_CONTROL_NAMES;
 
   constructor(
     private fb: FormBuilder,
@@ -61,9 +59,7 @@ export class AddPolicyComponent implements OnInit {
 
   submitPolicy(): void {
     this.selectPolicyTypeFlag = false;
-    // const policyPayload = this.addPolicyFormService.createPolicyPayload();
     this.store.dispatch(setLoadingSpinner({ status: true }));
-    // this.store.dispatch(addPolicyStart({ policy: policyPayload }));
     this.store.dispatch(addPolicyStart({ policy: this.form.value }));
 
     this.form.reset();

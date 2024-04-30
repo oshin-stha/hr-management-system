@@ -2,12 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UpdatePolicyComponent } from './update-policy.component';
 import { AddPolicyComponent } from './components/add-policy/add-policy/add-policy.component';
+import { EMPTY_PATH } from 'src/app/shared/constants/routes.constants';
 
 const routes: Routes = [
   {
-    path: '',
+    path: EMPTY_PATH,
     component: UpdatePolicyComponent,
-    children: [{ path: '', component: AddPolicyComponent }],
+    children: [{ path: EMPTY_PATH, component: AddPolicyComponent }],
   },
 ];
 

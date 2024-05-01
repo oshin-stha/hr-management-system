@@ -1,0 +1,60 @@
+mat-form-field {
+  width: 100%;
+  align-items: center;
+  display: flex;
+  padding: 4px;
+  border-radius: 20px;
+}
+
+mat-card {
+  width: 60%;
+  justify-content: center;
+  margin: auto;
+  display: flex;
+  padding: 20px;
+  text-align: justify;
+}
+
+mat-card-title {
+  font-weight: bold;
+  padding: 16px;
+  font-size: large;
+}
+
+mat-card-content {
+  font-family: "Roboto";
+  font-size: larger;
+  padding-left: 20px;
+}
+mat-card-content.leave {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+  padding-bottom: 30px;
+  font-style: italic;
+}
+
+.header {
+  width: 100%;
+  display: inline-flex;
+  padding: 16px;
+  justify-content: space-evenly;
+  background-color: rgb(255, 255, 255);
+}
+
+button {
+  width: 15em;
+}
+
+.initial-policy-select-btn {
+  background: #02b6ff !important;
+}
+
+.final-policy-select-btn {
+  background: #4278d2 !important;
+}
+
+.mat-success {
+  background-color: #4278d2;
+  color: #fff;
+}

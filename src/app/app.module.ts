@@ -13,6 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { appReducer } from './app.state';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found/page-not-found.component';
+import { MaterialModule } from './shared/material/material.module';
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
 }
@@ -36,6 +37,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     StoreModule.forRoot(appReducer),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument(),
+    MaterialModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

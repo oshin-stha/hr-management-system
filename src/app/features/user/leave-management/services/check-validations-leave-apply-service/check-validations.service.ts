@@ -24,7 +24,6 @@ export class CheckValidationsService {
     const endDate = formData.value.leaveTo
       ? moment(formData.value.leaveTo)
       : moment(formData.value.leaveFrom);
-    console.log(endDate);
     while (startDate.isSameOrBefore(endDate)) {
       leavesToTake.push(startDate.format(DATE_FORMAT));
       startDate.add(1, DAY);

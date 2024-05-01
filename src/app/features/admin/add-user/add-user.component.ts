@@ -1,6 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { setLoadingSpinner } from 'src/app/shared/store/loader-store/loader-spinner.action';
@@ -18,6 +17,7 @@ import { FORM_CONTROL_NAMES } from 'src/app/shared/constants/form-field.constant
 import { GENDER } from 'src/app/shared/constants/gender.constants';
 import { ROLE } from 'src/app/shared/constants/role.constants';
 import { DEPARTMENT_OPTION } from 'src/app/shared/constants/departmentoption.constants';
+import { leaveBalance } from 'src/app/shared/models/adduser.model';
 @Component({
   selector: 'app-add-user',
   templateUrl: './add-user.component.html',
@@ -37,7 +37,6 @@ export class AddUserComponent implements OnDestroy {
 
   constructor(
     private addUserService: AddUserService,
-    private router: Router,
     private store: Store,
     private formService: FormService,
   ) {}
@@ -63,8 +62,14 @@ export class AddUserComponent implements OnDestroy {
 
             if (userDetails) {
               this.store.dispatch(addUserStart({ data: userDetails }));
-              const leaveBalance = this.formService.getLeaveBalance();
-              this.store.dispatch(addleaveBalance({ email, leaveBalance }));
+              const leaveBalance: leaveBalance = {} as leaveBalance;
+              this.addUserService.getLeaveBalance().subscribe((res) => {
+                leaveBalance.annualLeaveTotal = res.annualLeave;
+                leaveBalance.annualLeaveRemaining = res.annualLeave;
+                leaveBalance.sickLeaveTotal = res.sickLeave;
+                leaveBalance.sickLeaveRemaining = res.sickLeave;
+                this.store.dispatch(addleaveBalance({ email, leaveBalance }));
+              });
             }
             this.signupForm.reset();
           } else {

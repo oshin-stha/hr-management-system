@@ -1,6 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { setLoadingSpinner } from 'src/app/shared/store/loader-store/loader-spinner.action';
@@ -38,7 +37,6 @@ export class AddUserComponent implements OnDestroy {
 
   constructor(
     private addUserService: AddUserService,
-    private router: Router,
     private store: Store,
     private formService: FormService,
   ) {}
@@ -64,7 +62,6 @@ export class AddUserComponent implements OnDestroy {
 
             if (userDetails) {
               this.store.dispatch(addUserStart({ data: userDetails }));
-              // const leaveBalance = this.formService.getLeaveBalance();
               const leaveBalance: leaveBalance = {} as leaveBalance;
               this.addUserService.getLeaveBalance().subscribe((res) => {
                 leaveBalance.annualLeaveTotal = res.annualLeave;

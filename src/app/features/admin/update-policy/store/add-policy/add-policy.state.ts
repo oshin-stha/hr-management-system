@@ -6,8 +6,11 @@ export interface AddPolicyState {
   error: string;
 }
 
-export const initialPolicyState = {
-  policy: {},
+export const initialPolicyState: AddPolicyState = {
+  policy: {
+    policyType: '',
+    policyList: [],
+  },
   isLoading: false,
   error: '',
 };

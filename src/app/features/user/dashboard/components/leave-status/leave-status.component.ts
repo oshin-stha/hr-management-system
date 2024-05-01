@@ -18,7 +18,8 @@ import { Subscription } from 'rxjs';
 })
 export class LeaveStatusComponent implements OnInit, OnDestroy {
   leaveAppDetails: LeaveAppDetails[] = [];
-  dataSource = new MatTableDataSource<LeaveAppDetails>([]);
+  dataSource: MatTableDataSource<LeaveAppDetails> =
+    new MatTableDataSource<LeaveAppDetails>([]);
   displayedColumns: string[] = DASHBOARD_LEAVE_COLUMNS;
   selectStatusSubscriber: Subscription = new Subscription();
   DASHBOARD_LEAVE_COLUMN_TITLES = DASHBOARD_LEAVE_COLUMN_TITLES;
@@ -45,7 +46,7 @@ export class LeaveStatusComponent implements OnInit, OnDestroy {
     return timestamp.toDate().toLocaleDateString();
   }
 
-  getStatusColor(status: string) {
+  getStatusColor(status: string): string {
     if (status === 'accepted') return 'green';
     else if (status === 'pending') return 'grey';
     else return 'red';

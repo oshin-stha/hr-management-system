@@ -11,14 +11,13 @@ import { POLICY_CONSTANTS } from 'src/app/shared/constants/policy.constants';
   styleUrls: ['./view-policy.component.scss'],
 })
 export class ViewPolicyComponent implements OnInit, OnDestroy {
-  isHrDisabled = 'true';
-  selectedButtonValue = 'HR Policy';
-  policyTitle = 'HR Policy';
+  selectedButtonValue: string = 'HR Policy';
+  policyTitle: string = 'HR Policy';
   policyList: string[] = [];
-  sickLeave? = 0;
-  annualLeave? = 0;
+  sickLeave?: number = 0;
+  annualLeave?: number = 0;
   selectPolicySubscriber: Subscription = new Subscription();
-  activePolicy = 'HR Policy';
+  activePolicy: string = 'HR Policy';
   POLICY_CONSTANTS = POLICY_CONSTANTS;
 
   constructor(private store: Store) {}
@@ -42,7 +41,7 @@ export class ViewPolicyComponent implements OnInit, OnDestroy {
     );
   }
 
-  getPolicyValue(value: string) {
+  getPolicyValue(value: string): void {
     this.selectedButtonValue = value;
     this.loadPolicyDetails();
     this.setActive(this.selectedButtonValue);

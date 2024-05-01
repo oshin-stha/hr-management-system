@@ -40,7 +40,7 @@ export class RemainingLeaveComponent implements OnInit, OnDestroy {
     this.store.dispatch(getRemainingLeaveStart());
   }
 
-  initializeTiles() {
+  initializeTiles(): void {
     this.tiles = [
       {
         text: 'Sick Leave Remaining',

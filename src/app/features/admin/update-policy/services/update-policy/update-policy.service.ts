@@ -17,9 +17,9 @@ import { Observable, from } from 'rxjs';
 })
 export class UpdatePolicyService {
   selectedpolicyContent: string[] = [];
-  selectedPolicyType = '';
-  sickLeave = 0;
-  annualLeave = 0;
+  selectedPolicyType: string = '';
+  sickLeave: number = 0;
+  annualLeave: number = 0;
 
   app = initializeApp(firebaseConfig);
   firestore = getFirestore(this.app);
@@ -38,7 +38,7 @@ export class UpdatePolicyService {
     });
   }
 
-  updatePolicyDetails(data: Policy) {
+  updatePolicyDetails(data: Policy): Observable<void> {
     return from(updateDoc(doc(this.policyRef, data.policyType), { ...data }));
   }
 

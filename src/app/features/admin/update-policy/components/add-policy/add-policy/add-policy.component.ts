@@ -20,8 +20,8 @@ import { FORM_CONTROL_NAMES } from 'src/app/shared/constants/form-field.constant
   styleUrls: ['./add-policy.component.scss'],
 })
 export class AddPolicyComponent implements OnInit {
-  selected = '';
-  selectPolicyTypeFlag = false;
+  selected: string = '';
+  selectPolicyTypeFlag: boolean = false;
   POLICY_CONSTANTS = POLICY_CONSTANTS;
   FORM_CONTROL_NAMES = FORM_CONTROL_NAMES;
 
@@ -66,7 +66,7 @@ export class AddPolicyComponent implements OnInit {
     this.form.setControl('policyList', this.fb.array([]));
   }
 
-  patchFormValue() {
+  patchFormValue(): void {
     this.selectPolicyTypeFlag = true;
     this.updatePolicyService
       .patchValuetoForm(this.selected)

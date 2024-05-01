@@ -29,7 +29,7 @@ export class WorkingHoursComponent implements OnInit, OnDestroy {
     this.destroyBarChart();
   }
 
-  getAttendenceDetails() {
+  getAttendenceDetails(): void {
     this.leaveDetailsSubscriber$ = this.store
       .select(selectAttendenceDetails)
       .subscribe((res) => {
@@ -40,7 +40,7 @@ export class WorkingHoursComponent implements OnInit, OnDestroy {
     this.store.dispatch(loadAttendenceDetails());
   }
 
-  getWorkingHours() {
+  getWorkingHours(): void {
     this.noOfWorkingHours = [];
     this.colorOfWorkingHours = [];
     this.dateOfWorkingHours = [];
@@ -79,7 +79,7 @@ export class WorkingHoursComponent implements OnInit, OnDestroy {
     }
   }
 
-  createChart() {
+  createChart(): void {
     const ctx = document.getElementById('myChart') as HTMLCanvasElement;
     this.destroyBarChart();
     this.myChart = new Chart(ctx, {

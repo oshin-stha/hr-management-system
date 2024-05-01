@@ -89,7 +89,6 @@ export class WorkingHoursComponent implements OnInit, OnDestroy {
         datasets: [
           {
             label: 'Number of Working Hours',
-            // label: this.labelOfWorkingHours,
             data: this.noOfWorkingHours.splice(-30),
             backgroundColor: this.colorOfWorkingHours,
             borderWidth: 1,

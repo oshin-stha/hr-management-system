@@ -62,8 +62,8 @@ export class AddPolicyComponent implements OnInit {
     this.store.dispatch(setLoadingSpinner({ status: true }));
     this.store.dispatch(addPolicyStart({ policy: this.form.value }));
 
-    this.form.reset();
     this.form.setControl('policyList', this.fb.array([]));
+    this.form.reset();
   }
 
   patchFormValue(): void {

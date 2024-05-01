@@ -10,10 +10,12 @@ export const selectPolicy = createSelector(
   selectPolicyStatus,
   (state) => state.policy,
 );
+
 export const selectisLoading = createSelector(
   selectPolicyStatus,
   (state) => state.isLoading,
 );
+
 export const selectError = createSelector(
   selectPolicyStatus,
   (state) => state.error,

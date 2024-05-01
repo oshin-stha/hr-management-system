@@ -9,6 +9,7 @@ import {
 } from '../add-policy.action';
 import { catchError, map, of, switchMap } from 'rxjs';
 import { setLoadingSpinner } from 'src/app/shared/store/loader-store/loader-spinner.action';
+import { SnackbarService } from 'src/app/shared/services/snackbar/snackbar.service';
 
 @Injectable()
 export class AddPolicyEffect {
@@ -19,11 +20,12 @@ export class AddPolicyEffect {
         return this.updatePolicyService.updatePolicyDetails(policy).pipe(
           map(() => {
             this.store.dispatch(setLoadingSpinner({ status: false }));
+            this.snackbarService.openSnackBar('Policy Updated');
             return addPolicySuccess();
           }),
           catchError((error) => {
             const errorMessage = error.code;
-            alert(errorMessage);
+            this.snackbarService.openSnackBar(errorMessage);
             this.store.dispatch(setLoadingSpinner({ status: false }));
             return of(addPolicyFailure({ error: errorMessage }));
           }),
@@ -35,5 +37,6 @@ export class AddPolicyEffect {
     private action$: Actions,
     private store: Store,
     private updatePolicyService: UpdatePolicyService,
+    private snackbarService: SnackbarService,
   ) {}
 }

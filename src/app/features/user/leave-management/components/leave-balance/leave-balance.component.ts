@@ -1,9 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import {
-  getLeavebalanceReset,
-  getLeavebalanceStart,
-} from '../../store/leaveBalanceState/leaveBalance.action';
+import { getLeavebalanceStart } from '../../store/leaveBalanceState/leaveBalance.action';
 import { getLeaveBalance } from '../../store/leaveBalanceState/selector/leaveBalance.selector';
 import { LEAVE_BALANCE_CONSTANTS } from 'src/app/shared/constants/leaveDetails.constants';
 import { EMAIL } from 'src/app/shared/constants/email.constant';
@@ -35,7 +32,7 @@ export class LeaveBalanceComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.getLeavebalanceSubscriber.unsubscribe();
-    this.store.dispatch(getLeavebalanceReset());
+    // this.store.dispatch(getLeavebalanceReset());
   }
 
   startGetLeaveBalance(): void {

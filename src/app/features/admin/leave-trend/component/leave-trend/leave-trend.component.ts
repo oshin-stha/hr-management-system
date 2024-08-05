@@ -12,10 +12,7 @@ import {
   UI_UX,
 } from 'src/app/shared/constants/departName.constants';
 import { LeaveDetails } from 'src/app/shared/models/leave-overview.model';
-import {
-  loadLeaveDetails,
-  resetLeaveDetails,
-} from 'src/app/shared/store/leave-overview-store/leave-overview.action';
+import { loadLeaveDetails } from 'src/app/shared/store/leave-overview-store/leave-overview.action';
 import { getLeaveDetails } from 'src/app/shared/store/leave-overview-store/selector/leave-overview.selector';
 import Chart from 'chart.js/auto';
 import { ACCEPTED_STATUS } from 'src/app/shared/constants/status.constant';
@@ -74,7 +71,7 @@ export class LeaveTrendComponent implements OnInit, OnDestroy {
     this.leaveDetailsSubscriber.unsubscribe();
     this.destroyPieChart();
     this.destroyBarChart();
-    this.store.dispatch(resetLeaveDetails());
+    // this.store.dispatch(resetLeaveDetails());
   }
 
   getLeaveDetails(): void {

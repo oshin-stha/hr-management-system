@@ -1,0 +1,45 @@
+mat-card {
+  padding: 10px;
+}
+
+.barmain {
+  display: flex;
+  justify-content: center;
+}
+
+.info-container {
+  display: flex;
+  align-items: center;
+  margin: 0 0 250px 20px;
+}
+
+.info-list {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+}
+
+.info-list li {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.color-box {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  border-radius: 4px;
+}
+
+.sufficient-hours .color-box {
+  background-color: #45b8ac;
+}
+
+.less-hours .color-box {
+  background-color: #dd4124;
+}
+
+.weekends .color-box {
+  background-color: #ffd662;
+}

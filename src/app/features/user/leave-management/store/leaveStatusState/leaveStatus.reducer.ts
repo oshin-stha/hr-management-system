@@ -14,10 +14,13 @@ const _leaveStatusreducer = createReducer(
     ...state,
     status: [],
   })),
-  on(getLeaveStatusSuccess, (state, action) => ({
-    ...state,
-    status: action.leaveDetails,
-  })),
+  on(getLeaveStatusSuccess, (state, action) => {
+    console.log('in Another leave status success');
+    return {
+      ...state,
+      status: action.leaveDetails,
+    };
+  }),
   on(getLeaveStatusFailure, (state, action) => ({
     ...state,
     error: action.error,

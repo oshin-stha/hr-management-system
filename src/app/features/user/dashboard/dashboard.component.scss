@@ -1,0 +1,30 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background-color: aliceblue;
+  padding: 10px;
+}
+
+.workinghours {
+  order: 1;
+}
+
+.leaves {
+  display: flex;
+  flex-direction: row;
+  order: 2;
+  height: 100%;
+}
+
+.leave,
+.remainingleave {
+  flex: 1;
+}

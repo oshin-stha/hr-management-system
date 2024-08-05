@@ -14,6 +14,7 @@ import {
   loginSuccess,
 } from '../login.actions';
 import { UserDetails } from 'src/app/shared/models/adduser.model';
+import { SnackbarService } from 'src/app/shared/services/snackbar/snackbar.service';
 
 @Injectable()
 export class AuthEffects {
@@ -22,6 +23,7 @@ export class AuthEffects {
     private loginService: LoginService,
     private router: Router,
     private loginFormService: LoginFormService,
+    private snackBarService: SnackbarService,
   ) {}
 
   login$ = createEffect(() => {
@@ -34,11 +36,13 @@ export class AuthEffects {
           map(() => {
             localStorage.setItem('Email', action.email);
             this.loginFormService.resetLoginForm();
+            const snackBarMessage = 'Login Successful';
+            this.snackBarService.openSnackBar(snackBarMessage);
             return loginSuccess();
           }),
           catchError((error) => {
             const errorMessage = error.code;
-            alert(errorMessage);
+            this.snackBarService.openSnackBar(errorMessage);
             return of(loginFailure({ error: errorMessage }));
           }),
         );

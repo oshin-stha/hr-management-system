@@ -23,4 +23,8 @@ export const FORM_CONTROL_NAMES = {
   FIRST_OR_SECOND_HALF: 'firstOrSecondHalf',
   FULL_LEAVE: 'Full Day',
   HALF_DAY_LEAVE: 'Half Day',
+  POLICY_TYPE: 'policyType',
+  POLICY_LIST: 'policyList',
+  SICK_LEAVE: 'sickLeave',
+  ANNUAL_LEAVE: 'annualLeave',
 };

@@ -1,0 +1,59 @@
+<div class="main">
+  <div class="header">
+    <button
+      class="color-button"
+      (click)="getPolicyValue('HR Policy')"
+      [ngClass]="
+        checkActive('HR Policy')
+          ? 'initial-policy-select-btn'
+          : 'final-policy-select-btn'
+      "
+      mat-raised-button
+    >
+      {{ POLICY_CONSTANTS.HR_POLICY }}
+    </button>
+    <button
+      (click)="getPolicyValue('Company Policy')"
+      [ngClass]="
+        checkActive('Company Policy')
+          ? 'initial-policy-select-btn'
+          : 'final-policy-select-btn'
+      "
+      mat-raised-button
+    >
+      {{ POLICY_CONSTANTS.COMPANY_POLICY }}
+    </button>
+    <button
+      (click)="getPolicyValue('Leave Policy')"
+      [ngClass]="
+        checkActive('Leave Policy')
+          ? 'initial-policy-select-btn'
+          : 'final-policy-select-btn'
+      "
+      mat-raised-button
+    >
+      {{ POLICY_CONSTANTS.LEAVE_POLICY }}
+    </button>
+  </div>
+
+  <mat-card class="example-card">
+    <mat-card-title>{{ policyTitle }}</mat-card-title>
+
+    <mat-card-content
+      class="leave"
+      *ngIf="selectedButtonValue === 'Leave Policy'"
+    >
+      <div>{{ POLICY_CONSTANTS.SICK_LEAVES }}: {{ sickLeave }}</div>
+      <div>{{ POLICY_CONSTANTS.ANNUAL_LEAVES }}: {{ annualLeave }}</div>
+    </mat-card-content>
+
+    <mat-card-content>
+      <ol>
+        <div *ngFor="let policy of policyList; let i = index">
+          <li>{{ policy }}</li>
+          <br />
+        </div>
+      </ol>
+    </mat-card-content>
+  </mat-card>
+</div>
